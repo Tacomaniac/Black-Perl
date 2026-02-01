@@ -1,5 +1,5 @@
 -- X-Perl UnitFrames
--- Author: Resike
+-- Author: Tacomaniac
 -- License: GNU GPL v3, 29 June 2007 (see LICENSE.txt)
 
 local XPerl_Player_Events = { }
@@ -234,7 +234,7 @@ local function UpdateAssignedRoles(self)
 			icon:SetTexture("Interface\\GroupFrame\\UI-Group-MainTankIcon")
 			icon:Show()
 		elseif isHealer then
-			icon:SetTexture("Interface\\AddOns\\ZPerl\\Images\\XPerl_RoleHealer_old")
+			icon:SetTexture("Interface\\AddOns\\BlackPerl\\Images\\XPerl_RoleHealer_old")
 			icon:Show()
 		elseif isDamage then
 			icon:SetTexture("Interface\\GroupFrame\\UI-Group-MainAssistIcon")
@@ -244,13 +244,13 @@ local function UpdateAssignedRoles(self)
 		end
 	else
 		if isTank then
-			icon:SetTexture("Interface\\AddOns\\ZPerl\\Images\\XPerl_RoleTank")
+			icon:SetTexture("Interface\\AddOns\\BlackPerl\\Images\\XPerl_RoleTank")
 			icon:Show()
 		elseif isHealer then
-			icon:SetTexture("Interface\\AddOns\\ZPerl\\Images\\XPerl_RoleHealer")
+			icon:SetTexture("Interface\\AddOns\\BlackPerl\\Images\\XPerl_RoleHealer")
 			icon:Show()
 		elseif isDamage then
-			icon:SetTexture("Interface\\AddOns\\ZPerl\\Images\\XPerl_RoleDamage")
+			icon:SetTexture("Interface\\AddOns\\BlackPerl\\Images\\XPerl_RoleDamage")
 			icon:Show()
 		else
 			icon:Hide()
@@ -1057,9 +1057,9 @@ function XPerl_Player_Events:PLAYER_ENTERING_WORLD(event, initialLogin, reloadin
 	end
 
 	if (initialLogin or reloadingUI) and not InCombatLockdown() then
-		self.state:SetFrameRef("ZPerlPlayer", self)
-		self.state:SetFrameRef("ZPerlPlayerPortrait", self.portraitFrame)
-		self.state:SetFrameRef("ZPerlPlayerStats", self.statsFrame)
+		self.state:SetFrameRef("BlackPerlPlayer", self)
+		self.state:SetFrameRef("BlackPerlPlayerPortrait", self.portraitFrame)
+		self.state:SetFrameRef("BlackPerlPlayerStats", self.statsFrame)
 
 		local class, classFileName, classID = UnitClass("player")
 
@@ -1075,16 +1075,16 @@ function XPerl_Player_Events:PLAYER_ENTERING_WORLD(event, initialLogin, reloadin
 		self.state:SetAttribute("docked", pconf.dockRunes)
 
 		self.state:Execute([[
-			frame = self:GetFrameRef("ZPerlPlayer")
-			portrait = self:GetFrameRef("ZPerlPlayerPortrait")
-			stats = self:GetFrameRef("ZPerlPlayerStats")
+			frame = self:GetFrameRef("BlackPerlPlayer")
+			portrait = self:GetFrameRef("BlackPerlPlayerPortrait")
+			stats = self:GetFrameRef("BlackPerlPlayerStats")
 		]])
 
 		self.state:SetAttribute("_onstate-petbattleupdate", [[
 			if newstate == "inpetbattle" then
 				frame:Hide()
 			else
-				local buffs = self:GetFrameRef("ZPerlPlayerBuffs")
+				local buffs = self:GetFrameRef("BlackPerlPlayerBuffs")
 
 				local class = self:GetAttribute("playerClass")
 				local spec = self:GetAttribute("playerSpec")
@@ -2214,7 +2214,7 @@ function XPerl_Player_Set_Bits(self)
 	end
 
 	--[[self.highlight:ClearAllPoints()
-	if (not pconf.level and not pconf.classIcon and (not ZPerlConfigHelper or ZPerlConfigHelper.ShowTargetCounters == 0)) then
+	if (not pconf.level and not pconf.classIcon and (not BlackPerlConfigHelper or BlackPerlConfigHelper.ShowTargetCounters == 0)) then
 		self.highlight:SetPoint("TOPLEFT", self.portraitFrame, "TOPLEFT", 0, 0)
 	else
 		self.highlight:SetPoint("TOPLEFT", self.levelFrame, "TOPLEFT", 0, 0)
@@ -2318,7 +2318,7 @@ function XPerl_Player_InitDruid(self, playerClass)
 		self.runes = CreateFrame("Frame", "XPerl_Runes", self)
 		self.runes:SetPoint("TOPLEFT", self.statsFrame, "BOTTOMLEFT", 0, 2)
 		self.runes:SetPoint("BOTTOMRIGHT", self.statsFrame, "BOTTOMRIGHT", 0, -22)
-		self.runes.child = CreateFrame("Frame", "ZPerlDruidComboPointBarFrame", self.runes, "DruidComboPointBarTemplate")
+		self.runes.child = CreateFrame("Frame", "BlackPerlDruidComboPointBarFrame", self.runes, "DruidComboPointBarTemplate")
 		--self.runes.child:SetTooltip(self.runes.child.tooltip1, self.runes.child.tooltip2)
 		self.runes.child.unit = "player"
 
@@ -2411,7 +2411,7 @@ function XPerl_Player_InitRogue(self, playerClass)
 	self.runes = CreateFrame("Frame", "XPerl_Runes", self)
 	self.runes:SetPoint("TOPLEFT", self.statsFrame, "BOTTOMLEFT", 0, 2)
 	self.runes:SetPoint("BOTTOMRIGHT", self.statsFrame, "BOTTOMRIGHT", 0, -22)
-	self.runes.child = CreateFrame("Frame", "ZPerlRogueComboPointBarFrame", self.runes, "RogueComboPointBarTemplate")
+	self.runes.child = CreateFrame("Frame", "BlackPerlRogueComboPointBarFrame", self.runes, "RogueComboPointBarTemplate")
 	--self.runes.child:SetTooltip(self.runes.child.tooltip1, self.runes.child.tooltip2)
 	self.runes.child.unit = "player"
 
@@ -2462,7 +2462,7 @@ function XPerl_Player_InitWarlock(self, playerClass)
 		self.runes = CreateFrame("Frame", "XPerl_Runes", self)
 		self.runes:SetPoint("TOPLEFT", self.statsFrame, "BOTTOMLEFT", 0, 2)
 		self.runes:SetPoint("BOTTOMRIGHT", self.statsFrame, "BOTTOMRIGHT", 0, -22)
-		self.runes.child = CreateFrame("Frame", "ZPerlWarlockPowerFrame", self.runes, "WarlockPowerFrameTemplate")
+		self.runes.child = CreateFrame("Frame", "BlackPerlWarlockPowerFrame", self.runes, "WarlockPowerFrameTemplate")
 		--self.runes.child:SetTooltip(self.runes.child.tooltip1, self.runes.child.tooltip2)
 		self.runes.child.unit = "player"
 
@@ -2556,7 +2556,7 @@ function XPerl_Player_InitPaladin(self, playerClass)
 		self.runes = CreateFrame("Frame", "XPerl_Runes", self)
 		self.runes:SetPoint("TOPLEFT", self.statsFrame, "BOTTOMLEFT", 0, 2)
 		self.runes:SetPoint("BOTTOMRIGHT", self.statsFrame, "BOTTOMRIGHT", 0, -22)
-		self.runes.child = CreateFrame("Frame", "ZPerlPaladinPowerBarFrame", self.runes, "PaladinPowerBarFrameTemplate")
+		self.runes.child = CreateFrame("Frame", "BlackPerlPaladinPowerBarFrame", self.runes, "PaladinPowerBarFrameTemplate")
 		--[[self.runes.child.tooltip1 = HOLY_POWER
 		self.runes.child.tooltip2 = HOLY_POWER_TOOLTIP
 		self.runes.child:SetTooltip(self.runes.child.tooltip1, self.runes.child.tooltip2)--]]
@@ -2701,12 +2701,12 @@ function XPerl_Player_InitMonk(self, playerClass)
 		self.runes = CreateFrame("Frame", "XPerl_Runes", self)
 		self.runes:SetPoint("TOPLEFT", self.statsFrame, "BOTTOMLEFT", 0, 2)
 		self.runes:SetPoint("BOTTOMRIGHT", self.statsFrame, "BOTTOMRIGHT", 0, -22)
-		self.runes.child = CreateFrame("Frame", "ZPerlMonkHarmonyBarFrame", self.runes, "MonkHarmonyBarFrameTemplate")
+		self.runes.child = CreateFrame("Frame", "BlackPerlMonkHarmonyBarFrame", self.runes, "MonkHarmonyBarFrameTemplate")
 		--[[self.runes.child.tooltip1 = CHI_POWER
 		self.runes.child.tooltip2 = CHI_TOOLTIP
 		self.runes.child:SetTooltip(self.runes.child.tooltip1, self.runes.child.tooltip2)--]]
 		self.runes.child.unit = "player"
-		self.runes.child2 = CreateFrame("StatusBar", "ZPerlMonkStaggerBar", self.runes, "PlayerFrameAlternatePowerBarBaseTemplate, MonkStaggerBarTemplate")
+		self.runes.child2 = CreateFrame("StatusBar", "BlackPerlMonkStaggerBar", self.runes, "PlayerFrameAlternatePowerBarBaseTemplate, MonkStaggerBarTemplate")
 		self.runes.child2.requiredClass = playerClass
 		self.runes.child2.requiredSpec = 1
 
@@ -2900,7 +2900,7 @@ function XPerl_Player_InitMage(self, playerClass)
 	self.runes = CreateFrame("Frame", "XPerl_Runes", self)
 	self.runes:SetPoint("TOPLEFT", self.statsFrame, "BOTTOMLEFT", 0, 2)
 	self.runes:SetPoint("BOTTOMRIGHT", self.statsFrame, "BOTTOMRIGHT", 0, -22)
-	self.runes.child = CreateFrame("Frame", "ZPerlMageArcaneChargesFrame", self.runes, "MageArcaneChargesFrameTemplate")
+	self.runes.child = CreateFrame("Frame", "BlackPerlMageArcaneChargesFrame", self.runes, "MageArcaneChargesFrameTemplate")
 	Mixin(self.runes.child, MagePowerBar)
 	--self.runes.child:SetTooltip(self.runes.child.tooltip1, self.runes.child.tooltip2)
 	self.runes.child.unit = "player"
@@ -2952,7 +2952,7 @@ function XPerl_Player_InitDK(self, playerClass)
 		self.runes = CreateFrame("Frame", "XPerl_Runes", self)
 		self.runes:SetPoint("TOPLEFT", self.statsFrame, "BOTTOMLEFT", 0, 2)
 		self.runes:SetPoint("BOTTOMRIGHT", self.statsFrame, "BOTTOMRIGHT", 0, -22)
-		self.runes.child2 = CreateFrame("Frame", "ZPerlRuneFrame", self.runes, "RuneFrameTemplate")
+		self.runes.child2 = CreateFrame("Frame", "BlackPerlRuneFrame", self.runes, "RuneFrameTemplate")
 		self.runes.child2.requiredClass = playerClass
 		--[[Mixin(self.runes.child2, ClassPowerBar)
 		self.runes.child2.tooltip1 = COMBAT_TEXT_RUNE_DEATH
@@ -3046,7 +3046,7 @@ function XPerl_Player_InitEvoker(self, playerClass)
 	self.runes = CreateFrame("Frame", "XPerl_Runes", self)
 	self.runes:SetPoint("TOPLEFT", self.statsFrame, "BOTTOMLEFT", 0, 2)
 	self.runes:SetPoint("BOTTOMRIGHT", self.statsFrame, "BOTTOMRIGHT", 0, -22)
-	self.runes.child = CreateFrame("Frame", "ZPerlEssencePlayerFrame", self.runes, "EssencePlayerFrameTemplate")
+	self.runes.child = CreateFrame("Frame", "BlackPerlEssencePlayerFrame", self.runes, "EssencePlayerFrameTemplate")
 	--self.runes.child:SetTooltip(self.runes.child.tooltip1, self.runes.child.tooltip2)
 	self.runes.child.unit = "player"
 

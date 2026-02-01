@@ -1,6 +1,6 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd">
 
-	<Script file="ZPerl_PlayerPet.lua"/>
+	<Script file="BlackPerl_PlayerPet.lua"/>
 
 	<Button name="XPerl_Player_Pet" inherits="XPerlBackdropTemplate,SecureUnitButtonTemplate" clampedToScreen="true" parent="UIParent" frameStrata="LOW" hidden="true" enableMouse="true" movable="true">
 		<Size>
@@ -19,8 +19,8 @@
 				self:RegisterForClicks("AnyUp")
 				self:RegisterForDrag("LeftButton")
 				XPerl_Player_Pet_OnLoad(self)
-				self:SetScript("OnEnter", ZPerl_Unit_OnEnter)
-				self:SetScript("OnLeave", ZPerl_Unit_OnLeave)
+				self:SetScript("OnEnter", BlackPerl_Unit_OnEnter)
+				self:SetScript("OnLeave", BlackPerl_Unit_OnLeave)
 			</OnLoad>
 			<OnDragStart>
 				if (XPerlLocked == 0) then
@@ -49,8 +49,8 @@
 						self:RegisterForClicks("AnyUp")
 						self:RegisterForDrag("LeftButton")
 						XPerl_RegisterUnitText(_G[self:GetName().."text"])
-						self:SetScript("OnEnter", function(self) ZPerl_Unit_OnEnter(self:GetParent()) end)
-						self:SetScript("OnLeave", function(self) ZPerl_Unit_OnLeave(self:GetParent()) end)
+						self:SetScript("OnEnter", function(self) BlackPerl_Unit_OnEnter(self:GetParent()) end)
+						self:SetScript("OnLeave", function(self) BlackPerl_Unit_OnLeave(self:GetParent()) end)
 					</OnLoad>
 					<OnDragStart>
 						if (XPerlLocked == 0) then

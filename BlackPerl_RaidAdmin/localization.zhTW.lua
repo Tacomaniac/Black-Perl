@@ -1,7 +1,7 @@
 if (GetLocale() == "zhTW") then
-XPERL_ADMIN_TITLE	= "Z-Perl 團隊管理介面"
+XPERL_ADMIN_TITLE	= "BlackPerl 團隊管理介面"
 
-XPERL_MSG_PREFIX	= "|c00C05050Z-Perl|r "
+XPERL_MSG_PREFIX	= "|c00C05050BlackPerl|r "
 
 -- 團隊管理
 XPERL_BUTTON_ADMIN_PIN		= "固定視窗位置"
@@ -23,7 +23,7 @@ XPERL_NO_ROSTER_NAME_GIVEN	= "沒有該名稱的名單"
 XPERL_NO_ROSTER_CALLED		= "儲存的名單中沒有 '%s'"
 
 -- 物品確認
-XPERL_CHECK_TITLE		= "Z-Perl 物品確認"
+XPERL_CHECK_TITLE		= "BlackPerl 物品確認"
 
 XPERL_CHECK_NAME		= "名稱"
 

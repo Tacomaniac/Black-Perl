@@ -1,6 +1,6 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd">
 
-	<Script file="ZPerl_AssistFrame.lua"/>
+	<Script file="BlackPerl_AssistFrame.lua"/>
 
 	<Frame name="XPerlListTemplate" inherits="XPerlBackdropTemplate" virtual="true">
 		<Layers>
@@ -60,10 +60,10 @@
 						</Offset>
 					</Anchor>
 				</Anchors>
-				<NormalTexture file="Interface\Addons\ZPerl_RaidHelper\Images\XPerl_Pin">
+				<NormalTexture file="Interface\Addons\BlackPerl_RaidHelper\Images\XPerl_Pin">
 					<TexCoords left="0" right="0.46875" top="0" bottom="0.453125"/>
 				</NormalTexture>
-				<PushedTexture file="Interface\Addons\ZPerl_RaidHelper\Images\XPerl_Pin">
+				<PushedTexture file="Interface\Addons\BlackPerl_RaidHelper\Images\XPerl_Pin">
 					<TexCoords left="0" right="0.46875" top="0.5" bottom="0.953125"/>
 				</PushedTexture>
 				<HighlightTexture file="Interface\Buttons\UI-Panel-MinimizeButton-Highlight" alphaMode="ADD">
@@ -73,14 +73,14 @@
 					<OnLoad>
 						self.SetButtonTex = function()
 							local tex = XPerlAssistPin:GetNormalTexture()
-							if (ZPerlConfigHelper and ZPerlConfigHelper.AssistPinned) then
+							if (BlackPerlConfigHelper and BlackPerlConfigHelper.AssistPinned) then
 								tex:SetTexCoord(0.5, 0.96875, 0, 0.453125)
 							else
 								tex:SetTexCoord(0, 0.46875, 0, 0.453125)
 							end
 
 							tex = XPerlAssistPin:GetPushedTexture()
-							if (ZPerlConfigHelper and ZPerlConfigHelper.AssistPinned) then
+							if (BlackPerlConfigHelper and BlackPerlConfigHelper.AssistPinned) then
 								if (XPerl_Assists_Frame.corner) then
 									XPerl_Assists_Frame.corner:Hide()
 								end
@@ -95,7 +95,7 @@
 						self.tooltipText = XPERL_BUTTON_HELPER_PIN
 					</OnLoad>
 					<OnClick>
-						ZPerlConfigHelper.AssistPinned = not ZPerlConfigHelper.AssistPinned
+						BlackPerlConfigHelper.AssistPinned = not BlackPerlConfigHelper.AssistPinned
 						self:SetButtonTex()
 					</OnClick>
 				</Scripts>
@@ -173,7 +173,7 @@
 				</Anchors>
 				<Layers>
 					<Layer level="ARTWORK">
-						<Texture file="Interface\AddOns\ZPerl_RaidHelper\Images\XPerl_FrameBack" setAllPoints="true"/>
+						<Texture file="Interface\AddOns\BlackPerl_RaidHelper\Images\XPerl_FrameBack" setAllPoints="true"/>
 					</Layer>
 				</Layers>
 			</Frame>
@@ -204,7 +204,7 @@
 		</Size>
 		<NormalFont style="GameFontNormalSmall"/>
 		<ButtonText name="$parenttext" setAllPoints="true"/>
-		<HighlightTexture file="Interface\Addons\ZPerl\Images\XPerl_Highlight" alphaMode="ADD">
+		<HighlightTexture file="Interface\Addons\BlackPerl\Images\XPerl_Highlight" alphaMode="ADD">
 			<TexCoords left="0" right="0.25" top="0" bottom="0.5"/>
 		</HighlightTexture>
 		<!--<Anchors>
@@ -217,7 +217,7 @@
 		<Scripts>
 			<OnLoad>
 				self:OnBackdropLoaded()
-				if C_AddOns.IsAddOnLoaded("ZPerl_Player") then
+				if C_AddOns.IsAddOnLoaded("BlackPerl_Player") then
 					self:SetParent(XPerl_Player)
 					self:SetPoint("TOPRIGHT", XPerl_PlayerportraitFrame, "TOPLEFT", 2, -19)
 				end
@@ -235,7 +235,7 @@
 				if (table.getn(XPerl_Assists_Frame.targetting) > 0 and XPerl_Assists_Frame.targetting[1][2] == "") then
 					title = XPERL_TOOLTIP_ENEMYONME
 				else
-					if (ZPerlConfigHelper.TargetCountersSelf == 0) then
+					if (BlackPerlConfigHelper.TargetCountersSelf == 0) then
 						title = XPERL_TOOLTIP_ALLONME
 					else
 						title = XPERL_TOOLTIP_HEALERS
@@ -263,7 +263,7 @@
 		</Size>
 		<NormalFont style="GameFontNormalSmall"/>
 		<ButtonText name="$parenttext" setAllPoints="true"/>
-		<HighlightTexture file="Interface\Addons\ZPerl\Images\XPerl_Highlight" alphaMode="ADD">
+		<HighlightTexture file="Interface\Addons\BlackPerl\Images\XPerl_Highlight" alphaMode="ADD">
 			<TexCoords left="0" right="0.25" top="0" bottom="0.5"/>
 		</HighlightTexture>
 		<Anchors>
@@ -309,7 +309,7 @@
 			<Frame name="$parentArrows" inherits="XPerlBackdropTemplate" setAllPoints="true">
 				<Layers>
 					<Layer level="ARTWORK">
-						<Texture name="$parenttex" file="Interface\Addons\ZPerl_RaidHelper\Images\XPerl_MoveCursor" setAllPoints="true"/>
+						<Texture name="$parenttex" file="Interface\Addons\BlackPerl_RaidHelper\Images\XPerl_MoveCursor" setAllPoints="true"/>
 					</Layer>
 				</Layers>
 				<Scripts>

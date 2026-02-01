@@ -1,5 +1,5 @@
 -- X-Perl UnitFrames
--- Author: Resike
+-- Author: Tacomaniac
 -- License: GNU GPL v3, 29 June 2007 (see LICENSE.txt)
 
 local XPerl_Target_Events = { }
@@ -32,7 +32,7 @@ local IsVanillaClassic = WOW_PROJECT_ID == WOW_PROJECT_CLASSIC
 
 local LCD = IsVanillaClassic and LibStub and LibStub("LibClassicDurations", true)
 if LCD then
-	LCD.RegisterCallback("ZPerl", "UNIT_BUFF", function(event, unit)
+	LCD.RegisterCallback("BlackPerl", "UNIT_BUFF", function(event, unit)
 		if unit ~= "target" then
 			return
 		end
@@ -547,13 +547,13 @@ local function XPerl_Target_UpdateClassification(self)
 		if (self.conf.eliteGfx) then
 			eliteGfx = true
 			if (targetclassification == "worldboss" or targetclassification == "elite") then
-				self.eliteFrame.tex:SetTexture("Interface\\Addons\\ZPerl\\Images\\XPerl_Elite")
+				self.eliteFrame.tex:SetTexture("Interface\\Addons\\BlackPerl\\Images\\XPerl_Elite")
 				self.eliteFrame.tex:SetVertexColor(1, 1, 0, 1)
 			elseif (targetclassification == "rareelite") then
-				self.eliteFrame.tex:SetTexture("Interface\\Addons\\ZPerl\\Images\\XPerl_Elite")
+				self.eliteFrame.tex:SetTexture("Interface\\Addons\\BlackPerl\\Images\\XPerl_Elite")
 				self.eliteFrame.tex:SetVertexColor(1, 1, 1, 1)
 			elseif (targetclassification == "rare") then
-				self.eliteFrame.tex:SetTexture("Interface\\Addons\\ZPerl\\Images\\XPerl_Rare")
+				self.eliteFrame.tex:SetTexture("Interface\\Addons\\BlackPerl\\Images\\XPerl_Rare")
 				self.eliteFrame.tex:SetVertexColor(1, 1, 1, 1)
 			else
 				eliteGfx = nil

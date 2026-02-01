@@ -9,7 +9,7 @@
 	<Script file="localization.koKR.lua"/>
 	<Script file="localization.ruRU.lua"/>
 	<Script file="localization.itIT.lua"/>
-	<Script file="ZPerl_RaidMonitor.lua"/>
+	<Script file="BlackPerl_RaidMonitor.lua"/>
 
 	<Button name="XPerl_RaidMonitor_BasicButton" inherits="XPerlBackdropTemplate" virtual="true">
 		<Scripts>
@@ -57,7 +57,7 @@
 		<Size>
 			<AbsDimension x="80" y="12"/>
 		</Size>
-		<HighlightTexture file="Interface\Addons\ZPerl\Images\XPerl_Highlight" alphaMode="ADD">
+		<HighlightTexture file="Interface\Addons\BlackPerl\Images\XPerl_Highlight" alphaMode="ADD">
 			<TexCoords left="0" right="1" top="0.5" bottom="1"/>
 		</HighlightTexture>
 		<Frames>
@@ -83,7 +83,7 @@
 				XPerl_RegisterHighlight(self, 3)
 			</OnLoad>
 			<OnEnter>
-				if (ZPerlRaidMonConfig.Tooltips == 1) then
+				if (BlackPerlRaidMonConfig.Tooltips == 1) then
 					XPerl_PlayerTip(self)
 				end
 			</OnEnter>
@@ -123,7 +123,7 @@
 				self.groupedIcon:SetHeight(h - 4)
 			</OnSizeChanged>
 			<OnEnter>
-				if (ZPerlRaidMonConfig.Tooltips == 1) then
+				if (BlackPerlRaidMonConfig.Tooltips == 1) then
 					local unit = SecureButton_GetUnit(self)
 					if (unit) then
 						XPerl_PlayerTip(self)
@@ -156,7 +156,7 @@
 		<Size>
 			<AbsDimension x="120" y="12"/>
 		</Size>
-		<HighlightTexture file="Interface\Addons\ZPerl\Images\XPerl_Highlight" alphaMode="ADD">
+		<HighlightTexture file="Interface\Addons\BlackPerl\Images\XPerl_Highlight" alphaMode="ADD">
 			<TexCoords left="0" right="1" top="0.5" bottom="1"/>
 		</HighlightTexture>
 		<Frames>
@@ -185,7 +185,7 @@
 						</Anchors>
 						<Layers>
 							<Layer level="OVERLAY">
-								<Texture name="$parentSpark" file="Interface\Addons\ZPerl\Images\XPerl_ArcaneBarSpark" alphaMode="ADD">
+								<Texture name="$parentSpark" file="Interface\Addons\BlackPerl\Images\XPerl_ArcaneBarSpark" alphaMode="ADD">
 									<Size>
 										<AbsDimension x="8" y="16"/>
 									</Size>
@@ -217,7 +217,7 @@
 				</Frames>
 				<Layers>
 					<Layer level="OVERLAY">
-						<Texture name="$parentGrouped" file="Interface\Addons\ZPerl_RaidHelper\Images\XPerl_Bits" hidden="true">
+						<Texture name="$parentGrouped" file="Interface\Addons\BlackPerl_RaidHelper\Images\XPerl_Bits" hidden="true">
 							<Size>
 								<AbsDimension x="8" y="8"/>
 							</Size>
@@ -268,7 +268,7 @@
 				self:EnableDisable()
 			</OnHide>
 			<OnDragStart>
-				if (not ZPerlRaidMonConfig.Pinned) then
+				if (not BlackPerlRaidMonConfig.Pinned) then
 					XPerl_RaidMonitor_Anchor:StartMoving()
 				end
 			</OnDragStart>
@@ -326,7 +326,7 @@
 								self:GetParent():GetParent().Buttons.Close = self
 							</OnLoad>
 							<OnClick>
-								ZPerlRaidMonConfig.enabled = false
+								BlackPerlRaidMonConfig.enabled = false
 								XPerl_RaidMonitor_Frame:Hide()
 							</OnClick>
 						</Scripts>
@@ -343,11 +343,11 @@
 								</Offset>
 							</Anchor>
 						</Anchors>
-						<NormalTexture file="Interface\Addons\ZPerl_RaidHelper\Images\XPerl_Pin">
+						<NormalTexture file="Interface\Addons\BlackPerl_RaidHelper\Images\XPerl_Pin">
 							<TexCoords left="0" right="0.46875" top="0" bottom="0.453125"/>
 						</NormalTexture>
 
-						<PushedTexture file="Interface\Addons\ZPerl_RaidHelper\Images\XPerl_Pin">
+						<PushedTexture file="Interface\Addons\BlackPerl_RaidHelper\Images\XPerl_Pin">
 							<TexCoords left="0" right="0.46875" top="0.5" bottom="0.953125"/>
 						</PushedTexture>
 
@@ -361,14 +361,14 @@
 
 								self.SetButtonTex = function(self)
 									local tex = self:GetNormalTexture()
-									if (ZPerlRaidMonConfig.Pinned) then
+									if (BlackPerlRaidMonConfig.Pinned) then
 										tex:SetTexCoord(0.5, 0.96875, 0, 0.453125)
 									else
 										tex:SetTexCoord(0, 0.46875, 0, 0.453125)
 									end
 
 									tex = self:GetPushedTexture()
-									if (ZPerlRaidMonConfig.Pinned) then
+									if (BlackPerlRaidMonConfig.Pinned) then
 										if (XPerl_RaidMonitor_Frame.corner) then
 											XPerl_RaidMonitor_Frame.corner:Hide()
 										end
@@ -383,7 +383,7 @@
 								self.tooltipText = XPERL_BUTTON_HELPER_PIN
 							</OnLoad>
 							<OnClick>
-								ZPerlRaidMonConfig.Pinned = not ZPerlRaidMonConfig.Pinned
+								BlackPerlRaidMonConfig.Pinned = not BlackPerlRaidMonConfig.Pinned
 								self:SetButtonTex()
 							</OnClick>
 						</Scripts>
@@ -396,15 +396,15 @@
 						<Anchors>
 							<Anchor point="RIGHT" relativeTo="$parentPin" relativePoint="LEFT"/>
 						</Anchors>
-						<NormalTexture file="Interface\Addons\ZPerl_RaidHelper\Images\XPerl_Bits">
+						<NormalTexture file="Interface\Addons\BlackPerl_RaidHelper\Images\XPerl_Bits">
 							<TexCoords left="0.625" right="0.75" top="0.0" bottom="0.125"/>
 						</NormalTexture>
 
-						<PushedTexture file="Interface\Addons\ZPerl_RaidHelper\Images\XPerl_Bits">
+						<PushedTexture file="Interface\Addons\BlackPerl_RaidHelper\Images\XPerl_Bits">
 							<TexCoords left="0.625" right="0.75" top="0.125" bottom="0.25"/>
 						</PushedTexture>
 
-						<DisabledTexture file="Interface\Addons\ZPerl_RaidHelper\Images\XPerl_Bits">
+						<DisabledTexture file="Interface\Addons\BlackPerl_RaidHelper\Images\XPerl_Bits">
 							<TexCoords left="0.625" right="0.75" top="0.25" bottom="0.375"/>
 						</DisabledTexture>
 
@@ -420,14 +420,14 @@
 								self.SetButtonTex = function(self)
 									local tex = self:GetNormalTexture()
 
-									if (ZPerlRaidMonConfig.Totals) then
+									if (BlackPerlRaidMonConfig.Totals) then
 										tex:SetTexCoord(0.625, 0.75, 0.125, 0.25)
 									else
 										tex:SetTexCoord(0.625, 0.75, 0, 0.125)
 									end
 
 									tex = self:GetDisabledTexture()
-									if (ZPerlRaidMonConfig.Totals) then
+									if (BlackPerlRaidMonConfig.Totals) then
 										tex:SetTexCoord(0.625, 0.75, 0.375, 0.5)
 									else
 										tex:SetTexCoord(0.625, 0.75, 0.25, 0.375)
@@ -435,7 +435,7 @@
 								end
 							</OnLoad>
 							<OnClick>
-								ZPerlRaidMonConfig.Totals = not ZPerlRaidMonConfig.Totals
+								BlackPerlRaidMonConfig.Totals = not BlackPerlRaidMonConfig.Totals
 								self:SetButtonTex()
 								self:GetParent():GetParent():SetFrameSizes()
 							</OnClick>

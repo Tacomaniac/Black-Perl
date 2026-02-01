@@ -1,10 +1,10 @@
 -- X-Perl UnitFrames
--- Author: Resike
+-- Author: Tacomaniac
 -- License: GNU GPL v3, 29 June 2007 (see LICENSE.txt)
 
 XPerl_SetModuleRevision("$Revision:  $")
 
-ZPerl_MainTanks = {}
+BlackPerl_MainTanks = {}
 local MainTankCount, blizzMTanks, ctraTanks = 0, 0, 0
 local MainTanks = {}
 local BlizzardMainTanks = {}
@@ -338,9 +338,9 @@ end
 
 -- RemoveDupMT
 local function RemoveDupMT(name)
-	for k, v in pairs(ZPerl_MainTanks) do
+	for k, v in pairs(BlackPerl_MainTanks) do
 		if (strlower(v[2]) == strlower(name)) then
-			ZPerl_MainTanks[k] = { }
+			BlackPerl_MainTanks[k] = { }
 			return true
 		end
 	end
@@ -368,7 +368,7 @@ end
 -- ValidateTankList
 -- Check the roster for any tanks that have left the raid
 local function ValidateTankList()
-	for index,entry in pairs(ZPerl_MainTanks) do
+	for index,entry in pairs(BlackPerl_MainTanks) do
 		local found
 		for i = 1,GetNumGroupMembers() do
 			if (strlower(UnitName("raid"..i)) == strlower(entry[2])) then
@@ -378,7 +378,7 @@ local function ValidateTankList()
 		end
 
 		if (not found) then
-			ZPerl_MainTanks[index] = nil
+			BlackPerl_MainTanks[index] = nil
 		end
 	end
 end
@@ -410,7 +410,7 @@ function XPerl_MTRosterChanged()
 		return
 	else
 		if (conf and conf.UseCTRATargets == 1) then
-			for index, entry in pairs(ZPerl_MainTanks) do
+			for index, entry in pairs(BlackPerl_MainTanks) do
 				local raidid = GetRaidIDByName(entry[2])
 				if (raidid) then
 					ctraTanks = ctraTanks + 1
@@ -476,7 +476,7 @@ function XPerl_MTRosterChanged()
 		end
 	end
 
-	if (not next(ZPerl_MainTanks)) then
+	if (not next(BlackPerl_MainTanks)) then
 		-- If no defined tanks, then make a list from the warriors in raid
 
 		if (blizzMTanks == 0 and conf.NoAutoList == 0 and not inBattlegrounds()) then
@@ -517,16 +517,16 @@ local function ProcessCTRAMessage(unitName, msg)
 				end
 			end
 
-			if (ZPerl_MainTanks[num]) then
-				if (ZPerl_MainTanks[num][1] == mtID and ZPerl_MainTanks[num][2] == name) then
+			if (BlackPerl_MainTanks[num]) then
+				if (BlackPerl_MainTanks[num][1] == mtID and BlackPerl_MainTanks[num][2] == name) then
 					return			-- No Change
 				end
 			end
 
 			RemoveDupMT(name)
 
-			--del(ZPerl_MainTanks[tonumber(num)])
-			ZPerl_MainTanks[tonumber(num)] = {mtID, name}
+			--del(BlackPerl_MainTanks[tonumber(num)])
+			BlackPerl_MainTanks[tonumber(num)] = {mtID, name}
 
 			mtListUpdate = true
 		end
@@ -719,15 +719,15 @@ function Events:VARIABLES_LOADED()
 		end
 	end
 
-	if (type(ZPerl_MainTanks) ~= "table") then
-		ZPerl_MainTanks = {}
+	if (type(BlackPerl_MainTanks) ~= "table") then
+		BlackPerl_MainTanks = {}
 	end
 
 	XPerl_MTTargets:UnregisterEvent("UNIT_NAME_UPDATE")	-- Fix for WoW 2.1 UNIT_NAME_UPDATE issue
 	XPerl_MTTargets:SetAttribute("template", "XPerl_MTList_UnitTemplate")
 
 	XPerl_Startup()
-	conf = ZPerlConfigHelper
+	conf = BlackPerlConfigHelper
 	XPerl_RaidHelperCheck:Show()		-- XPerl_EnableDisable()
 
 	XPerl_RegisterOptionChanger(XPerl_SetFrameSizes)
@@ -776,7 +776,7 @@ function XPerl_EnableDisable()
 		return
 	end
 
-	if (ZPerlConfigHelper and conf and conf.RaidHelper == 1 and IsInRaid()) then
+	if (BlackPerlConfigHelper and conf and conf.RaidHelper == 1 and IsInRaid()) then
 		if (not XPerl_RaidHelper_Frame:IsShown()) then
 			XPerl_RaidHelper_Frame:Show()
 			XPerl_RaidHelper_Frame:SetScript("OnUpdate", OnUpdate)
@@ -793,7 +793,7 @@ function XPerl_EnableDisable()
 			XPerl_RaidHelper_Frame:SetScript("OnUpdate", nil)
 		end
 
-		if (ZPerlConfigHelper and conf and conf.RaidHelper == 0 and CT_RAMenu_Options and CT_RA_UpdateVisibility) then
+		if (BlackPerlConfigHelper and conf and conf.RaidHelper == 0 and CT_RAMenu_Options and CT_RA_UpdateVisibility) then
 			if (conf.OldCTMTListHide ~= true) then
 				conf.OldCTMTListHide = nil
 				CT_RAMenu_Options["temp"]["HideMTs"] = false
@@ -1053,12 +1053,12 @@ function XPerl_SetTitle()
 	end
 end
 
-local bEdge = {	bgFile = "Interface\\AddOns\\ZPerl_RaidHelper\\Images\\XPerl_FrameBack",
+local bEdge = {	bgFile = "Interface\\AddOns\\BlackPerl_RaidHelper\\Images\\XPerl_FrameBack",
 		edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
 		tile = true, tileSize = 16, edgeSize = 9,
 		insets = { left = 3, right = 3, top = 3, bottom = 3 }
 	}
-local bNoEdge = {bgFile = "Interface\\AddOns\\ZPerl_RaidHelper\\Images\\XPerl_FrameBack",
+local bNoEdge = {bgFile = "Interface\\AddOns\\BlackPerl_RaidHelper\\Images\\XPerl_FrameBack",
 		edgeFile = "", tile = true, tileSize = 16, edgeSize = 9,
 		insets = { left = 3, right = 3, top = 3, bottom = 3 }
 	}
@@ -1162,7 +1162,7 @@ function XPerl_MakeTankList()
 		pendingTankListChange = nil
 	end
 
-	if (not ZPerlConfigHelper or (conf and conf.RaidHelper == 0) or not IsInRaid()) then
+	if (not BlackPerlConfigHelper or (conf and conf.RaidHelper == 0) or not IsInRaid()) then
 		XPerl_SetFrameSizes()
 		return
 	end
@@ -1326,10 +1326,10 @@ end
 
 -- XPerl_SetFrameSizes
 function XPerl_SetFrameSizes()
-	conf = ZPerlConfigHelper
+	conf = BlackPerlConfigHelper
 	local tanks = MainTankCount
 
-	if (ZPerlConfigHelper) then
+	if (BlackPerlConfigHelper) then
 		SetVisibility() -- Change which of MT, MTT and MTTT we can see
 		ScanForMTDups()
 

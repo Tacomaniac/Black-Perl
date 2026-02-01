@@ -1,5 +1,5 @@
 -- X-Perl UnitFrames
--- Author: Resike
+-- Author: Tacomaniac
 -- License: GNU GPL v3, 29 June 2007 (see LICENSE.txt)
 
 XPerl_SetModuleRevision("$Revision:  $")
@@ -636,9 +636,9 @@ end
 local MyIndex = 0
 local function GetPlayerList()
 	local ret = {}
-	if (ZPerlConfigNew) then
+	if (BlackPerlConfigNew) then
 		local me = GetRealmName().." / "..UnitName("player")
-		for realmName, realmConfig in pairs(ZPerlConfigNew) do
+		for realmName, realmConfig in pairs(BlackPerlConfigNew) do
 			if (type(realmConfig) == "table" and realmName ~= "global" and realmName ~= "savedPositions") then
 				for playerName, settings in pairs(realmConfig) do
 					local entry = realmName.." / "..playerName
@@ -751,14 +751,14 @@ local CopyFrom
 local function CopySelectedSettings()
 	XPerlDB = XPerl_CopyTable(CopyFrom.config)
 
-	if (ZPerlConfigSavePerCharacter) then
-		if (not ZPerlConfigNew[GetRealmName()]) then
-			ZPerlConfigNew[GetRealmName()] = {}
+	if (BlackPerlConfigSavePerCharacter) then
+		if (not BlackPerlConfigNew[GetRealmName()]) then
+			BlackPerlConfigNew[GetRealmName()] = {}
 		end
 
-		ZPerlConfigNew[GetRealmName()][UnitName("player")] = XPerlDB
+		BlackPerlConfigNew[GetRealmName()][UnitName("player")] = XPerlDB
 	else
-		ZPerlConfigNew[GetRealmName()].global = XPerlDB
+		BlackPerlConfigNew[GetRealmName()].global = XPerlDB
 	end
 
 	XPerl_GiveConfig()
@@ -791,7 +791,7 @@ local DeleteFrom
 local function DeleteSelectedSettings()
 	local realm, player = string.match(DeleteFrom.name, "([^,]+) / ([^,]+)")
 
-	ZPerlConfigNew[realm][player] = nil
+	BlackPerlConfigNew[realm][player] = nil
 
 	XPerl_GiveConfig()
 
@@ -1561,8 +1561,8 @@ end
 function XPerl_Options_LayoutGetList(self)
 	local list = { }
 
-	if (ZPerlConfigNew.savedPositions) then
-		for realmName, realmList in pairs(ZPerlConfigNew.savedPositions) do
+	if (BlackPerlConfigNew.savedPositions) then
+		for realmName, realmList in pairs(BlackPerlConfigNew.savedPositions) do
 			for playerName,frames in pairs(realmList) do
 				if (realmName == "saved") then
 					tinsert(list, playerName)
@@ -1580,8 +1580,8 @@ end
 
 -- XPerl_Options_GetLayout
 function XPerl_Options_GetLayout(name)
-	if (ZPerlConfigNew.savedPositions) then
-		for realmName, realmList in pairs(ZPerlConfigNew.savedPositions) do
+	if (BlackPerlConfigNew.savedPositions) then
+		for realmName, realmList in pairs(BlackPerlConfigNew.savedPositions) do
 			for playerName, frames in pairs(realmList) do
 				local find
 				if (realmName == "saved") then
@@ -1600,13 +1600,13 @@ end
 
 -- XPerl_Options_SaveFrameLayout
 function XPerl_Options_SaveFrameLayout(name)
-	if (not ZPerlConfigNew.savedPositions) then
-		ZPerlConfigNew.savedPositions = { }
+	if (not BlackPerlConfigNew.savedPositions) then
+		BlackPerlConfigNew.savedPositions = { }
 	end
-	if (not ZPerlConfigNew.savedPositions.saved) then
-		ZPerlConfigNew.savedPositions.saved = { }
+	if (not BlackPerlConfigNew.savedPositions.saved) then
+		BlackPerlConfigNew.savedPositions.saved = { }
 	end
-	ZPerlConfigNew.savedPositions.saved[name] = XPerl_CopyTable(XPerl_GetSavePositionTable())
+	BlackPerlConfigNew.savedPositions.saved[name] = XPerl_CopyTable(XPerl_GetSavePositionTable())
 end
 
 -- XPerl_Options_LoadFrameLayout
@@ -1617,10 +1617,10 @@ function XPerl_Options_LoadFrameLayout(name)
 		local name = UnitName("player")
 		local realm = GetRealmName()
 
-		if (not ZPerlConfigNew.savedPositions) then
-			ZPerlConfigNew.savedPositions = { }
+		if (not BlackPerlConfigNew.savedPositions) then
+			BlackPerlConfigNew.savedPositions = { }
 		end
-		local c = ZPerlConfigNew.savedPositions
+		local c = BlackPerlConfigNew.savedPositions
 		if (not c[realm]) then
 			c[realm] = { }
 		end
@@ -1638,8 +1638,8 @@ end
 function XPerl_Options_DeleteFrameLayout(name)
 	local me = format("%s(%s)", GetRealmName(), UnitName("player"))
 
-	if (ZPerlConfigNew.savedPositions) then
-		for realmName, realmList in pairs(ZPerlConfigNew.savedPositions) do
+	if (BlackPerlConfigNew.savedPositions) then
+		for realmName, realmList in pairs(BlackPerlConfigNew.savedPositions) do
 			for playerName, frames in pairs(realmList) do
 				local find
 				if (realmName == "saved") then
@@ -1725,7 +1725,7 @@ end
 ---------------------------------------------------------------------
 -------------------------- CONFIG IMPORT ----------------------------
 ---------------------------------------------------------------------
-if (ZPerlConfig or XPerlConfig_Global) then
+if (BlackPerlConfig or XPerlConfig_Global) then
 
 -- Convert		-- Convert old options (we have 1 or nil now instead of 1 or 0)
 local function Convert(opt)
@@ -2338,7 +2338,7 @@ local function XPerl_Global_ConfigDefault(default)
 	}
 
 	default.bar = {
-		texture		= {"Perl v2", "Interface\\Addons\\ZPerl\\Images\\XPerl_StatusBar"},
+		texture		= {"Perl v2", "Interface\\Addons\\BlackPerl\\Images\\XPerl_StatusBar"},
 		background	= 1,
 --		fading		= nil,		-- 1.8.9
 		fadeTime	= 0.5,		-- 1.9.1
@@ -2810,11 +2810,11 @@ function XPerl_Custom_Config_OnShow(self)
 		}
 	end
 	if (not XPerlDB.custom.zones) then
-		if (not ZPerl_Custom) then
-			LoadAddOn("ZPerl_CustomHighlight")
+		if (not BlackPerl_Custom) then
+			LoadAddOn("BlackPerl_CustomHighlight")
 		end
-		if (ZPerl_Custom) then
-			ZPerl_Custom:SetDefaultZoneData()
+		if (BlackPerl_Custom) then
+			BlackPerl_Custom:SetDefaultZoneData()
 		end
 	end
 
@@ -3173,8 +3173,8 @@ function XPerl_Options_Custom_ScanForIcons(self)
 								XPerl_Custom_Config.listzone:FillList()
 								XPerl_Custom_Config.listdebuff:FillList()
 
-								if (ZPerl_Custom) then
-									ZPerl_Custom:PLAYER_ENTERING_WORLD()
+								if (BlackPerl_Custom) then
+									BlackPerl_Custom:PLAYER_ENTERING_WORLD()
 								end
 							end
 						end
@@ -3713,37 +3713,37 @@ if (XPerl_UpgradeSettings) then
 
 	-- XPerl_Options_UpgradeSettings()
 	function XPerl_Options_UpgradeSettings()
-		local oldVersion = ZPerlConfigNew.ConfigVersion
+		local oldVersion = BlackPerlConfigNew.ConfigVersion
 
 		-- Global config upgrade checks here:
 		if (type(oldVersion) == "string" and oldVersion < "2.3.2d") then
-			if (ZPerlConfigNew.savedPositions and ZPerlConfigNew.savedPositions.current) then
-				for name,settings in pairs(ZPerlConfigNew.savedPositions) do
+			if (BlackPerlConfigNew.savedPositions and BlackPerlConfigNew.savedPositions.current) then
+				for name,settings in pairs(BlackPerlConfigNew.savedPositions) do
 					if (name ~= "saved" and name ~= "current") then
-						if (not ZPerlConfigNew.savedPositions.saved) then
-							ZPerlConfigNew.savedPositions.saved = {}
+						if (not BlackPerlConfigNew.savedPositions.saved) then
+							BlackPerlConfigNew.savedPositions.saved = {}
 						end
-						ZPerlConfigNew.savedPositions.saved[name] = settings
-						ZPerlConfigNew.savedPositions[name] = nil
+						BlackPerlConfigNew.savedPositions.saved[name] = settings
+						BlackPerlConfigNew.savedPositions[name] = nil
 					end
 				end
 
 				local realm, name = GetRealmName(), UnitName("player")
-				if (not ZPerlConfigNew.savedPositions[realm]) then
-					ZPerlConfigNew.savedPositions[realm] = {}
+				if (not BlackPerlConfigNew.savedPositions[realm]) then
+					BlackPerlConfigNew.savedPositions[realm] = {}
 				end
-				ZPerlConfigNew.savedPositions[realm][name] = ZPerlConfigNew.savedPositions.current
-				ZPerlConfigNew.savedPositions.current = nil
+				BlackPerlConfigNew.savedPositions[realm][name] = BlackPerlConfigNew.savedPositions.current
+				BlackPerlConfigNew.savedPositions.current = nil
 			end
 		end
 
-		for realmName, realmList in pairs(ZPerlConfigNew) do
+		for realmName, realmList in pairs(BlackPerlConfigNew) do
 			if (type(realmList) == "table" and realmName ~= "global" and realmName ~= "savedPositions") then
 				for playerName, settings in pairs(realmList) do
 					if (playerName == "global") then
 						-- Fix global settings being put in with realms
-						if (not ZPerlConfigNew.global) then
-							ZPerlConfigNew.global = settings
+						if (not BlackPerlConfigNew.global) then
+							BlackPerlConfigNew.global = settings
 							UpgradeSettings(settings, oldVersion)
 						end
 						realmList.global = nil

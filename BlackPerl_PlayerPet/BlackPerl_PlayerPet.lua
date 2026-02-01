@@ -1,5 +1,5 @@
 -- X-Perl UnitFrames
--- Author: Resike
+-- Author: Tacomaniac
 -- License: GNU GPL v3, 29 June 2007 (see LICENSE.txt)
 
 local XPerl_Player_Pet_Events = {}
@@ -114,10 +114,10 @@ function XPerl_Player_Pet_OnLoad(self)
 
 	self.state = CreateFrame("Frame", nil, nil, "SecureHandlerStateTemplate")
 
-	self.state:SetFrameRef("ZPerlPlayerPet", self)
+	self.state:SetFrameRef("BlackPerlPlayerPet", self)
 
 	self.state:Execute([[
-		frame = self:GetFrameRef("ZPerlPlayerPet")
+		frame = self:GetFrameRef("BlackPerlPlayerPet")
 	]])
 
 	self.state:SetAttribute("_onstate-petbattleupdate", [[

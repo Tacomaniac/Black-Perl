@@ -1,5 +1,5 @@
 -- X-Perl UnitFrames
--- Author: Resike
+-- Author: Tacomaniac
 -- License: GNU GPL v3, 29 June 2007 (see LICENSE.txt)
 
 if GetLocale() == "itIT" then
@@ -82,15 +82,15 @@ if GetLocale() == "itIT" then
 	XPERL_LOC_HUGENUMTAG		= "M"
 	XPERL_LOC_VERYHUGENUMTAG	= "G"
 
-	BINDING_HEADER_ZPERL = XPerl_ProductName
-	BINDING_NAME_ZPERL_TOGGLERAID = "Abilita/Disattiva Raid Windows"
-	BINDING_NAME_ZPERL_TOGGLERAIDSORT = "Abilita/Disattiva riorganizzazione per classe/gruppo"
-	BINDING_NAME_ZPERL_TOGGLERAIDPETS = "Abilita/Disattiva Raid Pets"
-	BINDING_NAME_ZPERL_TOGGLEOPTIONS = "Abilita/Disattiva finestra opzioni"
-	BINDING_NAME_ZPERL_TOGGLEBUFFTYPE = "Abilita/Disattiva Buffs/Debuffs/none"
-	BINDING_NAME_ZPERL_TOGGLEBUFFCASTABLE = "Abilita/Disattiva Castable/Curable"
-	BINDING_NAME_ZPERL_TEAMSPEAKMONITOR = "Teamspeak Monitor"
-	BINDING_NAME_ZPERL_TOGGLERANGEFINDER = "Abilita/Disattiva Range Finder"
+	BINDING_HEADER_BlackPerl = XPerl_ProductName
+	BINDING_NAME_BlackPerl_TOGGLERAID = "Abilita/Disattiva Raid Windows"
+	BINDING_NAME_BlackPerl_TOGGLERAIDSORT = "Abilita/Disattiva riorganizzazione per classe/gruppo"
+	BINDING_NAME_BlackPerl_TOGGLERAIDPETS = "Abilita/Disattiva Raid Pets"
+	BINDING_NAME_BlackPerl_TOGGLEOPTIONS = "Abilita/Disattiva finestra opzioni"
+	BINDING_NAME_BlackPerl_TOGGLEBUFFTYPE = "Abilita/Disattiva Buffs/Debuffs/none"
+	BINDING_NAME_BlackPerl_TOGGLEBUFFCASTABLE = "Abilita/Disattiva Castable/Curable"
+	BINDING_NAME_BlackPerl_TEAMSPEAKMONITOR = "Teamspeak Monitor"
+	BINDING_NAME_BlackPerl_TOGGLERANGEFINDER = "Abilita/Disattiva Range Finder"
 
 	XPERL_KEY_NOTICE_RAID_BUFFANY = "Visualizza tutti i benefici/penalità"
 	XPERL_KEY_NOTICE_RAID_BUFFCURECAST = "Visualizza solo benefici lanciabili/curabili o penalità"

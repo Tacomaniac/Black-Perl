@@ -9,8 +9,8 @@
 	<Script file="localization.koKR.lua"/>
 	<Script file="localization.ruRU.lua"/>
 	<Script file="localization.itIT.lua"/>
-	<Script file="ZPerl_Config.lua"/>
-	<Script file="ZPerl_RaidHelper.lua"/>
+	<Script file="BlackPerl_Config.lua"/>
+	<Script file="BlackPerl_RaidHelper.lua"/>
 
 	<GameTooltip name="XPerl_BottomTip" frameStrata="LOW" parent="UIParent" inherits="GameTooltipTemplate"/>
 
@@ -55,7 +55,7 @@
 		<Size>
 			<AbsDimension x="100" y="26"/>
 		</Size>
-		<HighlightTexture file="Interface\Addons\ZPerl\Images\XPerl_Highlight" alphaMode="ADD">
+		<HighlightTexture file="Interface\Addons\BlackPerl\Images\XPerl_Highlight" alphaMode="ADD">
 			<TexCoords left="0" right="1" top="0.5" bottom="1"/>
 		</HighlightTexture>
 		<Frames>
@@ -243,7 +243,7 @@
 						</Anchors>
 						<Scripts>
 							<OnClick>
-								ZPerlConfigHelper.RaidHelper = 0
+								BlackPerlConfigHelper.RaidHelper = 0
 								XPerl_EnableDisable()
 							</OnClick>
 						</Scripts>
@@ -260,11 +260,11 @@
 								</Offset>
 							</Anchor>
 						</Anchors>
-						<NormalTexture file="Interface\Addons\ZPerl_RaidHelper\Images\XPerl_Pin">
+						<NormalTexture file="Interface\Addons\BlackPerl_RaidHelper\Images\XPerl_Pin">
 							<TexCoords left="0" right="0.46875" top="0" bottom="0.453125"/>
 						</NormalTexture>
 
-						<PushedTexture file="Interface\Addons\ZPerl_RaidHelper\Images\XPerl_Pin">
+						<PushedTexture file="Interface\Addons\BlackPerl_RaidHelper\Images\XPerl_Pin">
 							<TexCoords left="0" right="0.46875" top="0.5" bottom="0.953125"/>
 						</PushedTexture>
 
@@ -276,14 +276,14 @@
 							<OnLoad>
 								self.SetButtonTex = function()
 									local tex = XPerl_RaidHelper_Frame_TitleBar_Pin:GetNormalTexture()
-									if (ZPerlConfigHelper.Pinned) then
+									if (BlackPerlConfigHelper.Pinned) then
 										tex:SetTexCoord(0.5, 0.96875, 0, 0.453125)
 									else
 										tex:SetTexCoord(0, 0.46875, 0, 0.453125)
 									end
 
 									tex = XPerl_RaidHelper_Frame_TitleBar_Pin:GetPushedTexture()
-									if (ZPerlConfigHelper.Pinned) then
+									if (BlackPerlConfigHelper.Pinned) then
 										if (XPerl_RaidHelper_Frame.corner) then
 											XPerl_RaidHelper_Frame.corner:Hide()
 										end
@@ -298,7 +298,7 @@
 								self.tooltipText = XPERL_BUTTON_HELPER_PIN
 							</OnLoad>
 							<OnClick>
-								ZPerlConfigHelper.Pinned = not ZPerlConfigHelper.Pinned
+								BlackPerlConfigHelper.Pinned = not BlackPerlConfigHelper.Pinned
 								self:SetButtonTex()
 							</OnClick>
 						</Scripts>
@@ -312,15 +312,15 @@
 							<Anchor point="RIGHT" relativeTo="$parent_Pin" relativePoint="LEFT"/>
 							<!--Anchor point="RIGHT" relativeTo="XPerl_Frame_ExpandLock" relativePoint="LEFT"/-->
 						</Anchors>
-						<NormalTexture file="Interface\Addons\ZPerl_RaidHelper\Images\XPerl_Bits">
+						<NormalTexture file="Interface\Addons\BlackPerl_RaidHelper\Images\XPerl_Bits">
 							<TexCoords left="0.5" right="0.625" top="0.0" bottom="0.125"/>
 						</NormalTexture>
 
-						<PushedTexture file="Interface\Addons\ZPerl_RaidHelper\Images\XPerl_Bits">
+						<PushedTexture file="Interface\Addons\BlackPerl_RaidHelper\Images\XPerl_Bits">
 							<TexCoords left="0.5" right="0.625" top="0.125" bottom="0.25"/>
 						</PushedTexture>
 
-						<DisabledTexture file="Interface\Addons\ZPerl_RaidHelper\Images\XPerl_Bits">
+						<DisabledTexture file="Interface\Addons\BlackPerl_RaidHelper\Images\XPerl_Bits">
 							<TexCoords left="0.5" right="0.625" top="0.25" bottom="0.375"/>
 						</DisabledTexture>
 
@@ -333,14 +333,14 @@
 								self.tooltipText = XPERL_BUTTON_TOGGLE_LABELS
 								self.SetButtonTex = function(self)
 									local tex = self:GetNormalTexture()
-									if (ZPerlConfigHelper.MTLabels == 1) then
+									if (BlackPerlConfigHelper.MTLabels == 1) then
 										tex:SetTexCoord(0.5, 0.625, 0.125, 0.25)
 									else
 										tex:SetTexCoord(0.5, 0.625, 0, 0.125)
 									end
 
 									tex = self:GetDisabledTexture()
-									if (ZPerlConfigHelper.MTLabels == 1) then
+									if (BlackPerlConfigHelper.MTLabels == 1) then
 										tex:SetTexCoord(0.5, 0.625, 0.375, 0.5)
 									else
 										tex:SetTexCoord(0.5, 0.625, 0.25, 0.375)
@@ -359,15 +359,15 @@
 							<Anchor point="RIGHT" relativeTo="$parent_ToggleLabels" relativePoint="LEFT"/>
 							<!--Anchor point="RIGHT" relativeTo="XPerl_Frame_ToggleTargets" relativePoint="LEFT"/-->
 						</Anchors>
-						<NormalTexture file="Interface\Addons\ZPerl_RaidHelper\Images\XPerl_Bits">
+						<NormalTexture file="Interface\Addons\BlackPerl_RaidHelper\Images\XPerl_Bits">
 							<TexCoords left="0.625" right="0.75" top="0.0" bottom="0.125"/>
 						</NormalTexture>
 
-						<PushedTexture file="Interface\Addons\ZPerl_RaidHelper\Images\XPerl_Bits">
+						<PushedTexture file="Interface\Addons\BlackPerl_RaidHelper\Images\XPerl_Bits">
 							<TexCoords left="0.625" right="0.75" top="0.125" bottom="0.25"/>
 						</PushedTexture>
 
-						<DisabledTexture file="Interface\Addons\ZPerl_RaidHelper\Images\XPerl_Bits">
+						<DisabledTexture file="Interface\Addons\BlackPerl_RaidHelper\Images\XPerl_Bits">
 							<TexCoords left="0.625" right="0.75" top="0.25" bottom="0.375"/>
 						</DisabledTexture>
 
@@ -381,14 +381,14 @@
 								self.SetButtonTex = function(self)
 									local tex = self:GetNormalTexture()
 
-									if (ZPerlConfigHelper.MTTargetTargets == 1) then
+									if (BlackPerlConfigHelper.MTTargetTargets == 1) then
 										tex:SetTexCoord(0.625, 0.75, 0.125, 0.25)
 									else
 										tex:SetTexCoord(0.625, 0.75, 0, 0.125)
 									end
 
 									tex = self:GetDisabledTexture()
-									if (ZPerlConfigHelper.MTTargetTargets == 1) then
+									if (BlackPerlConfigHelper.MTTargetTargets == 1) then
 										tex:SetTexCoord(0.625, 0.75, 0.375, 0.5)
 									else
 										tex:SetTexCoord(0.625, 0.75, 0.25, 0.375)
@@ -406,15 +406,15 @@
 						<Anchors>
 							<Anchor point="RIGHT" relativeTo="$parent_ToggleMTTargets" relativePoint="LEFT"/>
 						</Anchors>
-						<NormalTexture file="Interface\Addons\ZPerl_RaidHelper\Images\XPerl_Bits">
+						<NormalTexture file="Interface\Addons\BlackPerl_RaidHelper\Images\XPerl_Bits">
 							<TexCoords left="0.75" right="0.875" top="0.0" bottom="0.125"/>
 						</NormalTexture>
 
-						<PushedTexture file="Interface\Addons\ZPerl_RaidHelper\Images\XPerl_Bits">
+						<PushedTexture file="Interface\Addons\BlackPerl_RaidHelper\Images\XPerl_Bits">
 							<TexCoords left="0.75" right="0.875" top="0.125" bottom="0.25"/>
 						</PushedTexture>
 
-						<DisabledTexture file="Interface\Addons\ZPerl_RaidHelper\Images\XPerl_Bits">
+						<DisabledTexture file="Interface\Addons\BlackPerl_RaidHelper\Images\XPerl_Bits">
 							<TexCoords left="0.75" right="0.875" top="0.25" bottom="0.375"/>
 						</DisabledTexture>
 
@@ -428,14 +428,14 @@
 								self.SetButtonTex = function(self)
 									local tex = self:GetNormalTexture()
 
-									if (ZPerlConfigHelper.ShowMT == 1) then
+									if (BlackPerlConfigHelper.ShowMT == 1) then
 										tex:SetTexCoord(0.75, 0.875, 0.125, 0.25)
 									else
 										tex:SetTexCoord(0.75, 0.875, 0, 0.125)
 									end
 
 									tex = self:GetDisabledTexture()
-									if (ZPerlConfigHelper.ShowMT == 1) then
+									if (BlackPerlConfigHelper.ShowMT == 1) then
 										tex:SetTexCoord(0.75, 0.875, 0.375, 0.5)
 									else
 										tex:SetTexCoord(0.75, 0.875, 0.25, 0.375)
@@ -525,7 +525,7 @@
 			<OnLoad function="XPerl_RaidHelper_OnLoad"/>
 			<OnEvent function="XPerl_RaidHelper_OnEvent"/>
 			<OnDragStart>
-				if (not ZPerlConfigHelper or not ZPerlConfigHelper.Pinned or (IsAltKeyDown() and IsControlKeyDown() and IsShiftKeyDown())) then
+				if (not BlackPerlConfigHelper or not BlackPerlConfigHelper.Pinned or (IsAltKeyDown() and IsControlKeyDown() and IsShiftKeyDown())) then
 					XPerl_MTList_Anchor:StartMoving()
 				end
 			</OnDragStart>

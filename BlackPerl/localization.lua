@@ -1,15 +1,15 @@
 -- X-Perl UnitFrames
--- Author: Resike
+-- Author: Tacomaniac
 -- License: GNU GPL v3, 29 June 2007 (see LICENSE.txt)
 
 local IsRetail = WOW_PROJECT_ID == WOW_PROJECT_MAINLINE
 local IsPandaClassic = WOW_PROJECT_ID == WOW_PROJECT_MISTS_CLASSIC
 
-XPerl_ProductName		= "|cFFD00000Z-Perl|r UnitFrames"
-XPerl_ShortProductName	= "|cFFD00000Z-Perl|r"
-XPerl_Author			= "|cFFFF8080Resike|r"
+XPerl_ProductName		= "|cFFD00000BlackPerl|r UnitFrames"
+XPerl_ShortProductName	= "|cFFD00000BlackPerl|r"
+XPerl_Author			= "|cFFFF8080Tacomaniac|r"
 XPerl_Description		= XPerl_ProductName.." by "..XPerl_Author
-XPerl_VersionNumber		= C_AddOns.GetAddOnMetadata and C_AddOns.GetAddOnMetadata("ZPerl", "Version") or "7.6.2"
+XPerl_VersionNumber		= C_AddOns.GetAddOnMetadata and C_AddOns.GetAddOnMetadata("BlackPerl", "Version") or "7.6.2"
 XPerl_Version			= XPerl_Description.." - "..XPerl_VersionNumber
 XPerl_LongDescription	= "UnitFrame replacement for new look Player, Pet, Party, Target, Target's Target, Focus, Raid"
 XPerl_ModMenuIcon		= "Interface\\Icons\\INV_Misc_Gem_Pearl_02"
@@ -18,8 +18,8 @@ XPERL_MINIMAP_HELP1		= "|c00FFFFFFLeft click|r for Options (and to |c0000FF00unl
 XPERL_MINIMAP_HELP2		= "|c00FFFFFFRight click|r to drag this icon"
 XPERL_MINIMAP_HELP3		= "\rReal Raid Members: |c00FFFF80%d|r\rReal Party Members: |c00FFFF80%d|r"
 XPERL_MINIMAP_HELP4		= "\rYou are leader of the real party/raid"
-XPERL_MINIMAP_HELP5		= "|c00FFFFFFAlt|r for Z-Perl memory usage"
-XPERL_MINIMAP_HELP6		= "|c00FFFFFF+Shift|r for Z-Perl memory usage since startup"
+XPERL_MINIMAP_HELP5		= "|c00FFFFFFAlt|r for BlackPerl memory usage"
+XPERL_MINIMAP_HELP6		= "|c00FFFFFF+Shift|r for BlackPerl memory usage since startup"
 
 XPERL_MINIMENU_OPTIONS	= "Options"
 XPERL_MINIMENU_ASSIST	= "Show Assists Frame"
@@ -96,15 +96,15 @@ XPERL_LOC_LARGENUMTAG		= "K"
 XPERL_LOC_HUGENUMTAG		= "M"
 XPERL_LOC_VERYHUGENUMTAG	= "G"
 
-BINDING_HEADER_ZPERL = XPerl_ProductName
-BINDING_NAME_ZPERL_TOGGLERAID = "Toggle Raid Windows"
-BINDING_NAME_ZPERL_TOGGLERAIDSORT = "Toggle Raid Sort by Class/Group"
-BINDING_NAME_ZPERL_TOGGLERAIDPETS = "Toggle Raid Pets"
-BINDING_NAME_ZPERL_TOGGLEOPTIONS = "Toggle Options Window"
-BINDING_NAME_ZPERL_TOGGLEBUFFTYPE = "Toggle Buffs/Debuffs/none"
-BINDING_NAME_ZPERL_TOGGLEBUFFCASTABLE = "Toggle Castable/Curable"
-BINDING_NAME_ZPERL_TEAMSPEAKMONITOR = "Teamspeak Monitor"
-BINDING_NAME_ZPERL_TOGGLERANGEFINDER = "Toggle Range Finder"
+BINDING_HEADER_BlackPerl = XPerl_ProductName
+BINDING_NAME_BlackPerl_TOGGLERAID = "Toggle Raid Windows"
+BINDING_NAME_BlackPerl_TOGGLERAIDSORT = "Toggle Raid Sort by Class/Group"
+BINDING_NAME_BlackPerl_TOGGLERAIDPETS = "Toggle Raid Pets"
+BINDING_NAME_BlackPerl_TOGGLEOPTIONS = "Toggle Options Window"
+BINDING_NAME_BlackPerl_TOGGLEBUFFTYPE = "Toggle Buffs/Debuffs/none"
+BINDING_NAME_BlackPerl_TOGGLEBUFFCASTABLE = "Toggle Castable/Curable"
+BINDING_NAME_BlackPerl_TEAMSPEAKMONITOR = "Teamspeak Monitor"
+BINDING_NAME_BlackPerl_TOGGLERANGEFINDER = "Toggle Range Finder"
 
 XPERL_KEY_NOTICE_RAID_BUFFANY = "All buffs/debuffs shown"
 XPERL_KEY_NOTICE_RAID_BUFFCURECAST = "Only castable/curable buffs or debuffs shown"
@@ -129,7 +129,7 @@ XPERL_CMD_UNLOCK	= "unlock"
 XPERL_CMD_CONFIG	= "config"
 XPERL_CMD_LIST		= "list"
 XPERL_CMD_DELETE	= "delete"
-XPERL_CMD_HELP		= "|c00FFFF80Usage: |c00FFFFFF/zperl menu | lock | unlock | config list | config delete <realm> <name>"
+XPERL_CMD_HELP		= "|c00FFFF80Usage: |c00FFFFFF/BlackPerl menu | lock | unlock | config list | config delete <realm> <name>"
 XPERL_CANNOT_DELETE_CURRENT = "Cannot delete you current config"
 XPERL_CONFIG_DELETED		= "Deleted config for %s/%s"
 XPERL_CANNOT_FIND_DELETE_TARGET = "Cannot find config to delete (%s/%s)"
@@ -143,7 +143,7 @@ XPERL_RAID_TOOLTIP_BUFFEXPIRING	= "%s's %s expires in %s"	-- Name, buff name, ti
 
 XPERL_NEW_VERSION_DETECTED = "New version detected:"
 XPERL_DOWNLOAD_LATEST = "You can download the latest version from:"
-XPERL_DOWNLOAD_LOCATION = "https://mods.curse.com/addons/wow/zperl"
+XPERL_DOWNLOAD_LOCATION = "https://mods.curse.com/addons/wow/BlackPerl"
 
 
 -- Status highlight spells

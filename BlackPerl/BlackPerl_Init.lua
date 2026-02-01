@@ -1,5 +1,5 @@
 -- X-Perl UnitFrames
--- Author: Resike
+-- Author: Tacomaniac
 -- License: GNU GPL v3, 29 June 2007 (see LICENSE.txt)
 
 local init_done, gradient, conf, doneOptions
@@ -65,7 +65,7 @@ local function SetTex(self, num)
 	local p = highlightPositions[num]
 	if ((self.GetFrameType or self.GetObjectType)(self) == "Button") then
 		if (conf.highlightSelection == 1) then
-			self:SetHighlightTexture("Interface\\Addons\\ZPerl\\Images\\XPerl_Highlight", "ADD")
+			self:SetHighlightTexture("Interface\\Addons\\BlackPerl\\Images\\XPerl_Highlight", "ADD")
 			local tex = self:GetHighlightTexture()
 			tex:SetTexCoord(unpack(p))
 			tex:SetVertexColor(0.86, 0.82, 0.41)
@@ -75,7 +75,7 @@ local function SetTex(self, num)
 
 	elseif ((self.GetFrameType or self.GetObjectType)(self) == "Frame") then
 		if (self.tex) then
-			self.tex:SetTexture("Interface\\Addons\\ZPerl\\Images\\XPerl_Highlight", "ADD")
+			self.tex:SetTexture("Interface\\Addons\\BlackPerl\\Images\\XPerl_Highlight", "ADD")
 			self.tex:SetTexCoord(unpack(p))
 			self.tex:SetVertexColor(0.86, 0.82, 0.41)
 			if XPerl_Highlight then
@@ -488,8 +488,8 @@ local function XPerl_GameTooltipSetUnitDebuff(self, unitId, buffId)
 	XPerl_ToolTip_AddBuffDuration(self, unitId, buffId, "HARMFUL")
 end
 
--- ZPerl_Init()
-function ZPerl_Init()
+-- BlackPerl_Init()
+function BlackPerl_Init()
 	init_done = true
 	if GameTooltip.SetUnitAura then
 		hooksecurefunc(GameTooltip, "SetUnitAura", XPerl_GameTooltipSetUnitAura)
@@ -515,7 +515,7 @@ function ZPerl_Init()
 		local size = format("%.0f%.0f", width, height)
 		if size == "11" then
 			conf.bar.texture[1] = "Perl v2"
-			conf.bar.texture[2] = "Interface\\AddOns\\ZPerl\\Images\\XPerl_StatusBar"
+			conf.bar.texture[2] = "Interface\\AddOns\\BlackPerl\\Images\\XPerl_StatusBar"
 			XPerl_SetBarTextures()
 		end
 	end)
@@ -606,9 +606,9 @@ function ZPerl_Init()
 
 	--XPerl_RegisterSMBarTextures()
 
-	XPerl_pcall(ZPerl_DebufHighlightInit)
+	XPerl_pcall(BlackPerl_DebufHighlightInit)
 
-	ZPerl_Init = nil
+	BlackPerl_Init = nil
 end
 
 -- XPerl_StatsFrame_Setup

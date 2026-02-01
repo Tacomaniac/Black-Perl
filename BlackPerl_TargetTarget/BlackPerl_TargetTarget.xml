@@ -1,16 +1,16 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd">
 
-	<Script file="ZPerl_TargetTarget.lua"/>
+	<Script file="BlackPerl_TargetTarget.lua"/>
 
-	<Button name="ZPerl_TargetTarget_Template" inherits="XPerlBackdropTemplate,SecureUnitButtonTemplate" clampedToScreen="true" frameStrata="LOW" virtual="true" movable="true" parent="UIParent" hidden="true">
+	<Button name="BlackPerl_TargetTarget_Template" inherits="XPerlBackdropTemplate,SecureUnitButtonTemplate" clampedToScreen="true" frameStrata="LOW" virtual="true" movable="true" parent="UIParent" hidden="true">
 		<Size>
 			<!-- The size of this frame determines what can be clicked for the menu and moving, hence it is the same size as the name frame. -->
 			<AbsDimension x="160" y="60"/>
 		</Size>
 		<Scripts>
-			<OnLoad function="ZPerl_TargetTarget_OnLoad"/>
-			<OnEnter function="ZPerl_Unit_OnEnter"/>
-			<OnLeave function="ZPerl_Unit_OnLeave"/>
+			<OnLoad function="BlackPerl_TargetTarget_OnLoad"/>
+			<OnEnter function="BlackPerl_Unit_OnEnter"/>
+			<OnLeave function="BlackPerl_Unit_OnLeave"/>
 			<OnDragStart>
 				if (XPerlLocked == 0) then
 					self:StartMoving()
@@ -42,8 +42,8 @@
 						self:RegisterForClicks("AnyUp")
 						self:RegisterForDrag("LeftButton")
 						XPerl_RegisterUnitText(_G[self:GetName().."text"])
-						self:SetScript("OnEnter", function(self) ZPerl_Unit_OnEnter(self:GetParent()) end)
-						self:SetScript("OnLeave", function(self) ZPerl_Unit_OnLeave(self:GetParent()) end)
+						self:SetScript("OnEnter", function(self) BlackPerl_Unit_OnEnter(self:GetParent()) end)
+						self:SetScript("OnLeave", function(self) BlackPerl_Unit_OnLeave(self:GetParent()) end)
 					</OnLoad>
 					<OnDragStart>
 						if (XPerlLocked == 0) then
@@ -197,7 +197,7 @@
 		</Frames>
 	</Button>
 
-	<Button name="XPerl_TargetTarget" inherits="XPerlBackdropTemplate,ZPerl_TargetTarget_Template" movable="true" parent="UIParent" hidden="true">
+	<Button name="XPerl_TargetTarget" inherits="XPerlBackdropTemplate,BlackPerl_TargetTarget_Template" movable="true" parent="UIParent" hidden="true">
 		<Anchors>
 			<Anchor point="TOPLEFT">
 				<Offset>

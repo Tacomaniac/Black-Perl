@@ -1,5 +1,5 @@
 -- X-Perl UnitFrames
--- Author: Resike
+-- Author: Tacomaniac
 -- License: GNU GPL v3, 29 June 2007 (see LICENSE.txt)
 
 local XPerl_Party_Events = { }
@@ -218,12 +218,12 @@ local function onAttrChanged(self, name, value)
 	end
 end
 
--- ZPerl_Party_OnLoad
-function ZPerl_Party_OnLoad(self)
+-- BlackPerl_Party_OnLoad
+function BlackPerl_Party_OnLoad(self)
 	XPerl_SetChildMembers(self)
 	self.targetFrame.statsFrame = self.targetFrame.healthBar -- So the healthbar fades as part of pseudo statsFrame
 
-	partyHeader = ZPerl_Party_SecureHeader
+	partyHeader = BlackPerl_Party_SecureHeader
 	partyAnchor = XPerl_Party_Anchor
 
 	local id = strmatch(self:GetName(), ".+(%d)")
@@ -325,7 +325,7 @@ function ZPerl_Party_OnLoad(self)
 	XPerl_Party_Set_Bits1(self)
 
 	--[[if (XPerl_party1 and XPerl_party2 and XPerl_party3 and XPerl_party4) then
-		ZPerl_Party_OnLoad = nil
+		BlackPerl_Party_OnLoad = nil
 	end]]
 end
 
@@ -721,7 +721,7 @@ local function UpdateAssignedRoles(self)
 			icon:SetTexture("Interface\\GroupFrame\\UI-Group-MainTankIcon")
 			icon:Show()
 		elseif isHealer then
-			icon:SetTexture("Interface\\AddOns\\ZPerl\\Images\\XPerl_RoleHealer_old")
+			icon:SetTexture("Interface\\AddOns\\BlackPerl\\Images\\XPerl_RoleHealer_old")
 			icon:Show()
 		elseif isDamage then
 			icon:SetTexture("Interface\\GroupFrame\\UI-Group-MainAssistIcon")
@@ -731,13 +731,13 @@ local function UpdateAssignedRoles(self)
 		end
 	else
 		if isTank then
-			icon:SetTexture("Interface\\AddOns\\ZPerl\\Images\\XPerl_RoleTank")
+			icon:SetTexture("Interface\\AddOns\\BlackPerl\\Images\\XPerl_RoleTank")
 			icon:Show()
 		elseif isHealer then
-			icon:SetTexture("Interface\\AddOns\\ZPerl\\Images\\XPerl_RoleHealer")
+			icon:SetTexture("Interface\\AddOns\\BlackPerl\\Images\\XPerl_RoleHealer")
 			icon:Show()
 		elseif isDamage then
-			icon:SetTexture("Interface\\AddOns\\ZPerl\\Images\\XPerl_RoleDamage")
+			icon:SetTexture("Interface\\AddOns\\BlackPerl\\Images\\XPerl_RoleDamage")
 			icon:Show()
 		else
 			icon:Hide()
@@ -2006,11 +2006,11 @@ function XPerl_Party_Set_Bits()
 	partyAnchor:SetScale(pconf.scale)
 	XPerl_SavePosition(partyAnchor, true)
 
-	ZPerl_Party_SecureHeader:SetAttribute("showPlayer", pconf.showPlayer)
+	BlackPerl_Party_SecureHeader:SetAttribute("showPlayer", pconf.showPlayer)
 
-	ZPerl_Party_SecureState:SetAttribute("partyEnabled", pconf.enable)
-	ZPerl_Party_SecureState:SetAttribute("partyInRaid", pconf.inRaid)
-	ZPerl_Party_SecureState:SetAttribute("partySmallRaid", pconf.smallRaid)
+	BlackPerl_Party_SecureState:SetAttribute("partyEnabled", pconf.enable)
+	BlackPerl_Party_SecureState:SetAttribute("partyInRaid", pconf.inRaid)
+	BlackPerl_Party_SecureState:SetAttribute("partySmallRaid", pconf.smallRaid)
 
 	if (XPerlDB) then
 		conf = XPerlDB

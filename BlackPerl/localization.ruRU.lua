@@ -1,5 +1,5 @@
 -- X-Perl UnitFrames
--- Author: Resike
+-- Author: Tacomaniac
 -- License: GNU GPL v3, 29 June 2007 (see LICENSE.txt)
 -- Russian localization file translated by StingerSoft
 
@@ -78,15 +78,15 @@ if GetLocale() == "ruRU" then
 	XPERL_LOC_HUGENUMTAG		= "M"
 	XPERL_LOC_VERYHUGENUMTAG	= "G"
 
-	BINDING_HEADER_ZPERL = 	XPERL_ProductName
-	BINDING_NAME_ZPERL_TOGGLERAID = "Окна рейда"
-	BINDING_NAME_ZPERL_TOGGLERAIDSORT = "Сорт рейда по классам/группам"
-	BINDING_NAME_ZPERL_TOGGLERAIDPETS = "Питомцы рейда"
-	BINDING_NAME_ZPERL_TOGGLEOPTIONS = "Окно опций"
-	BINDING_NAME_ZPERL_TOGGLEBUFFTYPE = "Баффы/Дебаффы/пусто"
-	BINDING_NAME_ZPERL_TOGGLEBUFFCASTABLE = "Примен./Лечение"
-	BINDING_NAME_ZPERL_TEAMSPEAKMONITOR = "Монитор Teamspeak'a"
-	BINDING_NAME_ZPERL_TOGGLERANGEFINDER = "Определитель досягаемости"
+	BINDING_HEADER_BlackPerl = 	XPERL_ProductName
+	BINDING_NAME_BlackPerl_TOGGLERAID = "Окна рейда"
+	BINDING_NAME_BlackPerl_TOGGLERAIDSORT = "Сорт рейда по классам/группам"
+	BINDING_NAME_BlackPerl_TOGGLERAIDPETS = "Питомцы рейда"
+	BINDING_NAME_BlackPerl_TOGGLEOPTIONS = "Окно опций"
+	BINDING_NAME_BlackPerl_TOGGLEBUFFTYPE = "Баффы/Дебаффы/пусто"
+	BINDING_NAME_BlackPerl_TOGGLEBUFFCASTABLE = "Примен./Лечение"
+	BINDING_NAME_BlackPerl_TEAMSPEAKMONITOR = "Монитор Teamspeak'a"
+	BINDING_NAME_BlackPerl_TOGGLERANGEFINDER = "Определитель досягаемости"
 
 	XPERL_KEY_NOTICE_RAID_BUFFANY = "Показ всех баффов/дебаффов"
 	XPERL_KEY_NOTICE_RAID_BUFFCURECAST = "Показ только читаемые/исцеляющие баффы или дебаффы"

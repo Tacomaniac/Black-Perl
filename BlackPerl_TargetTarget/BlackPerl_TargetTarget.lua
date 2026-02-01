@@ -1,5 +1,5 @@
--- Z-Perl UnitFrames
--- Author: Resike
+-- BlackPerl UnitFrames
+-- Author: Tacomaniac
 -- License: GNU GPL v3, 18 October 2014
 
 local IsClassic = WOW_PROJECT_ID >= WOW_PROJECT_CLASSIC
@@ -64,8 +64,8 @@ end, "$Revision:  $")
 
 local buffSetup
 
--- ZPerl_TargetTarget_OnLoad
-function ZPerl_TargetTarget_OnLoad(self)
+-- BlackPerl_TargetTarget_OnLoad
+function BlackPerl_TargetTarget_OnLoad(self)
 	self:RegisterForClicks("AnyUp")
 	self:RegisterForDrag("LeftButton")
 	XPerl_SetChildMembers(self)
@@ -189,7 +189,7 @@ function ZPerl_TargetTarget_OnLoad(self)
 	end
 
 	if XPerl_TargetTarget and XPerl_FocusTarget and XPerl_PetTarget and XPerl_TargetTargetTarget then
-		ZPerl_TargetTarget_OnLoad = nil
+		BlackPerl_TargetTarget_OnLoad = nil
 	end
 end
 
@@ -681,7 +681,7 @@ function XPerl_TargetTarget_Set_Bits()
 
 	if conf.targettargettarget.enable then
 		if not XPerl_TargetTargetTarget then
-			local ttt = CreateFrame("Button", "XPerl_TargetTargetTarget", UIParent, "ZPerl_TargetTarget_Template")
+			local ttt = CreateFrame("Button", "XPerl_TargetTargetTarget", UIParent, "BlackPerl_TargetTarget_Template")
 			ttt:ClearAllPoints()
 			ttt:SetPoint("TOPLEFT", XPerl_TargetTarget.statsFrame, "TOPRIGHT", 5, 0)
 		end
@@ -689,7 +689,7 @@ function XPerl_TargetTarget_Set_Bits()
 
 	if conf.focustarget.enable then
 		if not XPerl_FocusTarget then
-			local ft = CreateFrame("Button", "XPerl_FocusTarget", UIParent, "ZPerl_TargetTarget_Template")
+			local ft = CreateFrame("Button", "XPerl_FocusTarget", UIParent, "BlackPerl_TargetTarget_Template")
 			ft:ClearAllPoints()
 			ft:SetPoint("TOPLEFT", XPerl_Focus.levelFrame, "TOPRIGHT", 5, 0)
 		end
@@ -697,7 +697,7 @@ function XPerl_TargetTarget_Set_Bits()
 
 	if conf.pettarget.enable and XPerl_Player_Pet then
 		if not XPerl_PetTarget then
-			local pt = CreateFrame("Button", "XPerl_PetTarget", XPerl_Player_Pet, "ZPerl_TargetTarget_Template")
+			local pt = CreateFrame("Button", "XPerl_PetTarget", XPerl_Player_Pet, "BlackPerl_TargetTarget_Template")
 			pt:ClearAllPoints()
 			pt:SetPoint("BOTTOMLEFT", XPerl_Player_Pet.statsFrame, "BOTTOMRIGHT", 5, 0)
 		end

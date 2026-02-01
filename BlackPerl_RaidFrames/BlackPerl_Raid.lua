@@ -1,5 +1,5 @@
 -- X-Perl UnitFrames
--- Author: Resike
+-- Author: Tacomaniac
 -- License: GNU GPL v3, 29 June 2007 (see LICENSE.txt)
 
 local XPerl_Raid_Events = { }
@@ -118,7 +118,7 @@ XPERL_RAIDGRP_PREFIX = "XPerl_Raid_Grp"
 
 -- Hold some raid roster information (AFK, DND etc.)
 -- Is also stored between sessions to maintain timers and flags
-ZPerl_Roster = { }
+BlackPerl_Roster = { }
 
 -- Uses some variables from FrameXML\RaidFrame.lua:
 -- MAX_RAID_MEMBERS = 40
@@ -213,19 +213,19 @@ function XPerl_Raid_OnLoad(self)
 
 	if not IsClassic then
 		self.state = CreateFrame("Frame", nil, nil, "SecureHandlerStateTemplate")
-		self.state:SetFrameRef("ZPerlRaidHeader1", _G[XPERL_RAIDGRP_PREFIX..1])
-		self.state:SetFrameRef("ZPerlRaidHeader2", _G[XPERL_RAIDGRP_PREFIX..2])
-		self.state:SetFrameRef("ZPerlRaidHeader3", _G[XPERL_RAIDGRP_PREFIX..3])
-		self.state:SetFrameRef("ZPerlRaidHeader4", _G[XPERL_RAIDGRP_PREFIX..4])
-		self.state:SetFrameRef("ZPerlRaidHeader5", _G[XPERL_RAIDGRP_PREFIX..5])
-		self.state:SetFrameRef("ZPerlRaidHeader6", _G[XPERL_RAIDGRP_PREFIX..6])
-		self.state:SetFrameRef("ZPerlRaidHeader7", _G[XPERL_RAIDGRP_PREFIX..7])
-		self.state:SetFrameRef("ZPerlRaidHeader8", _G[XPERL_RAIDGRP_PREFIX..8])
-		self.state:SetFrameRef("ZPerlRaidHeader9", _G[XPERL_RAIDGRP_PREFIX..9])
-		self.state:SetFrameRef("ZPerlRaidHeader10", _G[XPERL_RAIDGRP_PREFIX..10])
-		self.state:SetFrameRef("ZPerlRaidHeader11", _G[XPERL_RAIDGRP_PREFIX..11])
-		self.state:SetFrameRef("ZPerlRaidHeader12", _G[XPERL_RAIDGRP_PREFIX..12])
-		self.state:SetFrameRef("ZPerlRaidHeader13", _G[XPERL_RAIDGRP_PREFIX..13])
+		self.state:SetFrameRef("BlackPerlRaidHeader1", _G[XPERL_RAIDGRP_PREFIX..1])
+		self.state:SetFrameRef("BlackPerlRaidHeader2", _G[XPERL_RAIDGRP_PREFIX..2])
+		self.state:SetFrameRef("BlackPerlRaidHeader3", _G[XPERL_RAIDGRP_PREFIX..3])
+		self.state:SetFrameRef("BlackPerlRaidHeader4", _G[XPERL_RAIDGRP_PREFIX..4])
+		self.state:SetFrameRef("BlackPerlRaidHeader5", _G[XPERL_RAIDGRP_PREFIX..5])
+		self.state:SetFrameRef("BlackPerlRaidHeader6", _G[XPERL_RAIDGRP_PREFIX..6])
+		self.state:SetFrameRef("BlackPerlRaidHeader7", _G[XPERL_RAIDGRP_PREFIX..7])
+		self.state:SetFrameRef("BlackPerlRaidHeader8", _G[XPERL_RAIDGRP_PREFIX..8])
+		self.state:SetFrameRef("BlackPerlRaidHeader9", _G[XPERL_RAIDGRP_PREFIX..9])
+		self.state:SetFrameRef("BlackPerlRaidHeader10", _G[XPERL_RAIDGRP_PREFIX..10])
+		self.state:SetFrameRef("BlackPerlRaidHeader11", _G[XPERL_RAIDGRP_PREFIX..11])
+		self.state:SetFrameRef("BlackPerlRaidHeader12", _G[XPERL_RAIDGRP_PREFIX..12])
+		self.state:SetFrameRef("BlackPerlRaidHeader13", _G[XPERL_RAIDGRP_PREFIX..13])
 
 		self.state:SetAttribute("partySmallRaid", XPerlDB.party.smallRaid)
 		self.state:SetAttribute("raidEnabled", XPerlDB.raid.enable)
@@ -234,35 +234,35 @@ function XPerl_Raid_OnLoad(self)
 			--print(newstate)
 
 			if newstate == "hide" then
-				self:GetFrameRef("ZPerlRaidHeader1"):Hide()
-				self:GetFrameRef("ZPerlRaidHeader2"):Hide()
-				self:GetFrameRef("ZPerlRaidHeader3"):Hide()
-				self:GetFrameRef("ZPerlRaidHeader4"):Hide()
-				self:GetFrameRef("ZPerlRaidHeader5"):Hide()
-				self:GetFrameRef("ZPerlRaidHeader6"):Hide()
-				self:GetFrameRef("ZPerlRaidHeader7"):Hide()
-				self:GetFrameRef("ZPerlRaidHeader8"):Hide()
-				self:GetFrameRef("ZPerlRaidHeader9"):Hide()
-				self:GetFrameRef("ZPerlRaidHeader10"):Hide()
-				self:GetFrameRef("ZPerlRaidHeader11"):Hide()
-				self:GetFrameRef("ZPerlRaidHeader12"):Hide()
-				self:GetFrameRef("ZPerlRaidHeader13"):Hide()
+				self:GetFrameRef("BlackPerlRaidHeader1"):Hide()
+				self:GetFrameRef("BlackPerlRaidHeader2"):Hide()
+				self:GetFrameRef("BlackPerlRaidHeader3"):Hide()
+				self:GetFrameRef("BlackPerlRaidHeader4"):Hide()
+				self:GetFrameRef("BlackPerlRaidHeader5"):Hide()
+				self:GetFrameRef("BlackPerlRaidHeader6"):Hide()
+				self:GetFrameRef("BlackPerlRaidHeader7"):Hide()
+				self:GetFrameRef("BlackPerlRaidHeader8"):Hide()
+				self:GetFrameRef("BlackPerlRaidHeader9"):Hide()
+				self:GetFrameRef("BlackPerlRaidHeader10"):Hide()
+				self:GetFrameRef("BlackPerlRaidHeader11"):Hide()
+				self:GetFrameRef("BlackPerlRaidHeader12"):Hide()
+				self:GetFrameRef("BlackPerlRaidHeader13"):Hide()
 			elseif self:GetAttribute('partySmallRaid') or not self:GetAttribute('raidEnabled') then
 				return
 			else
-				self:GetFrameRef("ZPerlRaidHeader1"):Show()
-				self:GetFrameRef("ZPerlRaidHeader2"):Show()
-				self:GetFrameRef("ZPerlRaidHeader3"):Show()
-				self:GetFrameRef("ZPerlRaidHeader4"):Show()
-				self:GetFrameRef("ZPerlRaidHeader5"):Show()
-				self:GetFrameRef("ZPerlRaidHeader6"):Show()
-				self:GetFrameRef("ZPerlRaidHeader7"):Show()
-				self:GetFrameRef("ZPerlRaidHeader8"):Show()
-				self:GetFrameRef("ZPerlRaidHeader9"):Show()
-				self:GetFrameRef("ZPerlRaidHeader10"):Show()
-				self:GetFrameRef("ZPerlRaidHeader11"):Show()
-				self:GetFrameRef("ZPerlRaidHeader12"):Show()
-				self:GetFrameRef("ZPerlRaidHeader13"):Show()
+				self:GetFrameRef("BlackPerlRaidHeader1"):Show()
+				self:GetFrameRef("BlackPerlRaidHeader2"):Show()
+				self:GetFrameRef("BlackPerlRaidHeader3"):Show()
+				self:GetFrameRef("BlackPerlRaidHeader4"):Show()
+				self:GetFrameRef("BlackPerlRaidHeader5"):Show()
+				self:GetFrameRef("BlackPerlRaidHeader6"):Show()
+				self:GetFrameRef("BlackPerlRaidHeader7"):Show()
+				self:GetFrameRef("BlackPerlRaidHeader8"):Show()
+				self:GetFrameRef("BlackPerlRaidHeader9"):Show()
+				self:GetFrameRef("BlackPerlRaidHeader10"):Show()
+				self:GetFrameRef("BlackPerlRaidHeader11"):Show()
+				self:GetFrameRef("BlackPerlRaidHeader12"):Show()
+				self:GetFrameRef("BlackPerlRaidHeader13"):Show()
 			end
 		]])
 		RegisterStateDriver(self.state, "groupupdate", "[petbattle] hide; show")
@@ -449,7 +449,7 @@ local function XPerl_Raid_CheckFlags(partyid)
 		ResArray[resser] = nil
 	end
 
-	local unitInfo = ZPerl_Roster[unitName]
+	local unitInfo = BlackPerl_Roster[unitName]
 	if (unitInfo and unitInfo.ressed) then
 		if (UnitIsDead(partyid)) then
 			if (unitInfo.ressed == 2) then
@@ -612,7 +612,7 @@ local function XPerl_Raid_UpdateHealth(self)
 	if realm and realm ~= "" then
 		name = name.."-"..realm
 	end
-	local myRoster = ZPerl_Roster[name]
+	local myRoster = BlackPerl_Roster[name]
 	if (name and UnitIsConnected(partyid)) then
 		--self.disco = nil
 		--[[if (self.feigning and not UnitBuff(partyid, feignDeath)) then
@@ -799,7 +799,7 @@ end
 function XPerl_Raid_Single_OnLoad(self)
 	XPerl_SetChildMembers(self)
 
-	self.edgeFile = "Interface\\AddOns\\ZPerl\\Images\\XPerl_ThinEdge"
+	self.edgeFile = "Interface\\AddOns\\BlackPerl\\Images\\XPerl_ThinEdge"
 	self.edgeSize = 10
 	self.edgeInsets = 2
 
@@ -1095,7 +1095,7 @@ local function XPerl_Raid_UpdatePlayerFlags(self, partyid, ...)
 			unitName = unitName.."-"..realm
 		end
 		if (unitName) then
-			local unitInfo = ZPerl_Roster[unitName]
+			local unitInfo = BlackPerl_Roster[unitName]
 			if (unitInfo) then
 				local change
 				if (UnitIsAFK(partyid)) then
@@ -1140,12 +1140,12 @@ function XPerl_Raid_OnUpdate(self, elapsed)
 		else
 			XPerl_Raid_Position(self)
 		end
-		if ZPerl_Custom and rconf.enable and ZPerl_Custom and cconf and cconf.enable then
-			ZPerl_Custom:UpdateUnits()
+		if BlackPerl_Custom and rconf.enable and BlackPerl_Custom and cconf and cconf.enable then
+			BlackPerl_Custom:UpdateUnits()
 		end
 		if (not IsInRaid() or (not IsInGroup() and rconf.inParty)) then
 			ResArray = { }
-			ZPerl_Roster = { }
+			BlackPerl_Roster = { }
 			--buffUpdates = { }
 			return
 		end
@@ -1169,7 +1169,7 @@ function XPerl_Raid_OnUpdate(self, elapsed)
 					if (unit) then
 						local name = UnitName(unit)
 						if (name) then
-							local myRoster = ZPerl_Roster[name]
+							local myRoster = BlackPerl_Roster[name]
 							if (myRoster) then
 								if (frame.statsFrame.greyMana) then
 									if (myRoster.offline and UnitIsConnected(unit)) then
@@ -1242,7 +1242,7 @@ local function SetRoleIconTexture(texture, role)
 		if role == "TANK" then
 			texture:SetTexture("Interface\\GroupFrame\\UI-Group-MainTankIcon")
 		elseif role == "HEALER" then
-			texture:SetTexture("Interface\\AddOns\\ZPerl\\Images\\XPerl_RoleHealer_old")
+			texture:SetTexture("Interface\\AddOns\\BlackPerl\\Images\\XPerl_RoleHealer_old")
 		elseif role == "DAMAGER" then
 			texture:SetTexture("Interface\\GroupFrame\\UI-Group-MainAssistIcon")
 		else
@@ -1250,11 +1250,11 @@ local function SetRoleIconTexture(texture, role)
 		end
 	else
 		if role == "TANK" then
-			texture:SetTexture("Interface\\AddOns\\ZPerl\\Images\\XPerl_RoleTank")
+			texture:SetTexture("Interface\\AddOns\\BlackPerl\\Images\\XPerl_RoleTank")
 		elseif role == "HEALER" then
-			texture:SetTexture("Interface\\AddOns\\ZPerl\\Images\\XPerl_RoleHealer")
+			texture:SetTexture("Interface\\AddOns\\BlackPerl\\Images\\XPerl_RoleHealer")
 		elseif role == "DAMAGER" then
-			texture:SetTexture("Interface\\AddOns\\ZPerl\\Images\\XPerl_RoleDamage")
+			texture:SetTexture("Interface\\AddOns\\BlackPerl\\Images\\XPerl_RoleDamage")
 		else
 			return false
 		end
@@ -1444,9 +1444,9 @@ function XPerl_Raid_Events:VARIABLES_LOADED()
 
 	if (not IsInRaid() or (not IsInGroup() and rconf.inParty)) then
 		ResArray = { }
-		ZPerl_Roster = { }
+		BlackPerl_Roster = { }
 	else
-		local myRoster = ZPerl_Roster[UnitName("player")]
+		local myRoster = BlackPerl_Roster[UnitName("player")]
 		if (myRoster) then
 			myRoster.afk, myRoster.dnd, myRoster.ressed, myRoster.resCount = nil, nil, nil, nil
 		end
@@ -1476,8 +1476,8 @@ end
 	XPerl_Raid_UpdateDisplayAll()
 
 	if (IsInInstance()) then
-		ZPerl_CustomHighlight = true
-		C_AddOns.LoadAddOn("ZPerl_CustomHighlight")
+		BlackPerl_CustomHighlight = true
+		C_AddOns.LoadAddOn("BlackPerl_CustomHighlight")
 	end
 end]]
 
@@ -1526,8 +1526,8 @@ function XPerl_Raid_Events:PLAYER_ENTERING_WORLD()
 		XPerl_Raid_Frame:Show()
 	end
 
-	if not ZPerl_Custom and rconf.enable then
-		C_AddOns.LoadAddOn("ZPerl_CustomHighlight")
+	if not BlackPerl_Custom and rconf.enable then
+		C_AddOns.LoadAddOn("BlackPerl_CustomHighlight")
 	end
 
 	XPerl_Raid_UpdateDisplayAll()
@@ -1735,7 +1735,7 @@ local function SetResStatus(resserName, resTargetName, ignoreCounter)
 	end
 
 	if (resTargetName) then
-		local myRoster = ZPerl_Roster[resTargetName]
+		local myRoster = BlackPerl_Roster[resTargetName]
 		if (myRoster) then
 			if (resEnd and not ignoreCounter) then
 				myRoster.ressed = 1
@@ -1905,7 +1905,7 @@ end
 
 -- ProcessCTRAMessage
 local function ProcessCTRAMessage(unitName, msg)
-	local myRoster = ZPerl_Roster[unitName]
+	local myRoster = BlackPerl_Roster[unitName]
 
 	if (not myRoster) then
 		return
@@ -1962,7 +1962,7 @@ end
 -- XPerl_Raid_Events:CHAT_MSG_RAID
 -- Check for AFK/DND flags in chat
 --function XPerl_Raid_Events:CHAT_MSG_RAID()
---	local myRoster = ZPerl_Roster[arg4]
+--	local myRoster = BlackPerl_Roster[arg4]
 --	if (myRoster) then
 --		if (arg6 == "AFK") then
 --			if (not myRoster.afk) then
@@ -2053,10 +2053,10 @@ function SetRaidRoster()
 				RaidGroupCounts[group] = RaidGroupCounts[group] + 1
 			end
 
-			local r = ZPerl_Roster[name]
+			local r = BlackPerl_Roster[name]
 			if (r) then
 				NewRoster[name] = r
-				ZPerl_Roster[name] = nil
+				BlackPerl_Roster[name] = nil
 				r.afk = UnitIsAFK(unit) and GetTime() or nil
 				r.dnd = UnitIsDND(unit) and GetTime() or nil
 			else
@@ -2072,8 +2072,8 @@ function SetRaidRoster()
 		XPerl_Raid_Frame:Hide()
 	end
 
-	--del(ZPerl_Roster, true)
-	ZPerl_Roster = NewRoster
+	--del(BlackPerl_Roster, true)
+	BlackPerl_Roster = NewRoster
 
 	if (XPerl_RaidPets_Align) then
 		XPerl_ProtectedCall(XPerl_RaidPets_Align)
@@ -2386,7 +2386,7 @@ local function GetCombatRezzerList()
 					end
 				else
 					if (fileName == "DRUID") then
-						local myRoster = ZPerl_Roster[name]
+						local myRoster = BlackPerl_Roster[name]
 
 						if (myRoster) then
 							if (myRoster.Rebirth and myRoster.Rebirth - t <= 0) then
@@ -2452,7 +2452,7 @@ function XPerl_RaidTipExtra(unitid)
 			end
 		end
 
-		local stats = ZPerl_Roster[unitName]
+		local stats = BlackPerl_Roster[unitName]
 		if (stats) then
 			local t = GetTime()
 

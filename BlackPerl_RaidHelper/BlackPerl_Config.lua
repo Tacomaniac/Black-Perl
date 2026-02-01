@@ -1,5 +1,5 @@
 -- X-Perl UnitFrames
--- Author: Resike
+-- Author: Tacomaniac
 -- License: GNU GPL v3, 29 June 2007 (see LICENSE.txt)
 
 XPerl_SetModuleRevision("$Revision:  $")
@@ -28,25 +28,25 @@ function XPerl_SetupFrames()
 		return scale
 	end
 
-	if (ZPerlConfigHelper) then
-		ZPerlConfigHelper.AssistsFrame_Transparency = ValidAlpha(ZPerlConfigHelper.AssistsFrame_Transparency)
-		XPerl_Assists_Frame:SetAlpha(ZPerlConfigHelper.AssistsFrame_Transparency)
+	if (BlackPerlConfigHelper) then
+		BlackPerlConfigHelper.AssistsFrame_Transparency = ValidAlpha(BlackPerlConfigHelper.AssistsFrame_Transparency)
+		XPerl_Assists_Frame:SetAlpha(BlackPerlConfigHelper.AssistsFrame_Transparency)
 
-		ZPerlConfigHelper.Targets_Transparency = ValidAlpha(ZPerlConfigHelper.Targets_Transparency)
-		XPerl_RaidHelper_Frame:SetAlpha(ZPerlConfigHelper.Targets_Transparency)
+		BlackPerlConfigHelper.Targets_Transparency = ValidAlpha(BlackPerlConfigHelper.Targets_Transparency)
+		XPerl_RaidHelper_Frame:SetAlpha(BlackPerlConfigHelper.Targets_Transparency)
 
-		--ZPerlConfigHelper.Scale_AssistsFrame = ValidScale(ZPerlConfigHelper.Scale_AssistsFrame)
-		--XPerl_Assists_Frame:SetScale(ZPerlConfigHelper.Scale_AssistsFrame)
+		--BlackPerlConfigHelper.Scale_AssistsFrame = ValidScale(BlackPerlConfigHelper.Scale_AssistsFrame)
+		--XPerl_Assists_Frame:SetScale(BlackPerlConfigHelper.Scale_AssistsFrame)
 
-		--ZPerlConfigHelper.Targets_Scale = ValidScale(ZPerlConfigHelper.Targets_Scale)
-		--XPerl_RaidHelper_Frame:SetScale(ZPerlConfigHelper.Targets_Scale)
+		--BlackPerlConfigHelper.Targets_Scale = ValidScale(BlackPerlConfigHelper.Targets_Scale)
+		--XPerl_RaidHelper_Frame:SetScale(BlackPerlConfigHelper.Targets_Scale)
 
 		-- Assist Counters
 
-		XPerl_SetupFrameSimple(XPerl_RaidHelper_Frame, ZPerlConfigHelper.Background_Transparency)
+		XPerl_SetupFrameSimple(XPerl_RaidHelper_Frame, BlackPerlConfigHelper.Background_Transparency)
 		XPerl_SetupFrameSimple(XPerl_MTTargets)
-		XPerl_SetupFrameSimple(XPerl_Assists_Frame, ZPerlConfigHelper.Assists_BackTransparency)
-		XPerlScrollSeperator:SetAlpha(ZPerlConfigHelper.Assists_BackTransparency)
+		XPerl_SetupFrameSimple(XPerl_Assists_Frame, BlackPerlConfigHelper.Assists_BackTransparency)
+		XPerlScrollSeperator:SetAlpha(BlackPerlConfigHelper.Assists_BackTransparency)
 
 		XPerl_RaidHelper_Frame_TitleBar_ToggleMTTargets:SetButtonTex()
 		XPerl_RaidHelper_Frame_TitleBar_ToggleLabels:SetButtonTex()
@@ -77,10 +77,10 @@ function XPerl_Slash(msg)
 	local function setAlpha()
 		if (commands[2] and commands[3]) then
 			if (SubCommandMatch(commands[2], "raid")) then
-				ZPerlConfigHelper.Targets_Transparency = commands[3]
+				BlackPerlConfigHelper.Targets_Transparency = commands[3]
 				return true
 			elseif (SubCommandMatch(commands[2], "assists")) then
-				ZPerlConfigHelper.AssistsFrame_Transparency = commands[3]
+				BlackPerlConfigHelper.AssistsFrame_Transparency = commands[3]
 				return true
 			end
 		end
@@ -129,8 +129,8 @@ function XPerl_Slash(msg)
 end
 
 local function DefaultVar(name, value)
-	if (ZPerlConfigHelper[name] == nil or (type(value) ~= type(ZPerlConfigHelper[name]))) then
-		ZPerlConfigHelper[name] = value
+	if (BlackPerlConfigHelper[name] == nil or (type(value) ~= type(BlackPerlConfigHelper[name]))) then
+		BlackPerlConfigHelper[name] = value
 	end
 end
 
@@ -171,8 +171,8 @@ end
 -- Called after VARIABLES_LOADED
 function XPerl_Startup()
 
-	if (not ZPerlConfigHelper) then
-		ZPerlConfigHelper = {}
+	if (not BlackPerlConfigHelper) then
+		BlackPerlConfigHelper = {}
 	end
 	XPerl_Defaults()
 	if (XPerl_StartAssists) then

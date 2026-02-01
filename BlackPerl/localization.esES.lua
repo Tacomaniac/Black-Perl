@@ -1,5 +1,5 @@
 -- X-Perl UnitFrames
--- Author: Resike
+-- Author: Tacomaniac
 -- License: GNU GPL v3, 29 June 2007 (see LICENSE.txt)
 -- Spanish Translations by Hastings, Woopy
 
@@ -11,8 +11,8 @@ if GetLocale() == "esES" or GetLocale() == "esMX" then
 	XPERL_MINIMAP_HELP2 = "|c00FFFFFFClic derecho|r para arrastrar este icono"
 	XPERL_MINIMAP_HELP3 = "\rMiembros de la banda: |c00FFFF80%d|r\rMiembros del grupo: |c00FFFF80%d|r"
 	XPERL_MINIMAP_HELP4 = "\rEres el lider del grupo/banda"
-	XPERL_MINIMAP_HELP5 = "|c00FFFFFFAlt|r para ver el uso de memoria de Z-Perl"
-	XPERL_MINIMAP_HELP6 = "|c00FFFFFF+Mayús|r para ver el uso de memoria de Z-Perl desde el inicio"
+	XPERL_MINIMAP_HELP5 = "|c00FFFFFFAlt|r para ver el uso de memoria de BlackPerl"
+	XPERL_MINIMAP_HELP6 = "|c00FFFFFF+Mayús|r para ver el uso de memoria de BlackPerl desde el inicio"
 
 	XPERL_MINIMENU_OPTIONS = "Opciones"
 	XPERL_MINIMENU_ASSIST = "Mostrar marco de asistentes"
@@ -88,15 +88,15 @@ if GetLocale() == "esES" or GetLocale() == "esMX" then
 	XPERL_LOC_HUGENUMTAG		= "M"
 	XPERL_LOC_VERYHUGENUMTAG	= "G"
 
-	BINDING_HEADER_ZPERL = XPerl_ProductName
-	BINDING_NAME_ZPERL_TOGGLERAID = "Mostrar/ocultar ventanas de banda"
-	BINDING_NAME_ZPERL_TOGGLERAIDSORT = "Mostrar/ocultar ordenación de banda por clase/grupo"
-	BINDING_NAME_ZPERL_TOGGLERAIDPETS = "Mostrar/ocultar mascotas de banda"
-	BINDING_NAME_ZPERL_TOGGLEOPTIONS = "Mostrar/ocultar ventana de opciones"
-	BINDING_NAME_ZPERL_TOGGLEBUFFTYPE = "Mostrar/ocultar beneficios/perjuicios/ninguno"
-	BINDING_NAME_ZPERL_TOGGLEBUFFCASTABLE = "Mostrar/ocultar lanzables/curables"
-	BINDING_NAME_ZPERL_TEAMSPEAKMONITOR = "Monitor de Teamspeak"
-	BINDING_NAME_ZPERL_TOGGLERANGEFINDER = "Mostrar/ocultar buscador de alcance"
+	BINDING_HEADER_BlackPerl = XPerl_ProductName
+	BINDING_NAME_BlackPerl_TOGGLERAID = "Mostrar/ocultar ventanas de banda"
+	BINDING_NAME_BlackPerl_TOGGLERAIDSORT = "Mostrar/ocultar ordenación de banda por clase/grupo"
+	BINDING_NAME_BlackPerl_TOGGLERAIDPETS = "Mostrar/ocultar mascotas de banda"
+	BINDING_NAME_BlackPerl_TOGGLEOPTIONS = "Mostrar/ocultar ventana de opciones"
+	BINDING_NAME_BlackPerl_TOGGLEBUFFTYPE = "Mostrar/ocultar beneficios/perjuicios/ninguno"
+	BINDING_NAME_BlackPerl_TOGGLEBUFFCASTABLE = "Mostrar/ocultar lanzables/curables"
+	BINDING_NAME_BlackPerl_TEAMSPEAKMONITOR = "Monitor de Teamspeak"
+	BINDING_NAME_BlackPerl_TOGGLERANGEFINDER = "Mostrar/ocultar buscador de alcance"
 
 	XPERL_KEY_NOTICE_RAID_BUFFANY = "Todos los beneficios/perjuicios mostrados"
 	XPERL_KEY_NOTICE_RAID_BUFFCURECAST = "Solo beneficios o perjuicios lanzables/curables mostrados"
@@ -139,7 +139,7 @@ if GetLocale() == "esES" or GetLocale() == "esMX" then
 	XPERL_CMD_CONFIG = "config"
 	XPERL_CMD_LIST = "lista"
 	XPERL_CMD_DELETE = "eliminar"
-	XPERL_CMD_HELP = "|c00FFFF80Uso: |c00FFFFFF/zperl menú | bloquear | desbloquear | config lista | config eliminar <reino> <nombre>"
+	XPERL_CMD_HELP = "|c00FFFF80Uso: |c00FFFFFF/BlackPerl menú | bloquear | desbloquear | config lista | config eliminar <reino> <nombre>"
 
 	XPERL_CANNOT_DELETE_CURRENT = "No puedes eliminar tu configuración actual"
 	XPERL_CONFIG_DELETED = "Configuración eliminada para %s/%s"
@@ -154,5 +154,5 @@ if GetLocale() == "esES" or GetLocale() == "esMX" then
 
 	XPERL_NEW_VERSION_DETECTED = "Nueva versión detectada:"
 	XPERL_DOWNLOAD_LATEST = "Puedes descargar la última versión desde:"
-	XPERL_DOWNLOAD_LOCATION = "https://mods.curse.com/addons/wow/zperl"
+	XPERL_DOWNLOAD_LOCATION = "https://mods.curse.com/addons/wow/BlackPerl"
 end

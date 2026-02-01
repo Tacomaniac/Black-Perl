@@ -1,5 +1,5 @@
 -- X-Perl UnitFrames
--- Author: Resike
+-- Author: Tacomaniac
 -- License: GNU GPL v3, 29 June 2007 (see LICENSE.txt)
 
 if GetLocale() == "frFR" then
@@ -10,8 +10,8 @@ if GetLocale() == "frFR" then
 	XPERL_MINIMAP_HELP2		= "|c00FFFFFFClic droit|r pour déplacer cette icône"
 	XPERL_MINIMAP_HELP3		= "\rMembres du raid : |c00FFFF80%d|r\rMembres du groupe : |c00FFFF80%d|r"
 	XPERL_MINIMAP_HELP4		= "\rVous êtes le leader du groupe / raid"
-	XPERL_MINIMAP_HELP5		= "|c00FFFFFFAlt|r pour l'utilisation mémoire de Z-Perl"
-	XPERL_MINIMAP_HELP6		= "|c00FFFFFF+Maj|r pour l'utilisation mémoire de Z-Perl depuis le démarrage"
+	XPERL_MINIMAP_HELP5		= "|c00FFFFFFAlt|r pour l'utilisation mémoire de BlackPerl"
+	XPERL_MINIMAP_HELP6		= "|c00FFFFFF+Maj|r pour l'utilisation mémoire de BlackPerl depuis le démarrage"
 
 	XPERL_MINIMENU_OPTIONS	= "Options"
 	XPERL_MINIMENU_ASSIST	= "Afficher le cadre d'assistance"
@@ -88,15 +88,15 @@ if GetLocale() == "frFR" then
 	XPERL_LOC_HUGENUMTAG		= "M"
 	XPERL_LOC_VERYHUGENUMTAG	= "G"
 
-	BINDING_HEADER_ZPERL = XPerl_ProductName
-	BINDING_NAME_ZPERL_TOGGLERAID = "Basculer les fenêtres de raid"
-	BINDING_NAME_ZPERL_TOGGLERAIDSORT = "Basculer le tri du raid par classe / groupe"
-	BINDING_NAME_ZPERL_TOGGLERAIDPETS = "Basculer les mascottes du raid"
-	BINDING_NAME_ZPERL_TOGGLEOPTIONS = "Basculer la fenêtre des options"
-	BINDING_NAME_ZPERL_TOGGLEBUFFTYPE = "Basculer les buffs / débuffs / aucun"
-	BINDING_NAME_ZPERL_TOGGLEBUFFCASTABLE = "Basculer les buffs / soins incantables"
-	BINDING_NAME_ZPERL_TEAMSPEAKMONITOR = "Moniteur de Teamspeak"
-	BINDING_NAME_ZPERL_TOGGLERANGEFINDER = "Basculer le détecteur de portée"
+	BINDING_HEADER_BlackPerl = XPerl_ProductName
+	BINDING_NAME_BlackPerl_TOGGLERAID = "Basculer les fenêtres de raid"
+	BINDING_NAME_BlackPerl_TOGGLERAIDSORT = "Basculer le tri du raid par classe / groupe"
+	BINDING_NAME_BlackPerl_TOGGLERAIDPETS = "Basculer les mascottes du raid"
+	BINDING_NAME_BlackPerl_TOGGLEOPTIONS = "Basculer la fenêtre des options"
+	BINDING_NAME_BlackPerl_TOGGLEBUFFTYPE = "Basculer les buffs / débuffs / aucun"
+	BINDING_NAME_BlackPerl_TOGGLEBUFFCASTABLE = "Basculer les buffs / soins incantables"
+	BINDING_NAME_BlackPerl_TEAMSPEAKMONITOR = "Moniteur de Teamspeak"
+	BINDING_NAME_BlackPerl_TOGGLERANGEFINDER = "Basculer le détecteur de portée"
 
 	XPERL_KEY_NOTICE_RAID_BUFFANY = "Tous les buffs / débuffs sont affichés"
 	XPERL_KEY_NOTICE_RAID_BUFFCURECAST = "Seulement les buffs ou débuffs incantables / curables sont affichés"
@@ -121,7 +121,7 @@ if GetLocale() == "frFR" then
 	XPERL_CMD_CONFIG	= "config"
 	XPERL_CMD_LIST		= "liste"
 	XPERL_CMD_DELETE	= "supprimer"
-	XPERL_CMD_HELP		= "|c00FFFF80Utilisation: |c00FFFFFF/zperl menu | verrouiller | déverrouiller | config liste | config supprimer <royaume> <nom>"
+	XPERL_CMD_HELP		= "|c00FFFF80Utilisation: |c00FFFFFF/BlackPerl menu | verrouiller | déverrouiller | config liste | config supprimer <royaume> <nom>"
 	XPERL_CANNOT_DELETE_CURRENT = "Impossible de supprimer la configuration actuelle"
 	XPERL_CONFIG_DELETED		= "Configuration supprimée pour %s/%s"
 	XPERL_CANNOT_FIND_DELETE_TARGET = "Impossible de trouver la configuration à supprimer (%s/%s)"
@@ -135,5 +135,5 @@ if GetLocale() == "frFR" then
 
 	XPERL_NEW_VERSION_DETECTED = "Nouvelle version détectée : "
 	XPERL_DOWNLOAD_LATEST = "Vous pouvez télécharger la dernière version ici : "
-	XPERL_DOWNLOAD_LOCATION = "https://mods.curse.com/addons/wow/zperl"
+	XPERL_DOWNLOAD_LOCATION = "https://mods.curse.com/addons/wow/BlackPerl"
 end

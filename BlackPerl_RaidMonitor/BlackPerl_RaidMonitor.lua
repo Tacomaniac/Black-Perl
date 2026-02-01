@@ -1,12 +1,12 @@
 -- X-Perl UnitFrames
--- Author: Resike
+-- Author: Tacomaniac
 -- License: GNU GPL v3, 29 June 2007 (see LICENSE.txt)
 
 local cast
 local MonUnits = {}			-- Fixed list of all monitor units
 local TableUnits = {}			-- Dynamic list of units indexed by raid id, changed on attr change
-ZPerlRaidMonConfig = {}
-local config = ZPerlRaidMonConfig
+BlackPerlRaidMonConfig = {}
+local config = BlackPerlRaidMonConfig
 
 local IsRetail = WOW_PROJECT_ID == WOW_PROJECT_MAINLINE
 local IsClassic = WOW_PROJECT_ID >= WOW_PROJECT_CLASSIC
@@ -614,7 +614,7 @@ function XPerl_RaidMonitor_Init(self)
 
 	-- cast:PLAYER_ENTERING_WORLD
 	function cast:PLAYER_ENTERING_WORLD()
-		config = ZPerlRaidMonConfig
+		config = BlackPerlRaidMonConfig
 		self:Vars()
 		self:DoButtons()
 		self:SetupAlpha()

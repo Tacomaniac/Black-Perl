@@ -1,5 +1,5 @@
 -- X-Perl UnitFrames
--- Author: Resike
+-- Author: Tacomaniac
 -- License: GNU GPL v3, 29 June 2007 (see LICENSE.txt)
 
 XPerl_SetModuleRevision("$Revision:  $")
@@ -8,7 +8,7 @@ if type(C_ChatInfo.RegisterAddonMessagePrefix) == "function" then
 	C_ChatInfo.RegisterAddonMessagePrefix("CTRA")
 end
 
-ZPerl_CheckItems = {}
+BlackPerl_CheckItems = {}
 
 local IsRetail = WOW_PROJECT_ID == WOW_PROJECT_MAINLINE
 local IsPandaClassic = WOW_PROJECT_ID == WOW_PROJECT_MISTS_CLASSIC
@@ -224,10 +224,10 @@ function XPerl_Check_Setup()
 	SlashCmdList["RAREG"] = nil
 	SLASH_RAREG1 = nil
 
-	if (not ZPerl_Admin.ResistSort) then
-		ZPerl_Admin.ResistSort = "fr"
+	if (not BlackPerl_Admin.ResistSort) then
+		BlackPerl_Admin.ResistSort = "fr"
 	end
-	for k,v in ipairs(ZPerl_CheckItems) do
+	for k,v in ipairs(BlackPerl_CheckItems) do
 		v.query = nil
 	end
 
@@ -351,14 +351,14 @@ end
 
 -- ClearSelectedItem
 local function ClearSelectedItem()
-	for k,v in ipairs(ZPerl_CheckItems) do
+	for k,v in ipairs(BlackPerl_CheckItems) do
 		v.selected = nil
 	end
 end
 
 -- TickItemByName
 local function TickItemByName(itemName)
-	for k,v in ipairs(ZPerl_CheckItems) do
+	for k,v in ipairs(BlackPerl_CheckItems) do
 		local name = GetVLinkName(v)
 
 		if (name == itemName) then
@@ -374,7 +374,7 @@ end
 -- GotItem
 local function GotItem(link)
 	local findItem = strmatch(link, "item:(%d+):")
-	for k,v in pairs(ZPerl_CheckItems) do
+	for k,v in pairs(BlackPerl_CheckItems) do
 		local item = strmatch(v.link, "item:(%d+):")
 		if (item == findItem) then
 			return true
@@ -384,7 +384,7 @@ end
 
 -- GotItem
 local function GotItemName(itemName)
-	for k,v in pairs(ZPerl_CheckItems) do
+	for k,v in pairs(BlackPerl_CheckItems) do
 		local linkName = strmatch(v.link, "%[(.+)%]")
 		if (linkName == itemName) then
 			return true
@@ -398,14 +398,14 @@ local function InsertItemLink(itemLink)
 
 	if (strsub(itemLink, 1, 1) == "|") then
 		if (not GotItem(itemLink)) then
-			tinsert(ZPerl_CheckItems, {link = itemLink, ticked = true, selected = true})
+			tinsert(BlackPerl_CheckItems, {link = itemLink, ticked = true, selected = true})
 		else
 			local linkName = strmatch(itemLink, "%[(.+)%]")
 			TickItemByName(linkName)
 		end
 	else
 		if (not GotItemName(itemLink)) then
-			tinsert(ZPerl_CheckItems, {link = itemLink, ticked = true, selected = true})
+			tinsert(BlackPerl_CheckItems, {link = itemLink, ticked = true, selected = true})
 		else
 			local linkName = strmatch(itemLink, "%[(.+)%]")
 			TickItemByName(linkName)
@@ -499,7 +499,7 @@ end
 function XPerl_Check_ItemsChanged()
 	-- Validate. Make sure we have our fixed entries
 	local dur, reg, res
-	for k,v in ipairs(ZPerl_CheckItems) do
+	for k,v in ipairs(BlackPerl_CheckItems) do
 		if (v.link == "res") then
 			res = true
 		elseif (v.link == "dur") then
@@ -509,16 +509,16 @@ function XPerl_Check_ItemsChanged()
 		end
 	end
 	if (not dur) then
-		tinsert(ZPerl_CheckItems, {fixed = true, link = "dur"})
+		tinsert(BlackPerl_CheckItems, {fixed = true, link = "dur"})
 	end
 	if (not res) then
-		tinsert(ZPerl_CheckItems, {fixed = true, link = "res"})
+		tinsert(BlackPerl_CheckItems, {fixed = true, link = "res"})
 	end
 	if (not reg) then
-		tinsert(ZPerl_CheckItems, {fixed = true, link = "reg"})
+		tinsert(BlackPerl_CheckItems, {fixed = true, link = "reg"})
 	end
 
-	sort(ZPerl_CheckItems, sortItems)
+	sort(BlackPerl_CheckItems, sortItems)
 
 	XPerl_Check_UpdateItemList()
 	XPerl_Check_ValidateButtons()
@@ -526,7 +526,7 @@ end
 
 -- GetSelectedResults
 local function GetSelectedItem()
-	for k,v in ipairs(ZPerl_CheckItems) do
+	for k,v in ipairs(BlackPerl_CheckItems) do
 		if (v.selected) then
 			if (v.fixed) then
 				if (v.link == "res") then
@@ -550,7 +550,7 @@ end
 -- GetSelectedItemLink
 local function GetSelectedItemLink()
 	local link
-	for k,v in ipairs(ZPerl_CheckItems) do
+	for k,v in ipairs(BlackPerl_CheckItems) do
 		if (v.selected) then
 			return v.link
 		end
@@ -560,7 +560,7 @@ end
 -- GetCursorItem
 local function GetCursorItemLink(self)
 	local id = self:GetID() + XPerl_CheckListItemsScrollBar.offset
-	local item = ZPerl_CheckItems[id]
+	local item = BlackPerl_CheckItems[id]
 	if (item and not item.fixed) then
 		return item.link
 	end
@@ -570,7 +570,7 @@ end
 -- SelectClickedTickItem
 local function SelectClickedTickItem(self)
 	local oldSelection
-	for k, v in ipairs(ZPerl_CheckItems) do
+	for k, v in ipairs(BlackPerl_CheckItems) do
 		if (v.selected) then
 			oldSelection = v
 			v.selected = nil
@@ -587,7 +587,7 @@ local function SelectClickedTickItem(self)
 	if (id and id > 0) then
 		id = id + XPerl_CheckListItemsScrollBar.offset
 
-		local item = ZPerl_CheckItems[id]
+		local item = BlackPerl_CheckItems[id]
 		if (item) then
 			item.selected = true
 		end
@@ -606,7 +606,7 @@ end
 
 -- XPerl_Check_TickAll
 function XPerl_Check_TickAll(all)
-	for k, v in ipairs(ZPerl_CheckItems) do
+	for k, v in ipairs(BlackPerl_CheckItems) do
 		if (not v.fixed) then
 			v.ticked = all
 		end
@@ -616,7 +616,7 @@ end
 
 -- XPerl_Check_TickLastResults
 function XPerl_Check_TickLastResults()
-	for k, v in ipairs(ZPerl_CheckItems) do
+	for k, v in ipairs(BlackPerl_CheckItems) do
 		if (not v.fixed) then
 			v.ticked = nil
 
@@ -687,8 +687,8 @@ local function GetOnlineMembers()
 				reagentCount = reagentCount + 1
 			end
 
-			if (ZPerl_Roster) then
-				local stats = ZPerl_Roster[UnitName("raid"..i)]
+			if (BlackPerl_Roster) then
+				local stats = BlackPerl_Roster[UnitName("raid"..i)]
 				if (stats) then
 					if (stats.version) then
 						count = count + 1
@@ -728,7 +728,7 @@ function XPerl_Check_UpdateItemList()
 	local onlineCount, reagentCount = GetOnlineMembers()
 	local index = 1
 	local i = 0
-	for k,v in ipairs(ZPerl_CheckItems) do
+	for k,v in ipairs(BlackPerl_CheckItems) do
 		if (index > ITEMLISTSIZE) then
 			break
 		end
@@ -850,7 +850,7 @@ function XPerl_Check_UpdateItemList()
 			_G["XPerl_CheckListItems"..i]:Hide()
 	end
 
-	if (FauxScrollFrame_Update(XPerl_CheckListItemsScrollBar, #ZPerl_CheckItems, ITEMLISTSIZE, 1)) then
+	if (FauxScrollFrame_Update(XPerl_CheckListItemsScrollBar, #BlackPerl_CheckItems, ITEMLISTSIZE, 1)) then
 		XPerl_CheckListItemsScrollBar:Show()
 	else
 		XPerl_CheckListItemsScrollBar:Hide()
@@ -922,7 +922,7 @@ local function SortPlayersByResist(p1, p2)
 	local o1, o2 = 0,0
 	if (not p1.connected or p1.noCTRA) then o1 = 1000 end
 	if (not p2.connected or p2.noCTRA) then o2 = 1000 end
-	return p1[ZPerl_Admin.ResistSort] - o1 > p2[ZPerl_Admin.ResistSort] - o2
+	return p1[BlackPerl_Admin.ResistSort] - o1 > p2[BlackPerl_Admin.ResistSort] - o2
 end
 
 -- XPerl_Check_MakePlayerList
@@ -1009,8 +1009,8 @@ function XPerl_Check_MakePlayerList()
 			local count = 0
 			local noCTRA
 
-			if (ZPerl_Roster) then
-				local stats = ZPerl_Roster[name]
+			if (BlackPerl_Roster) then
+				local stats = BlackPerl_Roster[name]
 				if (stats) then
 					if (not stats.version) then
 						noCTRA = true
@@ -1171,7 +1171,7 @@ function XPerl_Check_UpdatePlayerList()
 							resFrameEquiped:SetTexture("Interface\\CharacterFrame\\Disconnect-Icon")
 							resFrameEquiped:SetTexCoord(0.2, 0.8, 0.2, 0.8)
 						elseif (z.notequipped) then
-							resFrameEquiped:SetTexture("Interface\\Addons\\ZPerl_RaidAdmin\\Images\\XPerl_Check")
+							resFrameEquiped:SetTexture("Interface\\Addons\\BlackPerl_RaidAdmin\\Images\\XPerl_Check")
 							if (z.changed) then
 								resFrameEquiped:SetTexCoord(0.75, 0.875, 0.25, 0.5)
 							else
@@ -1386,8 +1386,8 @@ end
 -- XPerl_Check_OnClickStart
 function XPerl_Check_OnClickTick(self)
 	local id = self:GetParent():GetID() + XPerl_CheckListItemsScrollBar.offset
-	if (ZPerl_CheckItems[id]) then
-		ZPerl_CheckItems[id].ticked = self:GetChecked()
+	if (BlackPerl_CheckItems[id]) then
+		BlackPerl_CheckItems[id].ticked = self:GetChecked()
 	end
 	XPerl_Check_ValidateButtons()
 end
@@ -1396,7 +1396,7 @@ end
 function XPerl_Check_DeleteSelectedItems()
 	local newList = {}
 
-	for k, v in ipairs(ZPerl_CheckItems) do
+	for k, v in ipairs(BlackPerl_CheckItems) do
 		if (v.fixed or not v.ticked) then
 			tinsert(newList, v)
 		else
@@ -1407,7 +1407,7 @@ function XPerl_Check_DeleteSelectedItems()
 		end
 	end
 
-	ZPerl_CheckItems = newList
+	BlackPerl_CheckItems = newList
 
 	XPerl_Check_ItemsChanged()
 end
@@ -1427,7 +1427,7 @@ function XPerl_Check_Query()
 	XPerl_RegResults.count = 0
 
 	local msg
-	for k, v in ipairs(ZPerl_CheckItems) do
+	for k, v in ipairs(BlackPerl_CheckItems) do
 		if (v.ticked) then
 			v.query = true
 			v.ticked = nil
@@ -1530,7 +1530,7 @@ end
 function XPerl_Check_ValidateButtons()
 	local fixedSelected, regSelected
 	local anyTicked
-	for k,v in ipairs(ZPerl_CheckItems) do
+	for k,v in ipairs(BlackPerl_CheckItems) do
 		if (v.selected) then
 			if (v.fixed) then
 				fixedSelected = true
@@ -1616,7 +1616,7 @@ function XPerl_Check_Players_Sort(sortType)
 	elseif (sortType == "dur") then
 		sort(XPerl_PlayerList, SortPlayersByDur)
 	elseif (strfind("frrsrnrar", sortType)) then
-		ZPerl_Admin.ResistSort = sortType
+		BlackPerl_Admin.ResistSort = sortType
 		sort(XPerl_PlayerList, SortPlayersByResist)
 	end
 

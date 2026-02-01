@@ -1,5 +1,5 @@
 -- X-Perl UnitFrames
--- Author: Resike
+-- Author: Tacomaniac
 -- License: GNU GPL v3, 29 June 2007 (see LICENSE.txt)
 
 local AddonName, Addon = ...
@@ -32,31 +32,31 @@ end
 
 -- DefaultVar
 local function DefaultVar(name, value)
-	if (ZPerl_Admin[name] == nil or (type(value) ~= type(ZPerl_Admin[name]))) then
-		ZPerl_Admin[name] = value
+	if (BlackPerl_Admin[name] == nil or (type(value) ~= type(BlackPerl_Admin[name]))) then
+		BlackPerl_Admin[name] = value
 	end
 end
 
 -- Defaults
 local function Defaults()
 
-	if (not ZPerl_Admin) then
-		ZPerl_Admin = {}
+	if (not BlackPerl_Admin) then
+		BlackPerl_Admin = {}
 	end
 
 	DefaultVar("AutoHideShow",	1)
 	DefaultVar("SavedRosters",	{})
 	DefaultVar("Transparency",	0.8)
 
-	ZPerl_Admin.Scale_ItemCheck = nil
-	ZPerl_Admin.Scale_Admin = nil
+	BlackPerl_Admin.Scale_ItemCheck = nil
+	BlackPerl_Admin.Scale_Admin = nil
 end
 
 -- XPerl_AdminOnLoad
 function XPerl_AdminOnLoad(self)
 	self:RegisterForDrag("LeftButton")
 
-	ZPerl_Admin = { }
+	BlackPerl_Admin = { }
 
 	SlashCmdList["XPERLRAIDADMIN"] = AdminCommands
 	SLASH_XPERLRAIDADMIN1 = "/rad"
@@ -132,8 +132,8 @@ function XPerl_AdminSetupFrames()
 
 	XPerl_SetupFrameSimple(XPerl_AdminFrame)
 
-	XPerl_Check:SetAlpha(ZPerl_Admin.Transparency)
-	XPerl_AdminFrame:SetAlpha(ZPerl_Admin.Transparency)
+	XPerl_Check:SetAlpha(BlackPerl_Admin.Transparency)
+	XPerl_AdminFrame:SetAlpha(BlackPerl_Admin.Transparency)
 
 	XPerl_AdminSetupFrames = nil
 end
@@ -145,7 +145,7 @@ end
 
 -- XPerl_AdminCheckMyRank
 function XPerl_AdminCheckMyRank()
-	if (ZPerl_Admin.AutoHideShow == 1) then
+	if (BlackPerl_Admin.AutoHideShow == 1) then
 		if (IsInRaid()) then
 			local me = UnitName("player")
 			for i = 1,GetNumGroupMembers() do
@@ -167,10 +167,10 @@ end
 
 -- XPerl_ToggleAuto
 local function XPerl_ToggleAuto()
-	if (ZPerl_Admin.AutoHideShow == 1) then
-		ZPerl_Admin.AutoHideShow = 0
+	if (BlackPerl_Admin.AutoHideShow == 1) then
+		BlackPerl_Admin.AutoHideShow = 0
 	else
-		ZPerl_Admin.AutoHideShow = 1
+		BlackPerl_Admin.AutoHideShow = 1
 	end
 	XPerl_AdminCheckMyRank()
 end
@@ -190,10 +190,10 @@ function XPerl_SaveRoster(saveName)
 		Roster[name] = {group = subgroup, class = fileName}
 	end
 
-	if (not ZPerl_Admin.SavedRosters) then
-		ZPerl_Admin.SavedRosters = {}
+	if (not BlackPerl_Admin.SavedRosters) then
+		BlackPerl_Admin.SavedRosters = {}
 	end
-	ZPerl_Admin.SavedRosters[saveName] = Roster
+	BlackPerl_Admin.SavedRosters[saveName] = Roster
 
 	XPerl_Message(format(XPERL_SAVED_ROSTER, saveName))
 
@@ -394,11 +394,11 @@ end
 
 -- XPerl_LoadRoster
 function XPerl_LoadRoster(loadName)
-	if (not ZPerl_Admin.SavedRosters) then
+	if (not BlackPerl_Admin.SavedRosters) then
 		return
 	end
 
-	SavedRoster = ZPerl_Admin.SavedRosters[loadName]
+	SavedRoster = BlackPerl_Admin.SavedRosters[loadName]
 	if (SavedRoster) then
 		XPerl_AdminFrame_Controls_StopLoad:Show()
 		XPerl_AdminFrame_Controls_LoadRoster:Hide()
@@ -444,13 +444,13 @@ XPerl_AdminCommands = {
 
 -- XPerl_Admin_CountDifferences
 function XPerl_Admin_CountDifferences(rosterName)
-	if (not ZPerl_Admin.SavedRosters) then
+	if (not BlackPerl_Admin.SavedRosters) then
 		return
 	end
 
 	local count = 0
 
-	SavedRoster = ZPerl_Admin.SavedRosters[rosterName]
+	SavedRoster = BlackPerl_Admin.SavedRosters[rosterName]
 	if (SavedRoster) then
 		for i = 1,GetNumGroupMembers() do
 			local name, _, subgroup = GetRaidRosterInfo(i)
@@ -489,7 +489,7 @@ function XPerl_Admin_ControlsOnLoad(self)
 		local find = XPerl_AdminFrame_Controls_Edit:GetText()
 
 		local Offset = XPerl_AdminFrame_Controls_RosterScrollBarScrollBar:GetValue() + 1
-		for name,roster in pairs(ZPerl_Admin.SavedRosters) do
+		for name,roster in pairs(BlackPerl_Admin.SavedRosters) do
 			if (index >= Offset) then
 				local f = _G["XPerl_AdminFrame_Controls_Roster"..line]
 				if (f) then
@@ -533,7 +533,7 @@ function XPerl_Admin_ControlsOnLoad(self)
 		local line = 1
 		local find = XPerl_AdminFrame_Controls_Edit:GetText()
 		local Offset = XPerl_AdminFrame_Controls_RosterScrollBarScrollBar:GetValue()
-			for name,roster in pairs(ZPerl_Admin.SavedRosters) do
+			for name,roster in pairs(BlackPerl_Admin.SavedRosters) do
 				if (index - 1 >= Offset) then
 					local f = _G["XPerl_AdminFrame_Controls_Roster"..line]
 					if (not f) then

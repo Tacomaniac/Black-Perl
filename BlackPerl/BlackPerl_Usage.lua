@@ -1,5 +1,5 @@
 -- X-Perl UnitFrames
--- Author: Resike
+-- Author: Tacomaniac
 -- License: GNU GPL v3, 29 June 2007 (see LICENSE.txt)
 
 local conf
@@ -83,10 +83,10 @@ function mod:TooltipInfo(tooltip, unitid)
 				if xpUsage.addon == 0 then
 					xp = "|cFFD00000X-Perl|r "..(xpUsage.version or XPerl_VersionNumber)
 				else
-					xp = "|cFFD00000Z-Perl|r "..(xpUsage.version or XPerl_VersionNumber)
+					xp = "|cFFD00000BlackPerl|r "..(xpUsage.version or XPerl_VersionNumber)
 				end
 			else
-				xp = "|cFFD00000Z-Perl|r "..(xpUsage.version or XPerl_VersionNumber)
+				xp = "|cFFD00000BlackPerl|r "..(xpUsage.version or XPerl_VersionNumber)
 			end
 
 			if (xpUsage.revision) then
@@ -239,21 +239,21 @@ function mod:ParseCTRA(sender, msg, channel)
 end
 
 local xpModList = {
-	"ZPerl",
-	"ZPerl_Player",
-	"ZPerl_PlayerPet",
-	"ZPerl_Target",
-	"ZPerl_TargetTarget",
-	"ZPerl_Party",
-	"ZPerl_PartyPet",
-	"ZPerl_RaidFrames",
-	"ZPerl_RaidHelper",
-	"ZPerl_RaidAdmin",
+	"BlackPerl",
+	"BlackPerl_Player",
+	"BlackPerl_PlayerPet",
+	"BlackPerl_Target",
+	"BlackPerl_TargetTarget",
+	"BlackPerl_Party",
+	"BlackPerl_PartyPet",
+	"BlackPerl_RaidFrames",
+	"BlackPerl_RaidHelper",
+	"BlackPerl_RaidAdmin",
 	"XPerl_TeamSpeak",
-	"ZPerl_RaidMonitor",
-	"ZPerl_RaidPets",
-	"ZPerl_ArcaneBar",
-	"ZPerl_PlayerBuffs",
+	"BlackPerl_RaidMonitor",
+	"BlackPerl_RaidPets",
+	"BlackPerl_ArcaneBar",
+	"BlackPerl_PlayerBuffs",
 	"XPerl_GrimReaper"
 }
 
@@ -305,7 +305,7 @@ function mod:MakePacket(response, versionOnly)
 	end
 
 	local addon
-	if C_AddOns.IsAddOnLoaded("ZPerl") then
+	if C_AddOns.IsAddOnLoaded("BlackPerl") then
 		addon = 1
 	else
 		addon = 0

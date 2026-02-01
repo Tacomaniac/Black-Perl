@@ -464,8 +464,8 @@ end
 function XPerl_ArcaneBar_OnLoad(self)
 	XPerl_SetChildMembers(self)
 
-	self.barFlash.tex:SetTexture("Interface\\AddOns\\ZPerl\\Images\\XPerl_ArcaneBarFlash")
-	self.tex:SetTexture("Interface\\AddOns\\ZPerl\\Images\\XPerl_StatusBar")
+	self.barFlash.tex:SetTexture("Interface\\AddOns\\BlackPerl\\Images\\XPerl_ArcaneBarFlash")
+	self.tex:SetTexture("Interface\\AddOns\\BlackPerl\\Images\\XPerl_StatusBar")
 	self.tex:SetHorizTile(false)
 	self.tex:SetVertTile(false)
 

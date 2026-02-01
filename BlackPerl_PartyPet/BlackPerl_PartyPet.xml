@@ -1,6 +1,6 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd">
 
-	<Script file="ZPerl_PartyPet.lua"/>
+	<Script file="BlackPerl_PartyPet.lua"/>
 
 	<Button name="XPerl_Party_Pet_FrameTemplate" inherits="SecureUnitButtonTemplate" frameStrata="LOW" hidden="true" movable="false" virtual="true">
 		<Size>
@@ -11,8 +11,8 @@
 			<OnLoad>
 				self:RegisterForClicks("AnyUp")
 				XPerl_Party_Pet_OnLoad(self)
-				self:SetScript("OnEnter", ZPerl_Unit_OnEnter)
-				self:SetScript("OnLeave", ZPerl_Unit_OnLeave)
+				self:SetScript("OnEnter", BlackPerl_Unit_OnEnter)
+				self:SetScript("OnLeave", BlackPerl_Unit_OnLeave)
 			</OnLoad>
 		</Scripts>
 
@@ -27,8 +27,8 @@
 						self:RegisterForClicks("AnyUp")
 						XPerl_RegisterUnitText(_G[self:GetName().."text"])
 						XPerl_RegisterUnitText(_G[self:GetName().."level"])
-						self:SetScript("OnEnter", function(self) ZPerl_Unit_OnEnter(self:GetParent()) end)
-						self:SetScript("OnLeave", function(self) ZPerl_Unit_OnLeave(self:GetParent()) end)
+						self:SetScript("OnEnter", function(self) BlackPerl_Unit_OnEnter(self:GetParent()) end)
+						self:SetScript("OnLeave", function(self) BlackPerl_Unit_OnLeave(self:GetParent()) end)
 					</OnLoad>
 				</Scripts>
 				<Size>

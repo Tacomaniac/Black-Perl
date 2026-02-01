@@ -1,5 +1,5 @@
--- Z-Perl UnitFrames
--- Author: Resike
+-- BlackPerl UnitFrames
+-- Author: Tacomaniac
 -- License: GNU GPL v3, 18 October 2014
 
 local conf
@@ -19,7 +19,7 @@ local IsClassic = WOW_PROJECT_ID >= WOW_PROJECT_CLASSIC
 local UnitAuraWithBuffs
 local LCD = IsVanillaClassic and LibStub and LibStub("LibClassicDurations", true)
 if LCD then
-	LCD:Register("ZPerl")
+	LCD:Register("BlackPerl")
 	UnitAuraWithBuffs = LCD.UnitAuraWithBuffs
 end
 local HealComm = IsVanillaClassic and LibStub and LibStub("LibHealComm-4.0", true)
@@ -763,11 +763,11 @@ do
 		end
 
 		shortlist = {
-			{"Perl v2", "Interface\\Addons\\ZPerl\\Images\\XPerl_StatusBar"},
+			{"Perl v2", "Interface\\Addons\\BlackPerl\\Images\\XPerl_StatusBar"},
 		}
 		for i = 1, 9 do
 			local name = i == 2 and "BantoBar" or "X-Perl "..i
-			tinsert(shortlist, {name, "Interface\\Addons\\ZPerl\\Images\\XPerl_StatusBar"..(i + 1)})
+			tinsert(shortlist, {name, "Interface\\Addons\\BlackPerl\\Images\\XPerl_StatusBar"..(i + 1)})
 		end
 
 		if (media) then
@@ -775,7 +775,7 @@ do
 				media:Register("statusbar", v[1], v[2])
 			end
 
-			media:Register("border", "X-Perl Thin", "Interface\\Addons\\ZPerl\\Images\\XPerl_ThinEdge")
+			media:Register("border", "X-Perl Thin", "Interface\\Addons\\BlackPerl\\Images\\XPerl_ThinEdge")
 		end
 	end
 
@@ -1453,34 +1453,34 @@ function XPerl_MinimapMenu_Initialize(self, level)
 	info.text = XPERL_MINIMENU_OPTIONS
 	MSA_DropDownMenu_AddButton(info)
 
-	if (C_AddOns.IsAddOnLoaded("ZPerl_RaidHelper")) then
+	if (C_AddOns.IsAddOnLoaded("BlackPerl_RaidHelper")) then
 		if (XPerl_Assists_Frame and not XPerl_Assists_Frame:IsShown()) then
 			info = MSA_DropDownMenu_CreateInfo()
 			info.notCheckable = 1
 			info.text = XPERL_MINIMENU_ASSIST
 			info.func = function()
-					ZPerlConfigHelper.AssistsFrame = 1
-					ZPerlConfigHelper.TargettingFrame = 1
+					BlackPerlConfigHelper.AssistsFrame = 1
+					BlackPerlConfigHelper.TargettingFrame = 1
 					XPerl_SetFrameSides()
 				end
 			MSA_DropDownMenu_AddButton(info)
 		end
 	end
 
-	if (C_AddOns.IsAddOnLoaded("ZPerl_RaidMonitor")) then
+	if (C_AddOns.IsAddOnLoaded("BlackPerl_RaidMonitor")) then
 		if (XPerl_RaidMonitor_Frame and not XPerl_RaidMonitor_Frame:IsShown()) then
 			info = MSA_DropDownMenu_CreateInfo()
 			info.notCheckable = 1
 			info.text = XPERL_MINIMENU_CASTMON
 			info.func = function()
-				ZPerlRaidMonConfig.enabled = 1
+				BlackPerlRaidMonConfig.enabled = 1
 				XPerl_RaidMonitor_Frame:SetFrameSizes()
 			end
 			MSA_DropDownMenu_AddButton(info)
 		end
 	end
 
-	if (C_AddOns.IsAddOnLoaded("ZPerl_RaidAdmin")) then
+	if (C_AddOns.IsAddOnLoaded("BlackPerl_RaidAdmin")) then
 		if (XPerl_AdminFrame and not XPerl_AdminFrame:IsShown()) then
 			info = MSA_DropDownMenu_CreateInfo()
 			info.notCheckable = 1
@@ -1509,19 +1509,19 @@ end
 
 -- XPerl_MinimapMenu
 function XPerl_MinimapMenu(self)
-	if (not ZPerl_Minimap) then
-		CreateFrame("Frame", "ZPerl_Minimap", nil, BackdropTemplateMixin and "BackdropTemplate")
-		XPerl_MinimapMenu_OnLoad(ZPerl_Minimap)
+	if (not BlackPerl_Minimap) then
+		CreateFrame("Frame", "BlackPerl_Minimap", nil, BackdropTemplateMixin and "BackdropTemplate")
+		XPerl_MinimapMenu_OnLoad(BlackPerl_Minimap)
 	end
 
-	MSA_ToggleDropDownMenu(1, nil, ZPerl_Minimap_DropDown, "cursor", 0, 0)
+	MSA_ToggleDropDownMenu(1, nil, BlackPerl_Minimap_DropDown, "cursor", 0, 0)
 end
 
-local xpModList = {"ZPerl", "ZPerl_Player", "ZPerl_PlayerBuffs", "ZPerl_PlayerPet", "ZPerl_Target", "ZPerl_TargetTarget", "ZPerl_Party", "ZPerl_PartyPet", "ZPerl_ArcaneBar", "ZPerl_RaidFrames", "ZPerl_RaidHelper", "ZPerl_RaidAdmin", "ZPerl_RaidMonitor", "ZPerl_RaidPets"}
+local xpModList = {"BlackPerl", "BlackPerl_Player", "BlackPerl_PlayerBuffs", "BlackPerl_PlayerPet", "BlackPerl_Target", "BlackPerl_TargetTarget", "BlackPerl_Party", "BlackPerl_PartyPet", "BlackPerl_ArcaneBar", "BlackPerl_RaidFrames", "BlackPerl_RaidHelper", "BlackPerl_RaidAdmin", "BlackPerl_RaidMonitor", "BlackPerl_RaidPets"}
 local xpStartupMemory = {}
 
--- ZPerl_MinimapButton_Init
-function ZPerl_MinimapButton_Init(self)
+-- BlackPerl_MinimapButton_Init
+function BlackPerl_MinimapButton_Init(self)
 	--self.time = 0
 	collectgarbage()
 	UpdateAddOnMemoryUsage()
@@ -1543,7 +1543,7 @@ function ZPerl_MinimapButton_Init(self)
 
 	--self.UpdateTooltip = XPerl_MinimapButton_OnEnter
 
-	ZPerl_MinimapButton_Init = nil
+	BlackPerl_MinimapButton_Init = nil
 end
 
 -- XPerl_MinimapButton_UpdatePosition
@@ -1686,13 +1686,13 @@ function XPerl_MinimapButton_Details(tt, ldb)
 			tt:AddDoubleLine("Total", format("%.1fkB", totalKB), 1, 1, 1, 1, 1, 1)
 		end
 
-		local usedKB = GetAddOnMemoryUsage("ZPerl_Options")
+		local usedKB = GetAddOnMemoryUsage("BlackPerl_Options")
 		if ((usedKB or 0) > 0) then
-			tt:AddDoubleLine(" ZPerl_Options", format("%.1fkB", usedKB), 0.5, 0.5, 0.5, 0.5, 0.5, 0.5)
+			tt:AddDoubleLine(" BlackPerl_Options", format("%.1fkB", usedKB), 0.5, 0.5, 0.5, 0.5, 0.5, 0.5)
 		end
 
 		if (totalCPU > 0) then
-			tt:AddDoubleLine(" ZPerl CPU Usage Comparison", format("%.2f%%", 100 * (totalCPU / allAddonsCPU)), 0.5, 0.5, 1, 0.5, 0.5, 1)
+			tt:AddDoubleLine(" BlackPerl CPU Usage Comparison", format("%.2f%%", 100 * (totalCPU / allAddonsCPU)), 0.5, 0.5, 1, 0.5, 0.5, 1)
 		end
 	end
 
@@ -1990,7 +1990,7 @@ local function CanClassCureMagic(class)
 end
 
 local getShow
-function ZPerl_DebufHighlightInit()
+function BlackPerl_DebufHighlightInit()
 	-- We also re-set the colours here so that we highlight best colour per class
 	if (playerClass == "MAGE") then
 		getShow = function(Curses)
@@ -2090,11 +2090,11 @@ function ZPerl_DebufHighlightInit()
 		end
 	end
 
-	ZPerl_DebufHighlightInit = nil
+	BlackPerl_DebufHighlightInit = nil
 end
 
 local bgDef = {
-	bgFile = "Interface\\Addons\\ZPerl\\Images\\XPerl_FrameBack",
+	bgFile = "Interface\\Addons\\BlackPerl\\Images\\XPerl_FrameBack",
 	edgeFile = "",
 	tile = true,
 	tileSize = 32,
@@ -2102,7 +2102,7 @@ local bgDef = {
 	insets = {left = 2, right = 2, top = 2, bottom = 2}
 }
 local normalEdge = "Interface\\Tooltips\\UI-Tooltip-Border"
-local curseEdge = "Interface\\Addons\\ZPerl\\Images\\XPerl_Curse"
+local curseEdge = "Interface\\Addons\\BlackPerl\\Images\\XPerl_Curse"
 
 -- XPerl_CheckDebuffs
 --local Curses = setmetatable({ }, {__mode = "k"})	-- 2.2.6 - Now re-using static table to save garbage memory creation
@@ -2220,20 +2220,20 @@ end
 
 -- XPerl_GetSavePositionTable
 function XPerl_GetSavePositionTable(create)
-	if (not ZPerlConfigNew) then
+	if (not BlackPerlConfigNew) then
 		return
 	end
 
 	local name = UnitName("player")
 	local realm = GetRealmName()
 
-	if (not ZPerlConfigNew.savedPositions) then
+	if (not BlackPerlConfigNew.savedPositions) then
 		if (not create) then
 			return
 		end
-		ZPerlConfigNew.savedPositions = {}
+		BlackPerlConfigNew.savedPositions = {}
 	end
-	local c = ZPerlConfigNew.savedPositions
+	local c = BlackPerlConfigNew.savedPositions
 	if (not c[realm]) then
 		if (not create) then
 			return
@@ -2287,7 +2287,7 @@ end
 
 -- XPerl_RestorePosition
 function XPerl_RestorePosition(self)
-	if (ZPerlConfigNew.savedPositions) then
+	if (BlackPerlConfigNew.savedPositions) then
 		local name = self:GetName()
 		if (name) then
 			local table = XPerl_GetSavePositionTable()
@@ -2337,13 +2337,13 @@ function XPerl_RestoreAllPositions()
 						frame:ClearAllPoints()
 						frame:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", v.left / frame:GetScale(), v.top / frame:GetScale())
 						if k == "XPerl_Assists_FrameAnchor" then
-							if ZPerlConfigHelper then
-								if ZPerlConfigHelper.sizeAssistsX and ZPerlConfigHelper.sizeAssistsY then
-									XPerl_Assists_Frame:SetWidth(ZPerlConfigHelper.sizeAssistsX)
-									XPerl_Assists_Frame:SetHeight(ZPerlConfigHelper.sizeAssistsY)
+							if BlackPerlConfigHelper then
+								if BlackPerlConfigHelper.sizeAssistsX and BlackPerlConfigHelper.sizeAssistsY then
+									XPerl_Assists_Frame:SetWidth(BlackPerlConfigHelper.sizeAssistsX)
+									XPerl_Assists_Frame:SetHeight(BlackPerlConfigHelper.sizeAssistsY)
 								end
-								if ZPerlConfigHelper.sizeAssistsS then
-									XPerl_Assists_Frame:SetScale(ZPerlConfigHelper.sizeAssistsS)
+								if BlackPerlConfigHelper.sizeAssistsS then
+									XPerl_Assists_Frame:SetScale(BlackPerlConfigHelper.sizeAssistsS)
 								end
 							end
 						else
@@ -3513,7 +3513,7 @@ function XPerl_Unit_UpdateBuffs(self, maxBuffs, maxDebuffs, castableOnly, curabl
 
 									button.steal.tex = button.steal:CreateTexture(nil, "OVERLAY")
 									button.steal.tex:SetAllPoints()
-									button.steal.tex:SetTexture("Interface\\Addons\\ZPerl\\Images\\StealMe")
+									button.steal.tex:SetTexture("Interface\\Addons\\BlackPerl\\Images\\StealMe")
 
 									local g = button.steal.tex:CreateAnimationGroup()
 									button.steal.anim = g
@@ -3950,8 +3950,8 @@ function XPerl_Unit_GetHealth(self)
 	return hp or 0, hpMax or 1,percent --(hpMax == 100)
 end
 
--- ZPerl_Unit_OnEnter
-function ZPerl_Unit_OnEnter(self)
+-- BlackPerl_Unit_OnEnter
+function BlackPerl_Unit_OnEnter(self)
 	XPerl_PlayerTip(self)
 	if (self.highlight) then
 		self.highlight:Select()
@@ -3972,8 +3972,8 @@ function ZPerl_Unit_OnEnter(self)
 	end
 end
 
--- ZPerl_Unit_OnLeave
-function ZPerl_Unit_OnLeave(self)
+-- BlackPerl_Unit_OnLeave
+function BlackPerl_Unit_OnLeave(self)
 	XPerl_PlayerTipHide()
 	if (self.highlight) then
 		self.highlight:Deselect()
@@ -4245,7 +4245,7 @@ function XPerl_RegisterScalableFrame(self, anchorFrame, minScale, maxScale, resi
 		anchorFrame.corner = self.corner
 
 		self.corner.tex = self.corner:CreateTexture(nil, "BORDER")
-		self.corner.tex:SetTexture("Interface\\Addons\\ZPerl\\Images\\XPerl_Elements")
+		self.corner.tex:SetTexture("Interface\\Addons\\BlackPerl\\Images\\XPerl_Elements")
 		self.corner.tex:SetAllPoints()
 		self.corner.tex:SetVertexColor(1, 1, 1, 0.5)
 

@@ -1,5 +1,5 @@
 -- X-Perl UnitFrames
--- Author: Resike
+-- Author: Tacomaniac
 -- License: GNU GPL v3, 29 June 2007 (see LICENSE.txt)
 
 local XPerl_RaidPets_Events = {}
@@ -284,15 +284,15 @@ end
 -- XPerl_RaidPets_OnLoad
 function XPerl_RaidPets_OnLoad(self)
 	self.state = CreateFrame("Frame", nil, nil, "SecureHandlerStateTemplate")
-	self.state:SetFrameRef("ZPerlRaidPetsHeader", XPerl_Raid_GrpPets)
+	self.state:SetFrameRef("BlackPerlRaidPetsHeader", XPerl_Raid_GrpPets)
 
 	self.state:SetAttribute("_onstate-groupupdate", [[
 		--print(newstate)
 
 		if newstate == "hide" then
-			self:GetFrameRef("ZPerlRaidPetsHeader"):Hide()
+			self:GetFrameRef("BlackPerlRaidPetsHeader"):Hide()
 		else
-			self:GetFrameRef("ZPerlRaidPetsHeader"):Show()
+			self:GetFrameRef("BlackPerlRaidPetsHeader"):Show()
 		end
 	]])
 	RegisterStateDriver(self.state, "groupupdate", "[petbattle] hide; show")
@@ -550,7 +550,7 @@ function XPerl_RaidPet_Single_OnLoad(self)
 
 	XPerl_SetChildMembers(self)
 
-	self.edgeFile = "Interface\\Addons\\ZPerl\\Images\\XPerl_ThinEdge"
+	self.edgeFile = "Interface\\Addons\\BlackPerl\\Images\\XPerl_ThinEdge"
 	self.edgeSize = 10
 	self.edgeInsets = 2
 

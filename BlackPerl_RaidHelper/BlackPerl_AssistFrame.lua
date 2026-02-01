@@ -1,5 +1,5 @@
 -- X-Perl UnitFrames
--- Author: Resike
+-- Author: Tacomaniac
 -- License: GNU GPL v3, 29 June 2007 (see LICENSE.txt)
 
 local conf
@@ -46,18 +46,18 @@ end
 
 -- XPerl_SetFrameSides
 function XPerl_SetFrameSides()
-	if (XPerl_Assists_Frame.LastSetView and XPerl_Assists_Frame.LastSetView[1] == ZPerlConfigHelper.AssistsFrame and XPerl_Assists_Frame.LastSetView[2] == ZPerlConfigHelper.TargettingFrame) then
+	if (XPerl_Assists_Frame.LastSetView and XPerl_Assists_Frame.LastSetView[1] == BlackPerlConfigHelper.AssistsFrame and XPerl_Assists_Frame.LastSetView[2] == BlackPerlConfigHelper.TargettingFrame) then
 		-- Frames the same from last time
 		return
 	end
 
-	if (ZPerlConfigHelper.AssistsFrame == 1 or ZPerlConfigHelper.TargettingFrame == 1) then
+	if (BlackPerlConfigHelper.AssistsFrame == 1 or BlackPerlConfigHelper.TargettingFrame == 1) then
 		XPerl_Assists_Frame:Show()
 
 		XPerl_Target_Targetting_ScrollFrame:ClearAllPoints()
 		XPerl_Target_Assists_ScrollFrame:ClearAllPoints()
 
-		if (ZPerlConfigHelper.AssistsFrame == 1 and ZPerlConfigHelper.TargettingFrame == 1) then
+		if (BlackPerlConfigHelper.AssistsFrame == 1 and BlackPerlConfigHelper.TargettingFrame == 1) then
 			XPerl_Target_Targetting_ScrollFrame:SetPoint("TOPLEFT", 4, -5)
 			XPerl_Target_Targetting_ScrollFrame:SetPoint("BOTTOMRIGHT", XPerl_Assists_Frame, "BOTTOM", -0.5, 5)
 			XPerl_Target_Targetting_ScrollFrame:Show()
@@ -73,7 +73,7 @@ function XPerl_SetFrameSides()
 		else
 			XPerlScrollSeperator:Hide()
 
-			if (ZPerlConfigHelper.AssistsFrame == 1) then
+			if (BlackPerlConfigHelper.AssistsFrame == 1) then
 				XPerl_Target_Assists_ScrollFrame:SetPoint("TOPLEFT", 4, -5)
 				XPerl_Target_Assists_ScrollFrame:SetPoint("BOTTOMRIGHT", -4, 5)
 				XPerl_Target_Assists_ScrollFrame:Show()
@@ -89,37 +89,37 @@ function XPerl_SetFrameSides()
 		XPerl_Assists_Frame:Hide()
 	end
 
-	XPerl_Assists_Frame.LastSetView = {ZPerlConfigHelper.AssistsFrame, ZPerlConfigHelper.TargettingFrame}
+	XPerl_Assists_Frame.LastSetView = {BlackPerlConfigHelper.AssistsFrame, BlackPerlConfigHelper.TargettingFrame}
 end
 
 -- ToggleAssistsFrame()
 function XPerl_ToggleAssistsFrame(param)
 	if (param == "assists") then
-		if (ZPerlConfigHelper.AssistsFrame == 1) then
-			ZPerlConfigHelper.AssistsFrame = 0
+		if (BlackPerlConfigHelper.AssistsFrame == 1) then
+			BlackPerlConfigHelper.AssistsFrame = 0
 		else
-			ZPerlConfigHelper.AssistsFrame = 1
+			BlackPerlConfigHelper.AssistsFrame = 1
 		end
 	else
-		if (ZPerlConfigHelper.TargettingFrame == 1) then
-			ZPerlConfigHelper.TargettingFrame = 0
+		if (BlackPerlConfigHelper.TargettingFrame == 1) then
+			BlackPerlConfigHelper.TargettingFrame = 0
 		else
-			ZPerlConfigHelper.TargettingFrame = 1
+			BlackPerlConfigHelper.TargettingFrame = 1
 		end
 	end
 end
 
 -- XPerl_AssistsView_Close
 function XPerl_AssistsView_Open()
-	ZPerlConfigHelper.AssistsFrame = 1
-	ZPerlConfigHelper.TargettingFrame = 1
+	BlackPerlConfigHelper.AssistsFrame = 1
+	BlackPerlConfigHelper.TargettingFrame = 1
 	XPerl_SetFrameSides()
 	return true
 end
 
 function XPerl_AssistsView_Close()
-	ZPerlConfigHelper.AssistsFrame = 0
-	ZPerlConfigHelper.TargettingFrame = 0
+	BlackPerlConfigHelper.AssistsFrame = 0
+	BlackPerlConfigHelper.TargettingFrame = 0
 	XPerl_SetFrameSides()
 end
 
@@ -205,17 +205,17 @@ end
 
 -- XPerl_ShowAssists()
 function XPerl_ShowAssists()
-	if (ZPerlConfigHelper and (ZPerlConfigHelper.AssistsFrame == 1 or ZPerlConfigHelper.TargettingFrame == 1)) then
-		if (ZPerlConfigHelper.AssistsFrame == 1 and XPerl_Assists_Frame.assists ~= nil) then
+	if (BlackPerlConfigHelper and (BlackPerlConfigHelper.AssistsFrame == 1 or BlackPerlConfigHelper.TargettingFrame == 1)) then
+		if (BlackPerlConfigHelper.AssistsFrame == 1 and XPerl_Assists_Frame.assists ~= nil) then
 			FillList(XPerl_Assists_Frame.assists, "Assists", XPERL_TOOLTIP_ASSISTING)
 		end
 
-		if (ZPerlConfigHelper.TargettingFrame == 1 and XPerl_Assists_Frame.targetting ~= nil) then
+		if (BlackPerlConfigHelper.TargettingFrame == 1 and XPerl_Assists_Frame.targetting ~= nil) then
 			local title
 			if (#XPerl_Assists_Frame.targetting > 0 and XPerl_Assists_Frame.targetting[1][2] == "") then
 				title = XPERL_TOOLTIP_ENEMYONME
 			else
-				if (ZPerlConfigHelper.TargetCountersSelf == 0) then
+				if (BlackPerlConfigHelper.TargetCountersSelf == 0) then
 					title = XPERL_TOOLTIP_ALLONME
 				else
 					title = XPERL_TOOLTIP_HEALERS
@@ -230,7 +230,7 @@ end
 -- XPerl_Assists_MouseDown
 function XPerl_Assists_MouseDown(self, button, param)
 	if (button == "LeftButton") then
-		if (not ZPerlConfigHelper or not ZPerlConfigHelper.AssistPinned or (IsAltKeyDown() and IsControlKeyDown() and IsShiftKeyDown())) then
+		if (not BlackPerlConfigHelper or not BlackPerlConfigHelper.AssistPinned or (IsAltKeyDown() and IsControlKeyDown() and IsShiftKeyDown())) then
 			--if (param and (param == "TOPLEFT" or param == "BOTTOMLEFT" or param == "BOTTOMRIGHT")) then
 			--	self:StartSizing(param)
 			--else
@@ -245,10 +245,10 @@ function XPerl_Assists_MouseDown(self, button, param)
 		end
 
 		if (param and param == "targetFrame") then
-			if (ZPerlConfigHelper.TargetCountersSelf == 1) then
-				ZPerlConfigHelper.TargetCountersSelf = 0
+			if (BlackPerlConfigHelper.TargetCountersSelf == 1) then
+				BlackPerlConfigHelper.TargetCountersSelf = 0
 			else
-				ZPerlConfigHelper.TargetCountersSelf = 1
+				BlackPerlConfigHelper.TargetCountersSelf = 1
 			end
 			XPerl_UpdateAssists()
 			XPerl_ShowAssists()
@@ -313,11 +313,11 @@ function XPerl_Assists_OnEvent(self, event, unit)
 
 		XPerl_RegisterScalableFrame(self, XPerl_Assists_FrameAnchor, nil, nil, nil, true, true)
 		self.corner.onSizeChanged = function(self, x, y)
-			ZPerlConfigHelper.sizeAssistsX = x
-			ZPerlConfigHelper.sizeAssistsY = y
+			BlackPerlConfigHelper.sizeAssistsX = x
+			BlackPerlConfigHelper.sizeAssistsY = y
 		end
 		self.corner.onScaleChanged = function(self, s)
-			ZPerlConfigHelper.sizeAssistsS = s
+			BlackPerlConfigHelper.sizeAssistsS = s
 		end
 		XPerlAssistPin:SetButtonTex()
 	elseif (event == "GROUP_ROSTER_UPDATE") then
@@ -397,7 +397,7 @@ local function XPerl_AddEnemy(anyEnemy, FoundEnemy, name)
 
 	if (UnitIsUnit("player", namett)) then
 		if (not XPerl_FoundEnemyBefore(FoundEnemy, name)) then
-			if (not playerAggro and ZPerlConfigHelper.AggroWarning == 1) then
+			if (not playerAggro and BlackPerlConfigHelper.AggroWarning == 1) then
 				playerAggro = true
 				XPerl_AggroPlayer:Show()
 			end
@@ -424,7 +424,7 @@ local function XPerl_AddEnemy(anyEnemy, FoundEnemy, name)
 			tinsert(assists, {UnitName(namet), ""})
 			return true
 		end
-	elseif (not petAggro and ZPerlConfigHelper.AggroWarning == 1 and UnitExists(namett) and UnitIsUnit("pet", namett)) then
+	elseif (not petAggro and BlackPerlConfigHelper.AggroWarning == 1 and UnitExists(namett) and UnitIsUnit("pet", namett)) then
 		petAggro = true
 		--petFadeStart = GetTime()
 		XPerl_AggroPet:Show()
@@ -448,7 +448,7 @@ function XPerl_UpdateAssists()
 		XPerl_Highlight:ClearAll("AGGRO")
 	--end]]
 
-	if ZPerlConfigHelper and ZPerlConfigHelper.TargetCounters == 0 then
+	if BlackPerlConfigHelper and BlackPerlConfigHelper.TargetCounters == 0 then
 		if (XPerl_Target_AssistFrame) then
 			XPerl_Target_AssistFrame:Hide()
 		end
@@ -459,9 +459,9 @@ function XPerl_UpdateAssists()
 	end
 
 	local selfFlag, enemyFlag
-	if ZPerlConfigHelper then
-		selfFlag = ZPerlConfigHelper.TargetCountersSelf == 1
-		enemyFlag = ZPerlConfigHelper.TargetCountersEnemy == 1
+	if BlackPerlConfigHelper then
+		selfFlag = BlackPerlConfigHelper.TargetCountersSelf == 1
+		enemyFlag = BlackPerlConfigHelper.TargetCountersEnemy == 1
 	end
 
 	local assistCount, targettingCount, anyEnemy = 0, 0, false
@@ -550,7 +550,7 @@ function XPerl_UpdateAssists()
 				end
 
 				if (not XPerl_FoundEnemyBefore(FoundEnemy, "focus")) then
-					if (not playerAggro and ZPerlConfigHelper.AggroWarning == 1) then
+					if (not playerAggro and BlackPerlConfigHelper.AggroWarning == 1) then
 						playerAggro = true
 						XPerl_AggroPlayer:Show()
 					end
@@ -594,10 +594,10 @@ function XPerl_UpdateAssists()
 		end
 	end
 
-	if ZPerlConfigHelper and ZPerlConfigHelper.ShowTargetCounters == 1 then
+	if BlackPerlConfigHelper and BlackPerlConfigHelper.ShowTargetCounters == 1 then
 		if (XPerl_Player_TargettingFrame) then
 			if (XPerl_Player) then
-				local color = (conf and conf.colour.border) or (ZPerlConfigHelper and ZPerlConfigHelper.BorderColour) or {r = 0.5, g = 0.5, b = 0.5}
+				local color = (conf and conf.colour.border) or (BlackPerlConfigHelper and BlackPerlConfigHelper.BorderColour) or {r = 0.5, g = 0.5, b = 0.5}
 
 				if (anyEnemy) then
 					XPerl_Player_TargettingFrame:SetBackdropBorderColor(1, 0.2, 0.2, color.a)
