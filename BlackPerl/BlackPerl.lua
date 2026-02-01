@@ -391,9 +391,7 @@ local function FriendlyIsInRange(unit)
     local unit = unit
 
     if UnitIsPlayer(unit) then
-        if isRetail then
-            if UnitPhaseReason(unit) then return false end
-        end
+		if UnitPhaseReason(unit) then return false end
     end
 
 	local inRange, checkedRange = UnitInRange(unit)
@@ -403,147 +401,17 @@ local function FriendlyIsInRange(unit)
 
     return UnitInSpellsRange(unit, "friendly")
 end
---end of midnight specific addons for range checking
+
+-- end of midnight specific addons for range checking
 
 --DoRangeCheck
 local function DoRangeCheck(unit, opt)
 	local range
-	if IsRetail then
-		if UnitInParty(unit) and UnitInRaid(unit) and not FriendlyIsInRange(unit) then
-			return opt.FadeAmount
-		else
-			return
-		end	
+	if UnitInParty(unit) and UnitInRaid(unit) and not FriendlyIsInRange(unit) then
+		return opt.FadeAmount
 	else
-		if opt.PlusHealth then
-			local hp, hpMax = UnitIsGhost(unit) and 1 or (UnitIsDead(unit) and 0 or UnitHealth(unit)), UnitHealthMax(unit)
-			-- Begin 4.3 divide by 0 work around.
-			local percent
-			if UnitIsDeadOrGhost(unit) or (hp == 0 and hpMax == 0) then -- Probably dead target
-				percent = 0 -- So just automatically set percent to 0 and avoid division of 0/0 all together in this situation.
-			elseif hp > 0 and hpMax == 0 then -- We have current HP but max hp failed.
-				hpMax = hp -- Make max hp at least equal to current health
-				percent = 1 -- 100% if they are alive with > 0 cur hp, since curhp = maxhp in this hack.
-			else
-				percent = hp / hpMax -- Everything is dandy, so just do it right way.
-			end
-			-- End divide by 0 work around
-			if (percent > opt.HealthLowPoint) then
-				range = 0
-			end
-		end
-
-		if opt.PlusDebuff and ((opt.PlusHealth and range == 0) or not opt.PlusHealth) then
-			local name
-			if not IsVanillaClassic and C_UnitAuras then
-				local auraData = C_UnitAuras.GetAuraDataByIndex(unit, 1, "HARMFUL|RAID")
-				if auraData then
-					name = auraData.name
-				end
-			else
-				name = UnitAura(unit, 1, "HARMFUL|RAID")
-			end
-			if not name then
-				range = 0
-			else
-				if ArcaneExclusions[name] then
-					-- It's one of the filtered debuffs, so we have to iterate thru all debuffs to see if anything is curable
-					for i = 1, 40 do
-						local name
-						if not IsVanillaClassic and C_UnitAuras then
-							local auraData = C_UnitAuras.GetAuraDataByIndex(unit, i, "HARMFUL|RAID")
-							if auraData then
-								name = auraData.name
-							end
-						else
-							name = UnitAura(unit, i, "HARMFUL|RAID")
-						end
-						if not name then
-							range = 0
-							break
-						elseif not ArcaneExclusions[name] then
-							range = nil
-							break
-						end
-					end
-				else
-					range = nil -- Override's the health check, because there's a debuff on unit
-				end
-			end
-		end
-
-		if not range then
-			--local playerRealm = UnitAura("player", SpiritRealm, "HARMFUL")
-			--local unitRealm = UnitAura(unit, SpiritRealm, "HARMFUL")
-
-			--[[if playerRealm ~= unitRealm then
-				range = nil
-			else--]]
-			if opt.interact then
-				if opt.interact == 6 then -- 45y
-					local checkedRange
-					range, checkedRange = UnitInRange(unit)
-					if not checkedRange then
-						range = 1
-					end
-				elseif opt.interact == 5 then -- 40y
-					local checkedRange
-					range, checkedRange = UnitInRange(unit)
-					if not checkedRange then
-						range = 1
-					end
-				elseif opt.interact == 3 then -- 10y
-					local checkedRange
-					range, checkedRange = UnitInRange(unit)
-					if not checkedRange then
-						range = 1
-					end
-				elseif opt.interact == 2 then -- 20y
-					local checkedRange
-					range, checkedRange = UnitInRange(unit)
-					if not checkedRange then
-						range = 1
-					end
-				elseif opt.interact == 1 then -- 30y
-					local checkedRange
-					range, checkedRange = UnitInRange(unit)
-					if not checkedRange then
-						range = 1
-					end
-				end
-				-- CheckInteractDistance
-				-- 1 = Inspect = 28 yards (BCC = 28 yards) (Vanilla = 10 yards)
-				-- 2 = Trade = 8 yards (BCC = 8 yards) (Vanilla = 11 yards)
-				-- 3 = Duel = 7 yards (BCC = 7 yards) (Vanilla = 10 yards)
-				-- 4 = Follow = 28 yards (BCC = 28 yards) (Vanilla = 28 yards)
-				-- 5 = Pet-battle Duel = 7 yards (BCC = 7 yards) (Vanilla = 10 yards)
-			elseif opt.spell or opt.spell2 then
-				if UnitCanAssist("player", unit) and opt.spell then
-					range = (C_Spell and C_Spell.IsSpellInRange) and C_Spell.IsSpellInRange(opt.spell, unit) or (IsSpellInRange and IsSpellInRange(opt.spell, unit))
-				elseif UnitCanAttack("player", unit) and opt.spell2 then
-					range = (C_Spell and C_Spell.IsSpellInRange) and C_Spell.IsSpellInRange(opt.spell2, unit) or (IsSpellInRange and IsSpellInRange(opt.spell2, unit))
-				else
-					-- Fallback (28y) (BCC = 28y) (Vanilla = 28 yards)
-					range = not InCombatLockdown() and CheckInteractDistance(unit, 4) or 1
-				end
-			--[[elseif not IsRetail and not IsVanillaClassic and (opt.item or opt.item2) then
-				if UnitCanAssist("player", unit) and opt.item then
-					range = not InCombatLockdown() and IsItemInRange(opt.item, unit)
-				elseif UnitCanAttack("player", unit) and opt.item2 then
-					range = not InCombatLockdown() and IsItemInRange(opt.item2, unit)
-				else
-					-- Fallback (28y) (BCC = 28y) (Vanilla = 28 yards)
-					range = not InCombatLockdown() and CheckInteractDistance(unit, 4)
-				end]]
-			else
-				range = 1
-			end
-		end
-
-		if range ~= 1 and range ~= true then
-			return opt.FadeAmount
-		end
-	end
+		return
+	end	
 end
 
 -- XPerl_UpdateSpellRange(self)
@@ -836,26 +704,12 @@ function XPerl_BlizzFrameDisable(self)
 	self:UnregisterAllEvents()
 
 	if self == PlayerFrame then
-		--[[local events = {
-			"PLAYER_ENTERING_WORLD",
-			"UNIT_ENTERING_VEHICLE",
-			"UNIT_ENTERED_VEHICLE",
-			"UNIT_EXITING_VEHICLE",
-			"UNIT_EXITED_VEHICLE",
-		}
-
-		for i, event in pairs(events) do
-			if pcall(self.RegisterEvent, self, event) then
-				self:RegisterEvent(event)
-			end
-		end--]]
-
 		if AlternatePowerBar then
 			AlternatePowerBar:UnregisterAllEvents()
 		end
 	end
 
-	if IsRetail and self == PartyFrame then
+	if self == PartyFrame then
 		for frame in PartyFrame.PartyMemberFramePool:EnumerateActive() do
 			XPerl_BlizzFrameDisable(frame)
 		end
@@ -1029,126 +883,8 @@ end
 function XPerl_SetValuedText(self, unitHealth, unitHealthMax, suffix)
 	local locale = GetLocale()
 
-	if IsRetail then 
-		-- if (abs(unitHealth) < 100000) then
-			-- self:SetFormattedText("%d/%d%s", unitHealth, unitHealthMax, suffix or "")
-			-- self:SetFormattedText("%d/%.1f%s%s",, unitHealth, largeNumTag, unitHealthMax, largeNumTag, suffix or "")
-		-- else
-		-- 	--sets it just to value / value (does not handle any shortening of the numbers atm)
-			self:SetFormattedText("%d/%d%s", unitHealth, unitHealthMax, suffix or "")
-		-- end
-	else
-		if locale == "zhCN" or locale == "zhTW" then
-			if unitHealthMax >= 1000000000000 then
-				if abs(unitHealth) >= 1000000000000 then
-					self:SetFormattedText("%.2f%s/%.2f%s%s", unitHealth / 1000000000000, veryhugeNumTag, unitHealthMax / 1000000000000, veryhugeNumTag, suffix or "")
-				elseif abs(unitHealth) >= 1000000000 then
-					self:SetFormattedText("%.1f%s/%.2f%s%s", unitHealth / 100000000, hugeNumTag, unitHealthMax / 1000000000000, veryhugeNumTag, suffix or "")
-				elseif abs(unitHealth) >= 100000000 then
-					self:SetFormattedText("%.2f%s/%.2f%s%s", unitHealth / 100000000, hugeNumTag, unitHealthMax / 1000000000000, veryhugeNumTag, suffix or "")
-				elseif abs(unitHealth) >= 1000000 then
-					self:SetFormattedText("%.1f%s/%.2f%s%s", unitHealth / 10000, hugeNumTag, unitHealthMax / 1000000000000, veryhugeNumTag, suffix or "")
-				elseif abs(unitHealth) >= 100000 then
-					self:SetFormattedText("%.2f%s/%.2f%s%s", unitHealth / 10000, largeNumTag, unitHealthMax / 1000000000000, veryhugeNumTag, suffix or "")
-				else
-					self:SetFormattedText("%d/%.2f%s%s", unitHealth, unitHealthMax / 1000000000000, veryhugeNumTag, suffix or "")
-				end
-			elseif unitHealthMax >= 1000000000 then
-				if abs(unitHealth) >= 1000000000 then
-					self:SetFormattedText("%.1f%s/%.1f%s%s", unitHealth / 100000000, hugeNumTag, unitHealthMax / 100000000, hugeNumTag, suffix or "")
-				elseif abs(unitHealth) >= 100000000 then
-					self:SetFormattedText("%.2f%s/%.1f%s%s", unitHealth / 100000000, hugeNumTag, unitHealthMax / 100000000, hugeNumTag, suffix or "")
-				elseif abs(unitHealth) >= 1000000 then
-					self:SetFormattedText("%.1f%s/%.1f%s%s", unitHealth / 10000, largeNumTag, unitHealthMax / 100000000, hugeNumTag, suffix or "")
-				elseif abs(unitHealth) >= 100000 then
-					self:SetFormattedText("%.2f%s/%.1f%s%s", unitHealth / 10000, largeNumTag, unitHealthMax / 100000000, hugeNumTag, suffix or "")
-				else
-					self:SetFormattedText("%d/%.2f%s%s", unitHealth, unitHealthMax / 100000000, hugeNumTag, suffix or "")
-				end
-			elseif unitHealthMax >= 100000000 then
-				if abs(unitHealth) >= 100000000 then
-					self:SetFormattedText("%.2f%s/%.2f%s%s", unitHealth / 100000000, hugeNumTag, unitHealthMax / 100000000, hugeNumTag, suffix or "")
-				elseif abs(unitHealth) >= 1000000 then
-					self:SetFormattedText("%.1f%s/%.2f%s%s", unitHealth / 10000, largeNumTag, unitHealthMax / 100000000, hugeNumTag, suffix or "")
-				elseif abs(unitHealth) >= 100000 then
-					self:SetFormattedText("%.2f%s/%.2f%s%s", unitHealth / 10000, largeNumTag, unitHealthMax / 100000000, hugeNumTag, suffix or "")
-				else
-					self:SetFormattedText("%d/%.2f%s%s", unitHealth, unitHealthMax / 100000000, hugeNumTag, suffix or "")
-				end
-			elseif unitHealthMax >= 1000000 then
-				if abs(unitHealth) >= 1000000 then
-					self:SetFormattedText("%.1f%s/%.1f%s%s", unitHealth / 10000, largeNumTag, unitHealthMax / 10000, largeNumTag, suffix or "")
-				elseif abs(unitHealth) >= 100000 then
-					self:SetFormattedText("%.2f%s/%.2f%s%s", unitHealth / 10000, largeNumTag, unitHealthMax / 10000, largeNumTag, suffix or "")
-				else
-					self:SetFormattedText("%d/%.1f%s%s", unitHealth, unitHealthMax / 10000, largeNumTag, suffix or "")
-				end
-			elseif unitHealthMax >= 100000 then
-				if abs(unitHealth) >= 100000 then
-					self:SetFormattedText("%.2f%s/%.2f%s%s", unitHealth / 10000, largeNumTag, unitHealthMax / 10000, largeNumTag, suffix or "")
-				else
-					self:SetFormattedText("%d/%.2f%s%s", unitHealth, unitHealthMax / 10000, largeNumTag, suffix or "")
-				end
-			else
-				self:SetFormattedText("%d/%d%s", unitHealth, unitHealthMax, suffix or "")
-			end
-		else
-			if unitHealthMax >= 1000000000 then
-				if abs(unitHealth) >= 1000000000 then
-					-- 1.23G/1.23G
-					self:SetFormattedText("%.2f%s/%.2f%s%s", unitHealth / 1000000000, veryhugeNumTag, unitHealthMax / 1000000000, veryhugeNumTag, suffix or "")
-				elseif abs(unitHealth) >= 10000000 then
-					-- 12.3M/1.23G
-					self:SetFormattedText("%.1f%s/%.2f%s%s", unitHealth / 1000000, hugeNumTag, unitHealthMax / 1000000000, veryhugeNumTag, suffix or "")
-				elseif abs(unitHealth) >= 1000000 then
-					-- 1.23M/1.23G
-					self:SetFormattedText("%.2f%s/%.2f%s%s", unitHealth / 1000000, hugeNumTag, unitHealthMax / 1000000000, veryhugeNumTag, suffix or "")
-				elseif abs(unitHealth) >= 100000 then
-					-- 123.4K/1.23G
-					self:SetFormattedText("%.1f%s/%.1f%s%s", unitHealth / 1000, largeNumTag, unitHealthMax / 1000000000, veryhugeNumTag, suffix or "")
-				else
-					-- 12345/1.23G
-					self:SetFormattedText("%d/%.2f%s%s", unitHealth, unitHealthMax / 1000000000, veryhugeNumTag, suffix or "")
-				end
-			elseif unitHealthMax >= 10000000 then
-				if abs(unitHealth) >= 10000000 then
-					-- 12.3M/12.3M
-					self:SetFormattedText("%.1f%s/%.1f%s%s", unitHealth / 1000000, hugeNumTag, unitHealthMax / 1000000, hugeNumTag, suffix or "")
-				elseif abs(unitHealth) >= 1000000 then
-					-- 1.23M/12.3M
-					self:SetFormattedText("%.2f%s/%.1f%s%s", unitHealth / 1000000, hugeNumTag, unitHealthMax / 1000000, hugeNumTag, suffix or "")
-				elseif abs(unitHealth) >= 100000 then
-					-- 123.4K/12.3M
-					self:SetFormattedText("%.1f%s/%.1f%s%s", unitHealth / 1000, largeNumTag, unitHealthMax / 1000000, hugeNumTag, suffix or "")
-				else
-					-- 12345/12.3M
-					self:SetFormattedText("%d/%.1f%s%s", unitHealth, unitHealthMax / 1000000, hugeNumTag, suffix or "")
-				end
-			elseif unitHealthMax >= 1000000 then
-				if abs(unitHealth) >= 1000000 then
-					-- 1.23M/1.23M
-					self:SetFormattedText("%.2f%s/%.2f%s%s", unitHealth / 1000000, hugeNumTag, unitHealthMax / 1000000, hugeNumTag, suffix or "")
-				elseif abs(unitHealth) >= 100000 then
-					-- 123.4K/1.23M
-					self:SetFormattedText("%.1f%s/%.2f%s%s", unitHealth / 1000, largeNumTag, unitHealthMax / 1000000, hugeNumTag, suffix or "")
-				else
-					-- 12345/1.23M
-					self:SetFormattedText("%d/%.2f%s%s", unitHealth, unitHealthMax / 1000000, hugeNumTag, suffix or "")
-				end
-			elseif unitHealthMax >= 100000 then
-				if abs(unitHealth) >= 100000 then
-					-- 123.4K/123.4K
-					self:SetFormattedText("%.1f%s/%.1f%s%s", unitHealth / 1000, largeNumTag, unitHealthMax / 1000, largeNumTag, suffix or "")
-				else
-					-- 12345/123.4K
-					self:SetFormattedText("%d/%.1f%s%s", unitHealth, unitHealthMax / 1000, largeNumTag, suffix or "")
-				end
-			else
-				-- 12345/12345
-				self:SetFormattedText("%d/%d%s", unitHealth, unitHealthMax, suffix or "")
-			end
-		end
-	end
+	-- need to add abbreviated numbers here
+	self:SetFormattedText("%d/%d%s", unitHealth, unitHealthMax, suffix or "")
 end
 
 local SetValuedText = XPerl_SetValuedText 
@@ -1156,152 +892,42 @@ local SetValuedText = XPerl_SetValuedText
 -- XPerl_SetHealthBar
 function XPerl_SetHealthBar(self, hp, Max)
 	local bar = self.statsFrame.healthBar
-	bar:SetMinMaxValues(0, Max)
+	bar:SetMinMaxValues(0, Max) --0 is always min / hp max is always max so just set them
+
 	local percent
-
-	if IsRetail then 
-		percent = UnitHealthPercent(self.partyid, true, CurveConstants.ScaleTo100)
-	else
-		if hp >= 1 and Max == 0 then -- For some dumb reason max HP is 0, normal HP is not, so lets use normal HP as max
-		Max = hp
-		percent = 1
-		elseif hp == 0 and Max == 0 then -- Both are 0, so it's probably dead since usually current HP returns correctly when Max HP fails.
-			percent = 0
-		else
-			percent = hp / Max
-		end
-
-		if percent > 1 then percent = 1 end -- percent only goes to 100
-	end
+	--Get health bar percent for unit
+	percent = UnitHealthPercent(self.partyid, true, CurveConstants.ScaleTo100)
 	
-
-	if (conf.bar.inverse) then
-		if IsRetail then
-			bar:SetValue(hp)
-			-- bar.tex:SetTexCoord(0, max(0,(1 - percent)), 0, 1) -- no clue how to do the inverse yet in retail
-		else 
-			bar:SetValue(Max - hp)
-			bar.tex:SetTexCoord(0, max(0,(1 - percent)), 0, 1)
-		end
-	else
-		if IsRetail then
-			bar:SetValue(hp)
-			-- bar.tex:SetTexCoord(0, max(0,(percent)), 0, 1) -- no clue how to do the non inverse yet in retail
-		else 
-			bar:SetValue(hp)
-			bar.tex:SetTexCoord(0, max(0, percent), 0, 1)
-		end
-	end
-
+	--set the color of the healthBar
 	XPerl_ColourHealthBar(self, percent)
-
+	
+	--Set percent bar for health
 	if (bar.percent) then
 		if (self.conf.healerMode and self.conf.healerMode.enable and self.conf.healerMode.type == 2) then
-			--bar.percent:SetText(hp - Max)
-			if IsRetail then 
-				local locale = GetLocale()
-				if locale == "zhCN" or locale == "zhTW" then
-					bar.percent:SetFormattedText(percD, percent)
-				else
-					bar.percent:SetFormattedText(percD, percent)
-				end
-			else
-				local health = hp - Max
-				local locale = GetLocale()
-				if locale == "zhCN" or locale == "zhTW" then
-					if (abs(health) >= 1000000000000) then
-						bar.percent:SetFormattedText("%.0f%s", health / 1000000000000, veryhugeNumTag)
-					elseif (abs(health) >= 100000000) then
-						bar.percent:SetFormattedText("%.0f%s", health / 100000000, hugeNumTag)
-					elseif (abs(health) >= 1000000) then
-						bar.percent:SetFormattedText("%.0f%s", health / 10000, largeNumTag)
-					elseif (abs(health) >= 1000) then
-						bar.percent:SetFormattedText("%.1f%s", health / 10000, largeNumTag)
-					else
-						bar.percent:SetFormattedText("%d", health)
-					end
-				else
-					if (abs(health) >= 10000000000) then
-						bar.percent:SetFormattedText("%.0f%s", health / 1000000000, veryhugeNumTag)
-					elseif (abs(health) >= 1000000000) then
-						bar.percent:SetFormattedText("%.1f%s", health / 1000000000, veryhugeNumTag)
-					elseif (abs(health) >= 10000000) then
-						bar.percent:SetFormattedText("%.0f%s", health / 1000000, hugeNumTag)
-					elseif (abs(health) >= 1000000) then
-						bar.percent:SetFormattedText("%.1f%s", health / 1000000, hugeNumTag)
-					elseif (abs(health) >= 10000) then
-						bar.percent:SetFormattedText("%.0f%s", health / 1000, largeNumTag)
-					elseif (abs(health) >= 1000) then
-						bar.percent:SetFormattedText("%.1f%s", health / 1000, largeNumTag)
-					else
-						bar.percent:SetFormattedText("%d", health)
-					end
-				end
-			end
-		else
-			if IsRetail then 
+			local locale = GetLocale()
+			if locale == "zhCN" or locale == "zhTW" then
 				bar.percent:SetFormattedText(percD, percent)
 			else
-				local show = percent * 100
-				if (show < 10) then
-					bar.percent:SetFormattedText(perc1F or "%.1f%%", percent == 1 and 100 or show + 0.05)
-				else
-					bar.percent:SetFormattedText(percD or "%d%%", percent == 1 and 100 or show + 0.5)
-				end
+				bar.percent:SetFormattedText(percD, percent)
 			end
+		else
+			bar.percent:SetFormattedText(percD, percent)
 		end
 	end
 
+	--Set health bar text
 	if (bar.text) then
 		local hbt = bar.text
 		if (self.conf.healerMode.enable and self.conf.healerMode.type ~= 2) then
-			if IsRetail then 
-				if (self.conf.healerMode.type == 1) then
-					SetValuedText(hbt, health, Max)
-				else
-					hbt:SetFormattedText("%d", health)
-				end
+			if (self.conf.healerMode.type == 1) then
+				SetValuedText(hbt, health, Max)
 			else
-				local health = hp - Max
-				if (self.conf.healerMode.type == 1) then
-					SetValuedText(hbt, health, Max)
-				else
-					local locale = GetLocale()
-					if locale == "zhCN" or locale == "zhTW" then
-						if (abs(health) >= 1000000000000) then
-							hbt:SetFormattedText("%.2f%s", health / 1000000000000, veryhugeNumTag)
-						elseif (abs(health) >= 1000000000) then
-							hbt:SetFormattedText("%.0f%s", health / 100000000, hugeNumTag)
-						elseif (abs(health) >= 100000000) then
-							hbt:SetFormattedText("%.1f%s", health / 100000000, hugeNumTag)
-						elseif (abs(health) >= 1000000) then
-							hbt:SetFormattedText("%.0f%s", health / 10000, largeNumTag)
-						elseif (abs(health) >= 100000) then
-							hbt:SetFormattedText("%.1f%s", health / 10000, largeNumTag)
-						else
-							hbt:SetFormattedText("%d", health)
-						end
-					else
-						if (abs(health) >= 1000000000) then
-							hbt:SetFormattedText("%.2f%s", health / 1000000000, veryhugeNumTag)
-						elseif (abs(health) >= 10000000) then
-							hbt:SetFormattedText("%.1f%s", health / 1000000, hugeNumTag)
-						elseif (abs(health) >= 1000000) then
-							hbt:SetFormattedText("%.2f%s", health / 1000000, hugeNumTag)
-						elseif (abs(health) >= 100000) then
-							hbt:SetFormattedText("%.1f%s", health / 1000, largeNumTag)
-						else
-							hbt:SetFormattedText("%d", health)
-						end
-					end
-				end
+				hbt:SetFormattedText("%d", health)
 			end
 		else
 			SetValuedText(hbt, hp, Max)
 		end
 	end
-
-	--XPerl_SetExpectedHealth(self)
 end
 
 ---------------------------------
@@ -1319,9 +945,6 @@ end
 --	PALADIN	= {0,    0.25,    0.5,	0.75},
 --	none	= {0.25, 0.5, 0.5, 0.75},
 --}
---function XPerl_ClassPos(class)
---	return unpack(ClassPos[class] or ClassPos.none)
---end
 
 local CLASS_ICON_TCOORDS = CLASS_ICON_TCOORDS
 function XPerl_ClassPos(unitClass)
@@ -1359,12 +982,6 @@ function XPerl_UnlockFrames()
 		XPerl_AggroAnchor:Enable()
 	end
 
-	--[[if (XPerl_Player) then
-		if (XPerl_Player.runes and not InCombatLockdown()) then
-			XPerl_Player.runes:EnableMouse(true)
-		end
-	end]]
-
 	if (XPerl_Options) then
 		XPerl_Options:Show()
 		XPerl_Options:SetAlpha(0)
@@ -1397,12 +1014,6 @@ function XPerl_LockFrames()
 	if (XPerl_AggroAnchor) then
 		XPerl_AggroAnchor:Disable()
 	end
-
-	--[[if (XPerl_Player) then
-		if (XPerl_Player.runes and not InCombatLockdown()) then
-			XPerl_Player.runes:EnableMouse(false)
-		end
-	end]]
 
 	if (XPerl_RaidTitles) then
 		XPerl_RaidTitles()
@@ -1451,58 +1062,58 @@ function XPerl_MinimapMenu_Initialize(self, level)
 	info.text = XPERL_MINIMENU_OPTIONS
 	MSA_DropDownMenu_AddButton(info)
 
-	if (C_AddOns.IsAddOnLoaded("BlackPerl_RaidHelper")) then
-		if (XPerl_Assists_Frame and not XPerl_Assists_Frame:IsShown()) then
-			info = MSA_DropDownMenu_CreateInfo()
-			info.notCheckable = 1
-			info.text = XPERL_MINIMENU_ASSIST
-			info.func = function()
-					BlackPerlConfigHelper.AssistsFrame = 1
-					BlackPerlConfigHelper.TargettingFrame = 1
-					XPerl_SetFrameSides()
-				end
-			MSA_DropDownMenu_AddButton(info)
-		end
-	end
+	-- if (C_AddOns.IsAddOnLoaded("BlackPerl_RaidHelper")) then
+	-- 	if (XPerl_Assists_Frame and not XPerl_Assists_Frame:IsShown()) then
+	-- 		info = MSA_DropDownMenu_CreateInfo()
+	-- 		info.notCheckable = 1
+	-- 		info.text = XPERL_MINIMENU_ASSIST
+	-- 		info.func = function()
+	-- 				BlackPerlConfigHelper.AssistsFrame = 1
+	-- 				BlackPerlConfigHelper.TargettingFrame = 1
+	-- 				XPerl_SetFrameSides()
+	-- 			end
+	-- 		MSA_DropDownMenu_AddButton(info)
+	-- 	end
+	-- end
 
-	if (C_AddOns.IsAddOnLoaded("BlackPerl_RaidMonitor")) then
-		if (XPerl_RaidMonitor_Frame and not XPerl_RaidMonitor_Frame:IsShown()) then
-			info = MSA_DropDownMenu_CreateInfo()
-			info.notCheckable = 1
-			info.text = XPERL_MINIMENU_CASTMON
-			info.func = function()
-				BlackPerlRaidMonConfig.enabled = 1
-				XPerl_RaidMonitor_Frame:SetFrameSizes()
-			end
-			MSA_DropDownMenu_AddButton(info)
-		end
-	end
+	-- if (C_AddOns.IsAddOnLoaded("BlackPerl_RaidMonitor")) then
+	-- 	if (XPerl_RaidMonitor_Frame and not XPerl_RaidMonitor_Frame:IsShown()) then
+	-- 		info = MSA_DropDownMenu_CreateInfo()
+	-- 		info.notCheckable = 1
+	-- 		info.text = XPERL_MINIMENU_CASTMON
+	-- 		info.func = function()
+	-- 			BlackPerlRaidMonConfig.enabled = 1
+	-- 			XPerl_RaidMonitor_Frame:SetFrameSizes()
+	-- 		end
+	-- 		MSA_DropDownMenu_AddButton(info)
+	-- 	end
+	-- end
 
-	if (C_AddOns.IsAddOnLoaded("BlackPerl_RaidAdmin")) then
-		if (XPerl_AdminFrame and not XPerl_AdminFrame:IsShown()) then
-			info = MSA_DropDownMenu_CreateInfo()
-			info.notCheckable = 1
-			info.text = XPERL_MINIMENU_RAIDAD
-			info.func = function() XPerl_AdminFrame:Show() end
-			MSA_DropDownMenu_AddButton(info)
-		end
+	-- if (C_AddOns.IsAddOnLoaded("BlackPerl_RaidAdmin")) then
+	-- 	if (XPerl_AdminFrame and not XPerl_AdminFrame:IsShown()) then
+	-- 		info = MSA_DropDownMenu_CreateInfo()
+	-- 		info.notCheckable = 1
+	-- 		info.text = XPERL_MINIMENU_RAIDAD
+	-- 		info.func = function() XPerl_AdminFrame:Show() end
+	-- 		MSA_DropDownMenu_AddButton(info)
+	-- 	end
 
-		if (XPerl_Check and not XPerl_Check:IsShown()) then
-			info = MSA_DropDownMenu_CreateInfo()
-			info.notCheckable = 1
-			info.text = XPERL_MINIMENU_ITEMCHK
-			info.func = function() XPerl_Check:Show() end
-			MSA_DropDownMenu_AddButton(info)
-		end
+	-- 	if (XPerl_Check and not XPerl_Check:IsShown()) then
+	-- 		info = MSA_DropDownMenu_CreateInfo()
+	-- 		info.notCheckable = 1
+	-- 		info.text = XPERL_MINIMENU_ITEMCHK
+	-- 		info.func = function() XPerl_Check:Show() end
+	-- 		MSA_DropDownMenu_AddButton(info)
+	-- 	end
 
-		if (XPerl_RosterText and not XPerl_RosterText:IsShown()) then
-			info = MSA_DropDownMenu_CreateInfo()
-			info.notCheckable = 1
-			info.text = XPERL_MINIMENU_ROSTERTEXT
-			info.func = function() XPerl_RosterText:Show() end
-			MSA_DropDownMenu_AddButton(info)
-		end
-	end
+	-- 	if (XPerl_RosterText and not XPerl_RosterText:IsShown()) then
+	-- 		info = MSA_DropDownMenu_CreateInfo()
+	-- 		info.notCheckable = 1
+	-- 		info.text = XPERL_MINIMENU_ROSTERTEXT
+	-- 		info.func = function() XPerl_RosterText:Show() end
+	-- 		MSA_DropDownMenu_AddButton(info)
+	-- 	end
+	-- end
 end
 
 -- XPerl_MinimapMenu
@@ -1520,7 +1131,6 @@ local xpStartupMemory = {}
 
 -- BlackPerl_MinimapButton_Init
 function BlackPerl_MinimapButton_Init(self)
-	--self.time = 0
 	collectgarbage()
 	UpdateAddOnMemoryUsage()
 	local totalKB = 0
@@ -1539,26 +1149,16 @@ function BlackPerl_MinimapButton_Init(self)
 		self:Hide()
 	end
 
-	--self.UpdateTooltip = XPerl_MinimapButton_OnEnter
-
 	BlackPerl_MinimapButton_Init = nil
 end
 
 -- XPerl_MinimapButton_UpdatePosition
 function XPerl_MinimapButton_UpdatePosition(self)
 	if (not conf.minimap.radius) then
-		if IsRetail then
-			conf.minimap.radius = 101
-		else
-			conf.minimap.radius = 78
-		end
+		conf.minimap.radius = 101
 	end
 	self:ClearAllPoints()
-	if IsRetail then
-		self:SetPoint("TOPLEFT", "Minimap", "TOPLEFT", 80 - (conf.minimap.radius * cos(conf.minimap.pos)), (conf.minimap.radius * sin(conf.minimap.pos)) - 82)
-	else
-		self:SetPoint("TOPLEFT", "Minimap", "TOPLEFT", 54 - (conf.minimap.radius * cos(conf.minimap.pos)), (conf.minimap.radius * sin(conf.minimap.pos)) - 55)
-	end
+	self:SetPoint("TOPLEFT", "Minimap", "TOPLEFT", 80 - (conf.minimap.radius * cos(conf.minimap.pos)), (conf.minimap.radius * sin(conf.minimap.pos)) - 82)
 end
 
 -- XPerl_MinimapButton_Dragging
@@ -1629,18 +1229,6 @@ function XPerl_MinimapButton_Details(tt, ldb)
 			tt:AddLine(XPERL_MINIMAP_HELP5)
 		end
 	end
-	--GetRealNumRaidMembers doesn't exist anymore in 5.0.4
-	--[==[if (GetRealNumRaidMembers) then
-		if (GetNumGroupMembers() > 0 and GetRealNumRaidMembers() > 0) then
-			if (select(2, IsInInstance()) == "pvp") then
-				tt:AddLine(format(XPERL_MINIMAP_HELP3, GetRealNumRaidMembers(), GetNumSubgroupMembers(LE_PARTY_CATEGORY_HOME)))
-
-				if (IsRealPartyLeader()) then
-					tt:AddLine(XPERL_MINIMAP_HELP4)
-				end
-			end
-		end
-	end]==]
 
 	if UpdateAddOnMemoryUsage and IsAltKeyDown() then
 		local showDiff = IsShiftKeyDown()
@@ -1699,7 +1287,7 @@ function XPerl_MinimapButton_Details(tt, ldb)
 end
 
 function XPerl_GetDisplayedPowerType(unitID)
-	local barInfo = not IsClassic and GetUnitPowerBarInfo(unitID)
+	local barInfo = GetUnitPowerBarInfo(unitID)
 	if barInfo and barInfo.showOnRaid and UnitHasVehicleUI(unitID) and (UnitInParty(unitID) or UnitInRaid(unitID)) then
 		return ALTERNATE_POWER_INDEX
 	else
@@ -1805,9 +1393,9 @@ function XPerl_PlayerTip(self, unitid)
 	GameTooltipTextLeft1:SetTextColor(r, g, b)
 	GameTooltip:Show()
 
-	if (XPerl_RaidTipExtra) then
-		XPerl_RaidTipExtra(unitid)
-	end
+	-- if (XPerl_RaidTipExtra) then
+	-- 	XPerl_RaidTipExtra(unitid)
+	-- end
 
 	XPerl_Highlight:TooltipInfo(UnitName(unitid))
 end
@@ -1824,7 +1412,7 @@ end
 -- XPerl_ColourFriendlyUnit
 function XPerl_ColourFriendlyUnit(self, partyid)
 	local color
-	if (UnitCanAttack("player", partyid) and UnitIsEnemy("player", partyid)) then	-- For dueling
+	if (UnitCanAttack("player", partyid) and UnitIsEnemy("player", partyid)) then -- For dueling
 		color = conf.colour.reaction.enemy
 	else
 		if (conf.colour.class) then
@@ -1983,7 +1571,7 @@ local MagicCureTalents = {
 
 local function CanClassCureMagic(class)
 	if (MagicCureTalents[class]) then
-		return not IsClassic and GetSpecialization() == MagicCureTalents[class] or (MagicCureTalentsClassic[class] and IsSpellKnown(MagicCureTalentsClassic[class]))
+		return GetSpecialization() == MagicCureTalents[class] or (MagicCureTalentsClassic[class] and IsSpellKnown(MagicCureTalentsClassic[class]))
 	end
 end
 
@@ -2375,7 +1963,7 @@ local BuffExceptions
 local DebuffExceptions
 local SeasonalDebuffs
 local RaidFrameIgnores
-if IsRetail then
+
 	BuffExceptions = {
 		PRIEST = {
 			[C_Spell.GetSpellInfo(774).name] = true,				-- Rejuvenation
@@ -2459,92 +2047,6 @@ if IsRetail then
 		[C_Spell.GetSpellInfo(71041).name] = true,					-- Dungeon Deserter
 		[C_Spell.GetSpellInfo(71328).name] = true,					-- Dungeon Cooldown
 	}
-else
-	BuffExceptions = {
-		PRIEST = {
-			[GetSpellInfo(774)] = true,					-- Rejuvenation
-			[GetSpellInfo(8936)] = true,				-- Regrowth
-			--[GetSpellInfo(33076)] = true,				-- Prayer of Mending
-			--[GetSpellInfo(81749)] = true,				-- Atonement
-		},
-		DRUID = {
-			[GetSpellInfo(139)] = true,					-- Renew
-		},
-		WARLOCK = {
-			[GetSpellInfo(20707)] = true,				-- Soulstone Resurrection
-		},
-		HUNTER = {
-			[GetSpellInfo(13165)] = true,				-- Aspect of the Hawk
-			[GetSpellInfo(5118)] = true,				-- Aspect of the Cheetah
-			[GetSpellInfo(13159)] = true,				-- Aspect of the Pack
-			--[GetSpellInfo(61648)] = true,				-- Aspect of the Beast
-			--[GetSpellInfo(13163)] = true,				-- Aspect of the Monkey
-			[GetSpellInfo(19506)] = true,				-- Trueshot Aura
-			[GetSpellInfo(5384)] = true,				-- Feign Death
-		},
-		ROGUE = {
-			[GetSpellInfo(1784)] = true,				-- Stealth
-			[GetSpellInfo(1856)] = true,				-- Vanish
-			[GetSpellInfo(2983)] = true,				-- Sprint
-			[GetSpellInfo(13750)] = true,				-- Adrenaline Rush
-			[GetSpellInfo(13877)] = true,				-- Blade Flurry
-		},
-		PALADIN = {
-			[GetSpellInfo(20154)] = true,				-- Seal of Righteousness
-			[GetSpellInfo(20165)] = true,				-- Seal of Insight
-			[GetSpellInfo(20164)] = true,				-- Seal of Justice
-			--[GetSpellInfo(31801)] = true,				-- Seal of Truth
-			--[GetSpellInfo(20375)] = true,				-- Seal of Command
-			--[GetSpellInfo(20166)] = true,				-- Seal of Wisdom
-			[GetSpellInfo(20165)] = true,				-- Seal of Light
-			--[GetSpellInfo(53736)] = true,				-- Seal of Corruption
-			--[GetSpellInfo(31892)] = true,				-- Seal of Blood
-			--[GetSpellInfo(31801)] = true,				-- Seal of Vengeance
-			[GetSpellInfo(25780)] = true,				-- Righteous Fury
-			[GetSpellInfo(20925)] = true,				-- Holy Shield
-			--[GetSpellInfo(54428)] = true,				-- Divine Plea
-		},
-	}
-	DebuffExceptions = {
-		ALL = {
-			[GetSpellInfo(11196)] = true,				-- Recently Bandaged
-		},
-		PRIEST = {
-			[GetSpellInfo(6788)] = true,				-- Weakened Soul
-		},
-		PALADIN = {
-			[GetSpellInfo(25771)] = true				-- Forbearance
-		}
-	}
-
-	SeasonalDebuffs = {
-		[GetSpellInfo(26004)] = true,					-- Mistletoe
-		[GetSpellInfo(26680)] = true,					-- Adored
-		[GetSpellInfo(26898)] = true,					-- Heartbroken
-		--[GetSpellInfo(64805)] = true,					-- Bested Darnassus
-		--[GetSpellInfo(64808)] = true,					-- Bested the Exodar
-		--[GetSpellInfo(64809)] = true,					-- Bested Gnomeregan
-		--[GetSpellInfo(64810)] = true,					-- Bested Ironforge
-		--[GetSpellInfo(64811)] = true,					-- Bested Orgrimmar
-		--[GetSpellInfo(64812)] = true,					-- Bested Sen'jin
-		--[GetSpellInfo(64813)] = true,					-- Bested Silvermoon City
-		--[GetSpellInfo(64814)] = true,					-- Bested Stormwind
-		--[GetSpellInfo(64815)] = true,					-- Bested Thunder Bluff
-		--[GetSpellInfo(64816)] = true,					-- Bested the Undercity
-		--[GetSpellInfo(36900)] = true,					-- Soul Split: Evil!
-		--[GetSpellInfo(36901)] = true,					-- Soul Split: Good
-		--[GetSpellInfo(36899)] = true,					-- Transporter Malfunction
-		[GetSpellInfo(24755)] = true,					-- Tricked or Treated
-		--[GetSpellInfo(69127)] = true,					-- Chill of the Throne
-		--[GetSpellInfo(69438)] = true,					-- Sample Satisfaction
-	}
-
-	RaidFrameIgnores = {
-		[GetSpellInfo(26013)] = true,					-- Deserter
-		--[GetSpellInfo(71041)] = true,					-- Dungeon Deserter
-		--[GetSpellInfo(71328)] = true,					-- Dungeon Cooldown
-	}
-end
 
 -- BuffException
 local showInfo
@@ -3333,11 +2835,7 @@ end
 
 -- XPerl_Unit_BuffPositions
 function XPerl_Unit_BuffPositions(self, buffList1, buffList2, size1, size2)
-	if IsRetail then
-			local optMix = format("%d%d%d%d%d%d%d", self.perlBuffs or 0, self.perlDebuffs or 0, self.perlBuffsMine or 0, self.perlDebuffsMine or 0, UnitCanAttack("player", self.partyid) and 1 or 0, UnitPowerMax(self.partyid) and 1 or 0, (self.creatureTypeFrame and self.creatureTypeFrame:IsVisible()) and 1 or 0)
-	else 
-		local optMix = format("%d%d%d%d%d%d%d", self.perlBuffs or 0, self.perlDebuffs or 0, self.perlBuffsMine or 0, self.perlDebuffsMine or 0, UnitCanAttack("player", self.partyid) and 1 or 0, (UnitPowerMax(self.partyid) > 0) and 1 or 0, (self.creatureTypeFrame and self.creatureTypeFrame:IsVisible()) and 1 or 0)
-	end
+	local optMix = format("%d%d%d%d%d%d%d", self.perlBuffs or 0, self.perlDebuffs or 0, self.perlBuffsMine or 0, self.perlDebuffsMine or 0, UnitCanAttack("player", self.partyid) and 1 or 0, UnitPowerMax(self.partyid) and 1 or 0, (self.creatureTypeFrame and self.creatureTypeFrame:IsVisible()) and 1 or 0)
 
 	if (optMix ~= self.buffOptMix) then
 		WieghAnchor(self)
@@ -3357,6 +2855,7 @@ function XPerl_Unit_BuffPositions(self, buffList1, buffList2, size1, size2)
 		if (buffList1 and buffList1[1]) then
 			buffList1[1]:ClearAllPoints()
 		end
+
 		if (buffList2 and buffList2[1]) then
 			buffList2[1]:ClearAllPoints()
 		end
@@ -3364,6 +2863,7 @@ function XPerl_Unit_BuffPositions(self, buffList1, buffList2, size1, size2)
 		if (buffList1) then
 			XPerl_Unit_BuffPositionsType(self, buffList1, true, size1)
 		end
+
 		if (buffList2) then
 			XPerl_Unit_BuffPositionsType(self, buffList2, false, size2)
 		end
@@ -3394,11 +2894,6 @@ function XPerl_Unit_BuffPositions(self, buffList1, buffList2, size1, size2)
 	end
 end
 
---[[local function fixMeBlizzard(self)
-	self.anim:Play()
-	self:SetScript("OnUpdate", nil)
-end]]
-
 -- XPerl_Unit_UpdateBuffs(self)
 function XPerl_Unit_UpdateBuffs(self, maxBuffs, maxDebuffs, castableOnly, curableOnly)
 	local buffs, debuffs, buffsMine, debuffsMine = 0, 0, 0, 0
@@ -3421,6 +2916,7 @@ function XPerl_Unit_UpdateBuffs(self, maxBuffs, maxDebuffs, castableOnly, curabl
 		if (self.conf.buffs.enable and maxBuffs and maxBuffs > 0) then
 			local buffIconIndex = 1
 			self.buffFrame:Show()
+
 			for mine = 1, 2 do
 				if (self.conf.buffs.onlyMine and mine == 2) then
 					if (not UnitCanAttack("player", partyid)) then
@@ -3448,13 +2944,8 @@ function XPerl_Unit_UpdateBuffs(self, maxBuffs, maxDebuffs, castableOnly, curabl
 					end
 
 					local isPlayer
-					-- if (self.conf.buffs.bigpet) then
-					-- 	isPlayer = unitCaster == "player" or unitCaster == "pet" or unitCaster == "vehicle"
-					-- else
-					-- 	isPlayer = unitCaster == "player" or unitCaster == "vehicle"
-					-- end
 
-					if IsRetail then 
+
 						--In midnight you canonly get the buffs of yourself / a party or a raid member
 						--If you are in a party / raid yourself is self.partyid --> if you are not in a party or raid then the target of the target is yoursel and you can already see your buffs
 						if UnitInParty(self.partyid) or UnitInRaid(self.partyid) then
@@ -3466,89 +2957,9 @@ function XPerl_Unit_UpdateBuffs(self, maxBuffs, maxDebuffs, castableOnly, curabl
 								isPlayer = UnitIsPlayer(self.partyid) --unitCaster == "player" or unitCaster == "vehicle"
 							end
 						end
-					else
-						if (self.conf.buffs.bigpet) then
-							isPlayer = unitCaster == "player" or unitCaster == "pet" or unitCaster == "vehicle"
-						else
-							isPlayer = unitCaster == "player" or unitCaster == "vehicle"
-						end
-					end
-
-					if IsRetail then
-						--currently do nothing until we figure out how to do this. cannot seem to get the information for people not in party or raid or yourself. 
-					elseif (icon and (((mine == 1) and (isPlayer or canStealOrPurge)) or ((mine == 2) and not (isPlayer or canStealOrPurge)))) then
-							local button = XPerl_GetBuffButton(self, buffIconIndex, 0, true, buffnum)
-							button.filter = filter
-							button:SetAlpha(1)
-
-							buffs = buffs + 1
-
-							button.icon:SetTexture(icon)
-							if (count > 1) then
-								button.count:SetText(count)
-								button.count:Show()
-							else
-								button.count:Hide()
-							end
-
-							-- Handle cooldowns
-							if (button.cooldown) then
-								if (duration and duration > 0 and expirationTime and expirationTime > 0 and conf.buffs.cooldown and (isPlayer or conf.buffs.cooldownAny)) then
-									local start = expirationTime - duration
-									XPerl_CooldownFrame_SetTimer(button.cooldown, start, duration, 1, isPlayer)
-								else
-									button.cooldown:Hide()
-								end
-							end
-
-							button:Show()
-
-							if (canStealOrPurge) then --  and UnitCanAttack("player", partyid)
-								if (not button.steal) then
-									button.steal = CreateFrame("Frame", nil, button, BackdropTemplateMixin and "BackdropTemplate")
-									button.steal:SetPoint("TOPLEFT", -2, 2)
-									button.steal:SetPoint("BOTTOMRIGHT", 2, -2)
-
-									button.steal.tex = button.steal:CreateTexture(nil, "OVERLAY")
-									button.steal.tex:SetAllPoints()
-									button.steal.tex:SetTexture("Interface\\Addons\\BlackPerl\\Images\\StealMe")
-
-									local g = button.steal.tex:CreateAnimationGroup()
-									button.steal.anim = g
-									local r = g:CreateAnimation("Rotation")
-									g.rot = r
-
-									r:SetDuration(4)
-									r:SetDegrees(-360)
-									r:SetOrigin("CENTER", 0, 0)
-
-									g:SetLooping("REPEAT")
-									g:Play()
-								end
-
-								button.steal:Show()
-								button.steal.anim:Play()
-								--button.steal:SetScript("OnUpdate", fixMeBlizzard) -- Workaround for Play not always working...
-							else
-								if (button.steal) then
-									button.steal:Hide()
-								end
-							end
-
-							lastIcon = buffIconIndex
-
-							if ((self.conf.buffs.big and isPlayer) or (self.conf.buffs.bigStealable and canStealOrPurge)) then
-								buffsMine = buffsMine + 1
-								button.big = true
-								button:SetScale((self.conf.buffs.size * 2) / 32)
-							else
-								button.big = nil
-								button:SetScale(self.conf.buffs.size / 32)
-							end
-							buffIconIndex = buffIconIndex + 1
-						end
-					end
+				end 
 			end
+
 			for buffnum = lastIcon + 1, 40 do
 				local button = self.buffFrame.buff and self.buffFrame.buff[buffnum]
 				if (button) then
@@ -3571,8 +2982,6 @@ function XPerl_Unit_UpdateBuffs(self, maxBuffs, maxDebuffs, castableOnly, curabl
 					if (UnitCanAttack("player", partyid)) then
 						break
 					end
-					-- Else we'll ignore this option for friendly targets, because it's unlikey
-					-- (except for PW:Shield and HoProtection) that we'll be debuffing friendlies
 				end
 
 				for buffnum = 1, maxDebuffs do
@@ -3587,13 +2996,7 @@ function XPerl_Unit_UpdateBuffs(self, maxBuffs, maxDebuffs, castableOnly, curabl
 					end
 
 					local isPlayer
-					-- if (self.conf.buffs.bigpet) then
-					-- 	isPlayer = unitCaster == "player" or unitCaster == "pet" or unitCaster == "vehicle"
-					-- else
-					-- 	isPlayer = unitCaster == "player"
-					-- end
 
-					if IsRetail then 
 						--In midnight you canonly get the buffs of yourself / a party or a raid member
 						--If you are in a party / raid yourself is self.partyid --> if you are not in a party or raid then the target of the target is yoursel and you can already see your buffs
 						if UnitInParty(self.partyid) or UnitInRaid(self.partyid) then
@@ -3605,60 +3008,9 @@ function XPerl_Unit_UpdateBuffs(self, maxBuffs, maxDebuffs, castableOnly, curabl
 								isPlayer = UnitIsPlayer(self.partyid) --unitCaster == "player" or unitCaster == "vehicle"
 							end
 						end
-					else
-						if (self.conf.buffs.bigpet) then
-							isPlayer = unitCaster == "player" or unitCaster == "pet" or unitCaster == "vehicle"
-						else
-							isPlayer = unitCaster == "player" or unitCaster == "vehicle"
-						end
-					end
-
-				if IsRetail then
-						--currently do nothing until we figure out how to do this. cannot seem to get the information for people not in party or raid or yourself. 
-				elseif (icon and (((mine == 1) and isPlayer) or ((mine == 2) and not isPlayer))) then
-						local button = XPerl_GetBuffButton(self, buffIconIndex, 1, true, buffnum)
-						button.filter = filter
-						button:SetAlpha(1)
-
-						debuffs = debuffs + 1
-
-						button.icon:SetTexture(icon)
-						if ((count or 0) > 1) then
-							button.count:SetText(count)
-							button.count:Show()
-						else
-							button.count:Hide()
-						end
-						
-						local borderColor = DebuffTypeColor[(debuffType or "none")]
-
-						button.border:SetVertexColor(borderColor.r, borderColor.g, borderColor.b)
-
-						-- Handle cooldowns
-						if (button.cooldown) then
-							if (duration and duration > 0 and expirationTime and expirationTime > 0 and conf.buffs.cooldown and (isPlayer or conf.buffs.cooldownAny)) then
-								local start = expirationTime - duration
-								XPerl_CooldownFrame_SetTimer(button.cooldown, start, duration, 1, isPlayer)
-							else
-								button.cooldown:Hide()
-							end
-						end
-
-						lastIcon = buffIconIndex
-						button:Show()
-
-						if (self.conf.debuffs.big and isPlayer) then
-							debuffsMine = debuffsMine + 1
-							button.big = true
-							button:SetScale((self.conf.debuffs.size * 2) / 32)
-						else
-							button.big = nil
-							button:SetScale(self.conf.debuffs.size / 32)
-						end
-						buffIconIndex = buffIconIndex + 1
-					end
 				end
 			end
+
 			for buffnum = lastIcon + 1, 40 do
 				local button = self.buffFrame.debuff and self.buffFrame.debuff[buffnum]
 				if (button) then
@@ -3931,19 +3283,7 @@ function XPerl_Unit_GetHealth(self)
 	local partyid = self.partyid
 	local hp, hpMax = UnitIsGhost(partyid) and 1 or (UnitIsDead(partyid) and 0 or UnitHealth(partyid)), UnitHealthMax(partyid)
 	local percent
-
-	if IsRetail then
-		percent = UnitHealthPercent(partyid, true, CurveConstants.ScaleTo100)
-	elseif (hp > hpMax) then
-		if (UnitIsGhost(partyid)) then
-			hp = 1
-		elseif UnitIsDead(partyid) then
-			hp = 0
-		else
-			hp = hpMax
-			percent = 100
-		end
-	end
+	percent = UnitHealthPercent(partyid, true, CurveConstants.ScaleTo100)
 
 	return hp or 0, hpMax or 1,percent --(hpMax == 100)
 end
@@ -4026,24 +3366,13 @@ function XPerl_Unit_UpdateReadyState(self)
 	local status = conf.showReadyCheck and self.partyid and GetReadyCheckStatus(self.partyid)
 	if status then
 		self.statsFrame.ready:Show()
+
 		if status == "ready" then
-			if IsRetail then
-				self.statsFrame.ready.check:SetAtlas(READY_CHECK_READY_TEXTURE)
-			else
-				self.statsFrame.ready.check:SetTexture(READY_CHECK_READY_TEXTURE)
-			end
+			self.statsFrame.ready.check:SetAtlas(READY_CHECK_READY_TEXTURE)
 		elseif status == "waiting" then
-			if IsRetail then
-				self.statsFrame.ready.check:SetAtlas(READY_CHECK_WAITING_TEXTURE)
-			else
-				self.statsFrame.ready.check:SetTexture(READY_CHECK_WAITING_TEXTURE)
-			end
+			self.statsFrame.ready.check:SetAtlas(READY_CHECK_WAITING_TEXTURE)
 		elseif status == "notready" then
-			if IsRetail then
-				self.statsFrame.ready.check:SetAtlas(READY_CHECK_NOT_READY_TEXTURE)
-			else
-				self.statsFrame.ready.check:SetTexture(READY_CHECK_NOT_READY_TEXTURE)
-			end
+			self.statsFrame.ready.check:SetAtlas(READY_CHECK_NOT_READY_TEXTURE)
 		else
 			self.statsFrame.ready:Hide()
 		end
@@ -4051,9 +3380,6 @@ function XPerl_Unit_UpdateReadyState(self)
 		self.statsFrame.ready:Hide()
 	end
 end
-
--- XPerl_SwitchAnchor(self, new)
--- Changes anchored corner without actually moving the frame
 
 -- XPerl_SwitchAnchor
 function XPerl_SwitchAnchor(self, New)
@@ -4399,11 +3725,13 @@ end
 -- XPerl_SetExpectedHealth
 function XPerl_SetExpectedHealth(self)
 	local bar
+
 	if self.statsFrame and self.statsFrame.expectedHealth then
 		bar = self.statsFrame.expectedHealth
 	else
 		bar = self.expectedHealth
 	end
+
 	if (bar) then
 		local unit = self.partyid
 
