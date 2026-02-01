@@ -77,5 +77,5 @@ local function XPerl_SlashHandler(msg)
 end
 
 SlashCmdList["BlackPerl"] = XPerl_SlashHandler
-SLASH_BlackPerl1 = "/BlackPerl"
-SLASH_BlackPerl2 = "/zp"
+SLASH_BlackPerl1 = "/bperl"
+SLASH_BlackPerl2 = "/bp"

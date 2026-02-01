@@ -3,8 +3,6 @@
 -- License: GNU GPL v3, 29 June 2007 (see LICENSE.txt)
 
 local IsRetail = WOW_PROJECT_ID == WOW_PROJECT_MAINLINE
-local IsPandaClassic = WOW_PROJECT_ID == WOW_PROJECT_MISTS_CLASSIC
-local IsVanillaClassic = WOW_PROJECT_ID == WOW_PROJECT_CLASSIC
 
 XPerlLocked = 1
 local conf
