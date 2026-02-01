@@ -3278,14 +3278,12 @@ function XPerl_Unit_UpdateLevel(self)
 end
 
 -- XPerl_Unit_GetHealth
---This function sucks, it needs reworking so it self corrects /0 problems here. But i haven't quite figured out how to approach it here yet. So i just fix stuff at sethealth functions.
 function XPerl_Unit_GetHealth(self)
 	local partyid = self.partyid
 	local hp, hpMax = UnitIsGhost(partyid) and 1 or (UnitIsDead(partyid) and 0 or UnitHealth(partyid)), UnitHealthMax(partyid)
-	local percent
-	percent = UnitHealthPercent(partyid, true, CurveConstants.ScaleTo100)
+	local percent = UnitHealthPercent(partyid, true, CurveConstants.ScaleTo100)
 
-	return hp or 0, hpMax or 1,percent --(hpMax == 100)
+	return hp, hpMax, percent
 end
 
 -- BlackPerl_Unit_OnEnter
@@ -3678,49 +3676,49 @@ function XPerl_SetExpectedAbsorbs(self)
 	end
 end
 
--- XPerl_SetExpectedHots
-function XPerl_SetExpectedHots(self) --no hots bar in on any player or party frame def (there is one in the raid frame def but not sure how its used)
-	if WOW_PROJECT_ID ~= WOW_PROJECT_MISTS_CLASSIC then
-		return
-	end
-	local bar
-	if self.statsFrame and self.statsFrame.expectedHots then
-		bar = self.statsFrame.expectedHots
-	else
-		bar = self.expectedHots
-	end
-	if (bar) then
-		local unit = self.partyid
+-- -- XPerl_SetExpectedHots
+-- function XPerl_SetExpectedHots(self) --no hots bar in on any player or party frame def (there is one in the raid frame def but not sure how its used)
+-- 	if WOW_PROJECT_ID ~= WOW_PROJECT_MISTS_CLASSIC then
+-- 		return
+-- 	end
+-- 	local bar
+-- 	if self.statsFrame and self.statsFrame.expectedHots then
+-- 		bar = self.statsFrame.expectedHots
+-- 	else
+-- 		bar = self.expectedHots
+-- 	end
+-- 	if (bar) then
+-- 		local unit = self.partyid
 
-		if not unit then
-			unit = self:GetParent().targetid
-		end
+-- 		if not unit then
+-- 			unit = self:GetParent().targetid
+-- 		end
 
-		local amount
-		if IsVanillaClassic then
-			local guid = UnitGUID(unit)
-			amount = (HealComm:GetHealAmount(guid, HealComm.OVERTIME_HEALS, GetTime() + 3) or 0) * HealComm:GetHealModifier(guid)
-		end
+-- 		local amount
+-- 		if IsVanillaClassic then
+-- 			local guid = UnitGUID(unit)
+-- 			amount = (HealComm:GetHealAmount(guid, HealComm.OVERTIME_HEALS, GetTime() + 3) or 0) * HealComm:GetHealModifier(guid)
+-- 		end
 
-		if (amount and amount > 0 and not UnitIsDeadOrGhost(unit)) then
-			local healthMax = UnitHealthMax(unit)
-			local health = UnitIsGhost(unit) and 1 or (UnitIsDead(unit) and 0 or UnitHealth(unit))
+-- 		if (amount and amount > 0 and not UnitIsDeadOrGhost(unit)) then
+-- 			local healthMax = UnitHealthMax(unit)
+-- 			local health = UnitIsGhost(unit) and 1 or (UnitIsDead(unit) and 0 or UnitHealth(unit))
 
-			if UnitIsAFK(unit) then
-				bar:SetStatusBarColor(0.2, 0.2, 0.2, 0.7)
-			else
-				bar:SetStatusBarColor(conf.colour.bar.hot.r, conf.colour.bar.hot.g, conf.colour.bar.hot.b, conf.colour.bar.hot.a)
-			end
+-- 			if UnitIsAFK(unit) then
+-- 				bar:SetStatusBarColor(0.2, 0.2, 0.2, 0.7)
+-- 			else
+-- 				bar:SetStatusBarColor(conf.colour.bar.hot.r, conf.colour.bar.hot.g, conf.colour.bar.hot.b, conf.colour.bar.hot.a)
+-- 			end
 
-			bar:Show()
-			bar:SetMinMaxValues(0, healthMax)
-			bar:SetValue(min(healthMax, health + amount))
+-- 			bar:Show()
+-- 			bar:SetMinMaxValues(0, healthMax)
+-- 			bar:SetValue(min(healthMax, health + amount))
 
-			return
-		end
-		bar:Hide()
-	end
-end
+-- 			return
+-- 		end
+-- 		bar:Hide()
+-- 	end
+-- end
 
 -- XPerl_SetExpectedHealth
 function XPerl_SetExpectedHealth(self)

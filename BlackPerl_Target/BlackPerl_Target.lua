@@ -26,19 +26,6 @@ XPerl_RequestConfig(function(new)
 end, "$Revision:  $")
 
 local IsRetail = WOW_PROJECT_ID == WOW_PROJECT_MAINLINE
-local IsClassic = WOW_PROJECT_ID >= WOW_PROJECT_CLASSIC
-local IsPandaClassic = WOW_PROJECT_ID == WOW_PROJECT_MISTS_CLASSIC
-local IsVanillaClassic = WOW_PROJECT_ID == WOW_PROJECT_CLASSIC
-
-local LCD = IsVanillaClassic and LibStub and LibStub("LibClassicDurations", true)
-if LCD then
-	LCD.RegisterCallback("BlackPerl", "UNIT_BUFF", function(event, unit)
-		if unit ~= "target" then
-			return
-		end
-		XPerl_Target_Events:UNIT_AURA(event, unit)
-	end)
-end
 
 -- Upvalues
 local _G = _G
@@ -157,21 +144,18 @@ function XPerl_Target_OnLoad(self, partyid)
 		"UNIT_CLASSIFICATION_CHANGED",
 		"UNIT_PORTRAIT_UPDATE",
 		"UNIT_AURA",
-		IsClassic and "UNIT_HEALTH_FREQUENT" or "UNIT_HEALTH",
+		"UNIT_HEALTH",
 		"UNIT_MAXHEALTH",
 		"UNIT_POWER_FREQUENT",
 		"UNIT_MAXPOWER",
 		"UNIT_LEVEL",
 		"UNIT_DISPLAYPOWER",
 		"UNIT_NAME_UPDATE",
-		--"PET_BATTLE_OPENING_START"
-		--"PET_BATTLE_CLOSE",
 		"INCOMING_RESURRECT_CHANGED",
 	}
-	if IsRetail then
-		tinsert(events, "PET_BATTLE_HEALTH_CHANGED")
-		tinsert(events, "UPDATE_SUMMONPETS_ACTION")
-	end
+	
+	tinsert(events, "PET_BATTLE_HEALTH_CHANGED")
+	tinsert(events, "UPDATE_SUMMONPETS_ACTION")
 
 	for i, event in pairs(events) do
 		if string.find(event, "^UNIT_") or string.find(event, "^INCOMING") then
@@ -195,9 +179,7 @@ function XPerl_Target_OnLoad(self, partyid)
 		self.statsFrame.focusTarget:SetVertexColor(0.7, 1, 1, 0.5)
 
 		self:RegisterEvent("PLAYER_TARGET_CHANGED")
-		if not IsVanillaClassic then
-			self:RegisterEvent("PLAYER_FOCUS_CHANGED")
-		end
+		self:RegisterEvent("PLAYER_FOCUS_CHANGED")
 
 		if (XPerl_Target_Events.INSPECT_READY) then
 			self:RegisterEvent("INSPECT_READY")
@@ -225,9 +207,7 @@ function XPerl_Target_OnLoad(self, partyid)
 	else
 		XPerl_BlizzFrameDisable(FocusFrame)
 
-		if not IsVanillaClassic then
-			self:RegisterEvent("PLAYER_FOCUS_CHANGED")
-		end
+		self:RegisterEvent("PLAYER_FOCUS_CHANGED")
 		self:RegisterEvent("PLAYER_ENTERING_WORLD")
 		--self:SetScript("OnShow", XPerl_Target_UpdateDisplay)
 		self.combatMask = 0x00020000
@@ -377,7 +357,7 @@ end
 -- Combo Points
 ---------------
 local function XPerl_Target_UpdateCombo(self)
-	local comboPoints = IsClassic and GetComboPoints("player", "target") or UnitPower(UnitHasVehicleUI("player") and "vehicle" or "player", Enum.PowerType.ComboPoints)
+	local comboPoints = UnitPower(UnitHasVehicleUI("player") and "vehicle" or "player", Enum.PowerType.ComboPoints)
 	local r, g, b = GetComboColor(comboPoints)
 	if tconf.combo.enable and not UnitIsDeadOrGhost("target") and UnitCanAttack(UnitHasVehicleUI("player") and "vehicle" or "player", "target") then
 		self.nameFrame.cpMeter:SetValue(comboPoints)
@@ -404,35 +384,6 @@ local function XPerl_Target_UpdateCombo(self)
 	end
 end
 
---[[local function XPerl_Target_DebuffUpdate(self)
-	local partyid = self.partyid
-	if (GetComboPoints((not IsClassic and UnitHasVehicleUI("player")) and "vehicle" or "player", partyid) == 0) then
-		local numDebuffs = 0
-		local r, g, b = GetComboColour(numDebuffs)
-		if (tconf.combo.enable) then
-			self.cpFrame:Hide()
-			self.nameFrame.cpMeter:SetValue(numDebuffs)
-			if (r) then
-				self.nameFrame.cpMeter:Show()
-				self.nameFrame.cpMeter:SetStatusBarColor(r, g, b, 0.4)
-			else
-				self.nameFrame.cpMeter:Hide()
-			end
-		else
-			self.nameFrame.cpMeter:Hide()
-			self.cpFrame.text:SetText(numDebuffs)
-			if (r) then
-				self.cpFrame:Show()
-				self.cpFrame.text:SetTextColor(r, g, b)
-			else
-				self.cpFrame:Hide()
-			end
-		end
-	else
-		XPerl_Target_UpdateCombo(self)
-	end
-end--]]
-
 -------------------------
 -- The Update Functions--
 -------------------------
@@ -449,7 +400,7 @@ local function XPerl_Target_UpdatePVP(self)
 	elseif self.conf.pvpIcon and factionGroup and factionGroup ~= "Neutral" and UnitIsPVP(partyid) then
 		pvpIcon.icon:SetTexture("Interface\\TargetingFrame\\UI-PVP-"..factionGroup)
 
-		if not IsClassic and UnitIsMercenary(partyid) then
+		if UnitIsMercenary(partyid) then
 			if factionGroup == "Horde" then
 				pvpIcon.icon:SetTexture("Interface\\TargetingFrame\\UI-PVP-Alliance")
 			elseif factionGroup == "Alliance" then
@@ -486,7 +437,7 @@ local function XPerl_Target_UpdatePVP(self)
 		XPerl_SetUnitNameColor(self.nameFrame.text, partyid)
 	end
 
-	if UnitIsVisible(partyid) and UnitIsCharmed(partyid) and UnitIsPlayer(partyid) and (not IsClassic and not UnitUsingVehicle(partyid) or true) then
+	if UnitIsVisible(partyid) and UnitIsCharmed(partyid) and UnitIsPlayer(partyid) and (not UnitUsingVehicle(partyid) or true) then
 		self.nameFrame.warningIcon:Show()
 	else
 		self.nameFrame.warningIcon:Hide()
@@ -690,22 +641,6 @@ do
 		end
 		LTQ:RegisterCallback("TalentQuery_Ready", TalentQuery_Ready)
 	else
-		if IsPandaClassic and NotifyInspect then
-			hooksecurefunc("NotifyInspect", function(unit)
-				if (IsRetail or UnitIsUnit("player", unit) or (not IsVanillaClassic and UnitInVehicle(unit)) or not (UnitExists(unit) and CanInspect(unit) and UnitIsVisible(unit) and UnitIsConnected(unit) and not InCombatLockdown() and CheckInteractDistance(unit, 4))) then
-					return
-				end
-				lastInspectUnit = unit
-				lastInspectPending = lastInspectPending + 1
-				if (lastInspectPending > 1) then
-					lastInspectInvalid = true
-				end
-				lastInspectTime = GetTime()
-				lastInspectGUID = UnitGUID(unit)
-				lastInspectName = UnitFullName(unit)
-			end)
-		end
-
 		-- INSPECT_READY
 		function XPerl_Target_Events:INSPECT_READY(guid)
 			if (UnitGUID(self.partyid) == guid) then
@@ -733,13 +668,9 @@ do
 						name1, name2, name3, group = unpack(cached)
 					elseif (inspectReady and guid == UnitGUID(partyid)) then
 						local remoteInspectNeeded = not UnitIsUnit("player", partyid) or nil
-						if not IsClassic then
-							group = GetInspectSpecialization("target")
-							local _, spec = GetSpecializationInfoByID(group)
-							name1 = group and spec or "None"
-						else
-							name1 = "None"
-						end
+						group = GetInspectSpecialization("target")
+						local _, spec = GetSpecializationInfoByID(group)
+						name1 = group and spec or "None"
 
 						inspectReady = nil
 					end
@@ -755,19 +686,6 @@ do
 						if (LTQ) then
 							inspectReady = nil
 							LTQ:Query(partyid)
-						else
-							if (lastInspectPending == 0 or GetTime() > lastInspectTime + 15) then
-								if (not IsRetail and UnitExists(partyid) and UnitIsVisible(partyid) and not InCombatLockdown() and CheckInteractDistance(partyid, 4)) then
-									if (not UnitIsUnit("player", partyid)) then
-										inspectReady = nil
-										lastInspectInvalid = nil
-										lastInspectPending = 0
-										if (lastInspectName ~= UnitFullName(partyid)) then
-											NotifyInspect(partyid)
-										end
-									end
-								end
-							end
 						end
 					end
 				end
@@ -794,13 +712,12 @@ local function XPerl_Target_UpdateType(self)
 	self.typeFramePlayer:Hide()
 
 
-	if not IsClassic and (UnitIsWildBattlePet(partyid) or UnitIsBattlePetCompanion(partyid)) then
+	if (UnitIsWildBattlePet(partyid) or UnitIsBattlePetCompanion(partyid)) then
 		self.creatureTypeFrame.text:SetText(PET_TYPE_SUFFIX[UnitBattlePetType(partyid)])
 	else
 		self.creatureTypeFrame.text:SetText(targettype)
 	end
 
-	--if (UnitIsPlayer(partyid)) then
 		if (self.conf.classIcon and (UnitIsPlayer(partyid) or UnitClassification(partyid) == "normal")) then
 			local LocalClass, PlayerClass = UnitClassBase(partyid)
 
@@ -817,17 +734,17 @@ local function XPerl_Target_UpdateType(self)
 				end
 			end
 		end
+
 		if (UnitIsPlayer(partyid)) then
 			self.creatureTypeFrame:Hide()
 		end
-	--else
+		
 		if (targettype) then
 			self.creatureTypeFrame.text:SetTextColor(1, 1, 1)
 			self.creatureTypeFrame:SetWidth(self.creatureTypeFrame.text:GetStringWidth() + 10)
 		else
 			self.creatureTypeFrame:Hide()
 		end
-	--end
 
 	AdjustCreatureTypeFrame(self)
 
@@ -836,22 +753,6 @@ end
 
 -- XPerl_Target_SetManaType
 function XPerl_Target_SetManaType(self)
-	if not IsRetail then
-		local unitPowerMax = UnitPowerMax(self.partyid)
-
-		if (unitPowerMax == 0 or not self.conf.mana) then
-			if (self.statsFrame.manaBar:IsShown()) then
-				self.statsFrame.manaBar:Hide()
-
-				if (self == XPerl_Target or self == XPerl_Focus or self == XPerl_TargetTarget or self == XPerl_FocusTarget or self == XPerl_PetTarget or self == XPerl_TargetTargetTarget) then
-					self.statsFrame:SetHeight(28 + ((conf.bar.fat or 0) * 2))
-					XPerl_StatsFrameSetup(self)
-				end
-			end
-			return
-		end
-	end
-
 	XPerl_SetManaBarType(self)
 
 	if (not self.statsFrame.manaBar:IsShown()) then
@@ -880,33 +781,17 @@ function XPerl_Target_SetMana(self)
 	self.targetmana = unitPower
 	self.targetmanamax = unitPowerMax
 
-	if IsRetail then 
-		local powerPercent = UnitHealthPercent(partyid, true, CurveConstants.ScaleTo100)
-	else
-		-- Begin 4.3 division by 0 work around to ensure we don't divide if max is 0
-		local powerPercent
-		if unitPower > 0 and unitPowerMax == 0 then -- We have current mana but max mana failed.
-			unitPowerMax = unitPower -- Make max mana at least equal to current mana
-			powerPercent = 1 -- And percent 100% cause a number divided by itself is 1, duh.
-		elseif unitPower == 0 and unitPowerMax == 0 then -- Probably doesn't use mana or is oom?
-			powerPercent = 0 -- So just automatically set percent to 0 and avoid division of 0/0 all together in this situation.
-		else
-			powerPercent = unitPower / unitPowerMax -- Everything is dandy, so just do it right way.
-		end
-	end
+	--Set power type percent
+	local powerPercent = UnitPowerPercent(partyid, powerType,true, CurveConstants.ScaleTo100)
+	--set percent 
+	self.statsFrame.manaBar.percent:SetFormattedText(percD, powerPercent)
 
+	--set mana bar
 	self.statsFrame.manaBar:SetMinMaxValues(0, unitPowerMax)
 	self.statsFrame.manaBar:SetValue(unitPower)
 
-	if powerType >= 1 then
-		self.statsFrame.manaBar.percent:SetText(unitPower)
-	else
-		-- self.statsFrame.manaBar.percent:SetFormattedText(percD, powerPercent)
-		-- self.statsFrame.manaBar.percent:SetFormattedText(percD, 100 * powerPercent)	--	XPerl_Percent[floor(100 * (unitPower / unitPowerMax))])
-	end
-
+	--Set text value of the power type
 	XPerl_SetValuedText(self.statsFrame.manaBar.text, unitPower, unitPowerMax)
-	-- self.statsFrame.manaBar.text:SetFormattedText("%d/%d", unitPower, unitPowerMax)
 end
 
 -- XPerl_Target_SetComboBar
@@ -915,7 +800,7 @@ local function XPerl_Target_SetComboBar(self)
 		return
 	end
 
-	local comboPoints = IsClassic and GetComboPoints("player", "target") or UnitPower(UnitHasVehicleUI("player") and "vehicle" or "player", Enum.PowerType.ComboPoints)
+	local comboPoints = UnitPower(UnitHasVehicleUI("player") and "vehicle" or "player", Enum.PowerType.ComboPoints)
 	local maxComboPoints = UnitPowerMax("player", Enum.PowerType.ComboPoints)
 	self.nameFrame.cpMeter:SetMinMaxValues(0, maxComboPoints)
 	self.nameFrame.cpMeter:SetValue(comboPoints)
@@ -979,38 +864,6 @@ local function XPerl_Target_UpdateAbsorbPrediction(self)
 	end
 end
 
--- XPerl_Target_UpdateHotsPrediction
-local function XPerl_Target_UpdateHotsPrediction(self)
-	if not IsPandaClassic then
-		return
-	end
-	if self == XPerl_Target then
-		if tconf.hotPrediction then
-			XPerl_SetExpectedHots(self)
-		else
-			self.statsFrame.expectedHots:Hide()
-		end
-	elseif self == XPerl_TargetTarget or self == XPerl_TargetTargetTarget then
-		if conf.targettarget.hotPrediction then
-			XPerl_SetExpectedHots(self)
-		else
-			self.statsFrame.expectedHots:Hide()
-		end
-	elseif self == XPerl_Focus then
-		if fconf.hotPrediction then
-			XPerl_SetExpectedHots(self)
-		else
-			self.statsFrame.expectedHots:Hide()
-		end
-	elseif self == XPerl_FocusTarget then
-		if conf.focustarget.hotPrediction then
-			XPerl_SetExpectedHots(self)
-		else
-			self.statsFrame.expectedHots:Hide()
-		end
-	end
-end
-
 function XPerl_Target_UpdateResurrectionStatus(self)
 	if (UnitHasIncomingResurrection(self.partyid)) then
 		if (self == XPerl_Target and tconf.portrait) or (self == XPerl_Focus and fconf.portrait) then
@@ -1043,60 +896,23 @@ function XPerl_Target_UpdateHealth(self)
 	self.targethpmax = hpMax
 	self.afk = UnitIsAFK(partyid) and conf.showAFK == 1
 
-	--[[if (self.targethp == 100) then
-		-- Try to work around the occasion WoW targettarget bug of a zero hp tank who is not at zero hp
-		if (not UnitIsDeadOrGhost(partyid)) then
-			if (UnitInRaid(partyid)) then
-				for i = 1, GetNumGroupMembers() do
-					local id = "raid"..i
-					if (UnitIsUnit(id, partyid)) then
-						hp, hpMax, percent = UnitIsGhost(id) and 1 or (UnitIsDead(id) and 0 or UnitHealth(id)), UnitHealthMax(id), false
-						break
-					end
-				end
-			end
-		end
-	end]]
-
-	if IsRetail then 
-		XPerl_SetHealthBar(self, hp, hpMax)
-	else 
-		if hp and hp >= 0 and hpMax and hpMax > 0 then
-			XPerl_SetHealthBar(self, hp, hpMax)
-		end
-	end
-
+	--set bar / text and percent of the health bar for the target
+	XPerl_SetHealthBar(self, hp, hpMax)
 	XPerl_Target_UpdateAbsorbPrediction(self)
 	XPerl_Target_UpdateHealPrediction(self)
-	XPerl_Target_UpdateHotsPrediction(self)
 	XPerl_Target_UpdateResurrectionStatus(self)
-
-	if (percent) then
-		if not IsRetail then 
-			if UnitIsDeadOrGhost(partyid) or hpMax == 0 then -- 4.3+ fix so if for some dumb reason max HP is 0, prevent any division by 0.
-				self.statsFrame.healthBar.text:SetFormattedText(percD, 0)
-			else
-				self.statsFrame.healthBar.text:SetFormattedText(percD, 100 * hp / hpMax) 
-			end
-		end
-	end
 
 	local color
 	if (self.conf.percent) then
 		if (UnitIsGhost(partyid)) then
 			self.statsFrame.manaBar.percent:Hide()
 			self.statsFrame.healthBar.percent:SetText(XPERL_LOC_GHOST)
-		--[[elseif (conf.showFD and UnitBuff(partyid, feignDeath)) then
-			--self.statsFrame.manaBar.percent:Hide()
-			--hb.percent:SetText(XPERL_LOC_DEAD)
-			hbt:SetText(XPERL_LOC_FEIGNDEATH)--]]
 		elseif (UnitIsDead(partyid)) then
-			--self.statsFrame.manaBar.percent:Hide()
 			self.statsFrame.healthBar.percent:SetText(XPERL_LOC_DEAD)
 		elseif (UnitExists(partyid) and not UnitIsConnected(partyid)) then
 			self.statsFrame.manaBar.percent:Hide()
 			self.statsFrame.healthBar.percent:SetText(XPERL_LOC_OFFLINE)
-		elseif (UnitIsAFK(partyid) and conf.showAFK) --[[and (self == XPerl_Target or self == XPerl_Focus))]] then
+		elseif (UnitIsAFK(partyid) and conf.showAFK) then
 			self.statsFrame.healthBar.percent:SetText(CHAT_MSG_AFK)
 		else
 			self.statsFrame.manaBar.percent:Show()
@@ -1105,8 +921,6 @@ function XPerl_Target_UpdateHealth(self)
 	else
 		if (UnitIsGhost(partyid)) then
 			self.statsFrame.healthBar.text:SetText(XPERL_LOC_GHOST)
-		--[[elseif (conf.showFD and UnitBuff(partyid, feignDeath)) then
-			hbt:SetText(XPERL_LOC_FEIGNDEATH)--]]
 		elseif (UnitIsDead(partyid)) then
 			self.statsFrame.healthBar.text:SetText(XPERL_LOC_DEAD)
 		elseif (UnitExists(partyid) and not UnitIsConnected(partyid)) then
@@ -1119,13 +933,7 @@ function XPerl_Target_UpdateHealth(self)
 	end
 
 	if (color) then
-		if IsRetail then
-			XPerl_ColourHealthBar(self, percent)
-		else 
-			if hp and hp >= 0 and hpMax and hpMax > 0 then
-			XPerl_ColourHealthBar(self, hp / hpMax)
-			end
-		end	
+		XPerl_ColourHealthBar(self, percent)
 
 		if (self.statsFrame.greyMana) then
 			self.statsFrame.greyMana = nil
@@ -1138,15 +946,7 @@ end
 
 -- XPerl_Target_GetHealth
 function XPerl_Target_GetHealth(self)
-	local hp, hpMax = XPerl_Unit_GetHealth(self)
-	local percent
-
-	if IsRetail then
-		percent = UnitHealthPercent(self.partyid, true, CurveConstants.ScaleTo100)
-	else 
-		percent = hpMax
-	end 
-
+	local hp, hpMax, percent= XPerl_Unit_GetHealth(self)
 	return hp, hpMax, percent
 end
 
@@ -1262,7 +1062,7 @@ local function XPerl_Target_CheckDebuffs(self)
 end
 
 local function XPerl_Target_ComboFrame_Update()
-	local comboPoints = IsClassic and GetComboPoints("player", "target") or UnitPower(UnitHasVehicleUI("player") and "vehicle" or "player", Enum.PowerType.ComboPoints)
+	local comboPoints = UnitPower(UnitHasVehicleUI("player") and "vehicle" or "player", Enum.PowerType.ComboPoints)
 	if tconf.combo.blizzard and comboPoints > 0 and not UnitIsDeadOrGhost("target") and UnitCanAttack(UnitHasVehicleUI("player") and "vehicle" or "player", "target") then
 		if not ComboFrame:IsShown() then
 			ComboFrame:Show()
@@ -1270,7 +1070,7 @@ local function XPerl_Target_ComboFrame_Update()
 		end
 
 		local fadeInfo = { }
-		for i = 1, not IsClassic and 9 or 5 do
+		for i = 1, 9 or 5 do
 			local comboPoint = _G["ComboPoint"..i]
 			if i < 6 then
 				comboPoint:Show()
@@ -1324,7 +1124,7 @@ function XPerl_Target_UpdateDisplay(self)
 	XPerl_Target_UpdateLeader(self)
 	XPerl_Unit_ThreatStatus(self, partyid == "target" and "player" or nil, true)
 
-	if IsRetail and self == XPerl_Target and tconf.combo.blizzard then
+	if self == XPerl_Target and tconf.combo.blizzard then
 		XPerl_Target_ComboFrame_Update()
 	end
 
@@ -1999,10 +1799,6 @@ local function XPerl_Target_RegisterComboEvents(self)
 	if not tconf.combo.blizzard and not tconf.combo.enable and not tconf.comboindicator.enable then
 		ComboEventFrame:UnregisterAllEvents()
 
-		if IsClassic then
-			ComboFrame:UnregisterAllEvents()
-		end
-
 		ComboFrame:Hide()
 		self.nameFrame.cpMeter:Hide()
 		self.cpFrame:Hide()
@@ -2015,23 +1811,7 @@ local function XPerl_Target_RegisterComboEvents(self)
 	ComboEventFrame:RegisterUnitEvent("UNIT_ENTERED_VEHICLE", "player")
 	ComboEventFrame:RegisterUnitEvent("UNIT_EXITED_VEHICLE", "player")
 
-	if IsClassic and tconf.combo.blizzard then
-		ComboFrame:RegisterEvent("PLAYER_TARGET_CHANGED")
-		ComboFrame:RegisterEvent("UNIT_POWER_FREQUENT")
-		ComboFrame:RegisterEvent("UNIT_MAXPOWER")
-		ComboFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-		ComboFrame:RegisterUnitEvent("UNIT_ENTERED_VEHICLE", "player")
-		ComboFrame:RegisterUnitEvent("UNIT_EXITED_VEHICLE", "player")
-
-		ComboFrame.unit = UnitHasVehicleUI("player") and "vehicle" or "player"
-
-		ComboFrame_UpdateMax(ComboFrame)
-	end
-
 	if not tconf.combo.blizzard then
-		if IsClassic then
-			ComboFrame:UnregisterAllEvents()
-		end
 		ComboFrame:Hide()
 	end
 
@@ -2050,7 +1830,7 @@ end
 function XPerl_Target_Set_BlizzCPFrame(self)
 	if tconf.combo.blizzard then
 		ComboFrame:ClearAllPoints()
-		for i = 1, not IsClassic and 9 or 5 do
+		for i = 1, 9 or 5 do
 			local combo = _G["ComboPoint"..i]
 			if i < 9 then
 				combo:ClearAllPoints()
@@ -2073,11 +1853,9 @@ function XPerl_Target_Set_BlizzCPFrame(self)
 			ComboPoint3:SetPoint("LEFT", ComboPoint2, "RIGHT", 0, 1)
 			ComboPoint4:SetPoint("LEFT", ComboPoint3, "RIGHT", 0, -1)
 			ComboPoint5:SetPoint("LEFT", ComboPoint4, "RIGHT", 0, -1)
-			if not IsClassic then
-				ComboPoint6:SetPoint("TOPLEFT", ComboPoint2, "BOTTOMLEFT", 0, 0)
-				ComboPoint7:SetPoint("TOPLEFT", ComboPoint3, "BOTTOMLEFT", 0, 0)
-				ComboPoint8:SetPoint("TOPLEFT", ComboPoint4, "BOTTOMLEFT", 0, 0)
-			end
+			ComboPoint6:SetPoint("TOPLEFT", ComboPoint2, "BOTTOMLEFT", 0, 0)
+			ComboPoint7:SetPoint("TOPLEFT", ComboPoint3, "BOTTOMLEFT", 0, 0)
+			ComboPoint8:SetPoint("TOPLEFT", ComboPoint4, "BOTTOMLEFT", 0, 0)
 		elseif tconf.combo.pos == "bottom" then
 			ComboFrame:SetPoint("BOTTOM", self.portraitFrame, "BOTTOM", 98, -4)
 			ComboPoint1:SetPoint("BOTTOMLEFT", 0, 0)
@@ -2085,11 +1863,9 @@ function XPerl_Target_Set_BlizzCPFrame(self)
 			ComboPoint3:SetPoint("LEFT", ComboPoint2, "RIGHT", 0, -1)
 			ComboPoint4:SetPoint("LEFT", ComboPoint3, "RIGHT", 0, 1)
 			ComboPoint5:SetPoint("LEFT", ComboPoint4, "RIGHT", 0, 1)
-			if not IsClassic then
-				ComboPoint6:SetPoint("BOTTOMLEFT", ComboPoint2, "TOPLEFT", 0, 0)
-				ComboPoint7:SetPoint("BOTTOMLEFT", ComboPoint3, "TOPLEFT", 0, 0)
-				ComboPoint8:SetPoint("BOTTOMLEFT", ComboPoint4, "TOPLEFT", 0, 0)
-			end
+			ComboPoint6:SetPoint("BOTTOMLEFT", ComboPoint2, "TOPLEFT", 0, 0)
+			ComboPoint7:SetPoint("BOTTOMLEFT", ComboPoint3, "TOPLEFT", 0, 0)
+			ComboPoint8:SetPoint("BOTTOMLEFT", ComboPoint4, "TOPLEFT", 0, 0)
 		elseif tconf.combo.pos == "left" then
 			ComboFrame:SetPoint("BOTTOMLEFT", self.portraitFrame, "BOTTOMLEFT", -1, 0)
 			ComboPoint1:SetPoint("BOTTOMLEFT", 0, 0)
@@ -2097,11 +1873,9 @@ function XPerl_Target_Set_BlizzCPFrame(self)
 			ComboPoint3:SetPoint("BOTTOM", ComboPoint2, "TOP", -1, 0)
 			ComboPoint4:SetPoint("BOTTOM", ComboPoint3, "TOP", 1, 0)
 			ComboPoint5:SetPoint("BOTTOM", ComboPoint4, "TOP", 1, 0)
-			if not IsClassic then
-				ComboPoint6:SetPoint("TOPLEFT", ComboPoint2, "TOPRIGHT", 0, 0)
-				ComboPoint7:SetPoint("TOPLEFT", ComboPoint3, "TOPRIGHT", 0, 0)
-				ComboPoint8:SetPoint("TOPLEFT", ComboPoint4, "TOPRIGHT", 0, 0)
-			end
+			ComboPoint6:SetPoint("TOPLEFT", ComboPoint2, "TOPRIGHT", 0, 0)
+			ComboPoint7:SetPoint("TOPLEFT", ComboPoint3, "TOPRIGHT", 0, 0)
+			ComboPoint8:SetPoint("TOPLEFT", ComboPoint4, "TOPRIGHT", 0, 0)
 		elseif tconf.combo.pos == "right" then
 			ComboFrame:SetPoint("BOTTOMRIGHT", self.portraitFrame, "BOTTOMRIGHT", 2, 0)
 			ComboPoint1:SetPoint("BOTTOMRIGHT", 0, 0)
@@ -2109,11 +1883,9 @@ function XPerl_Target_Set_BlizzCPFrame(self)
 			ComboPoint3:SetPoint("BOTTOM", ComboPoint2, "TOP", 1, 0)
 			ComboPoint4:SetPoint("BOTTOM", ComboPoint3, "TOP", -1, 0)
 			ComboPoint5:SetPoint("BOTTOM", ComboPoint4, "TOP", -1, 0)
-			if not IsClassic then
-				ComboPoint6:SetPoint("TOPRIGHT", ComboPoint2, "TOPLEFT", 0, 0)
-				ComboPoint7:SetPoint("TOPRIGHT", ComboPoint3, "TOPLEFT", 0, 0)
-				ComboPoint8:SetPoint("TOPRIGHT", ComboPoint4, "TOPLEFT", 0, 0)
-			end
+			ComboPoint6:SetPoint("TOPRIGHT", ComboPoint2, "TOPLEFT", 0, 0)
+			ComboPoint7:SetPoint("TOPRIGHT", ComboPoint3, "TOPLEFT", 0, 0)
+			ComboPoint8:SetPoint("TOPRIGHT", ComboPoint4, "TOPLEFT", 0, 0)
 		else
 			ComboFrame:SetPoint("TOP", self.portraitFrame, "TOP", 98, 4)
 			ComboPoint1:SetPoint("TOPLEFT", 0, 0)
@@ -2121,11 +1893,9 @@ function XPerl_Target_Set_BlizzCPFrame(self)
 			ComboPoint3:SetPoint("LEFT", ComboPoint2, "RIGHT", 0, 1)
 			ComboPoint4:SetPoint("LEFT", ComboPoint3, "RIGHT", 0, -1)
 			ComboPoint5:SetPoint("LEFT", ComboPoint4, "RIGHT", 0, -1)
-			if not IsClassic then
-				ComboPoint6:SetPoint("TOPLEFT", ComboPoint2, "BOTTOMLEFT", 0, 0)
-				ComboPoint7:SetPoint("TOPLEFT", ComboPoint3, "BOTTOMLEFT", 0, 0)
-				ComboPoint8:SetPoint("TOPLEFT", ComboPoint4, "BOTTOMLEFT", 0, 0)
-			end
+			ComboPoint6:SetPoint("TOPLEFT", ComboPoint2, "BOTTOMLEFT", 0, 0)
+			ComboPoint7:SetPoint("TOPLEFT", ComboPoint3, "BOTTOMLEFT", 0, 0)
+			ComboPoint8:SetPoint("TOPLEFT", ComboPoint4, "BOTTOMLEFT", 0, 0)
 		end
 	end
 
@@ -2138,7 +1908,7 @@ ComboEventFrame:SetScript("OnEvent", function(self, event, unit, ...)
 		if powerType == "COMBO_POINTS" then
 			if UnitExists("target") and XPerl_Target:IsShown() then
 				XPerl_Target_UpdateCombo(XPerl_Target)
-				if IsRetail and conf.target.combo.blizzard then
+				if conf.target.combo.blizzard then
 					XPerl_Target_ComboFrame_Update()
 				end
 			end
@@ -2148,7 +1918,7 @@ ComboEventFrame:SetScript("OnEvent", function(self, event, unit, ...)
 		if powerType == "COMBO_POINTS" then
 			if UnitExists("target") and XPerl_Target:IsShown() then
 				XPerl_Target_SetComboBar(XPerl_Target)
-				if IsRetail and conf.target.combo.blizzard then
+				if conf.target.combo.blizzard then
 					XPerl_Target_ComboFrame_Update()
 				end
 			end

@@ -5,9 +5,6 @@
 XPerl_SetModuleRevision("$Revision:  $")
 
 local IsRetail = WOW_PROJECT_ID == WOW_PROJECT_MAINLINE
-local IsPandaClassic = WOW_PROJECT_ID == WOW_PROJECT_MISTS_CLASSIC
-local IsVanillaClassic = WOW_PROJECT_ID == WOW_PROJECT_CLASSIC
-local IsClassic = WOW_PROJECT_ID >= WOW_PROJECT_CLASSIC
 
 local LOCALIZED_CLASS_NAMES_MALE = LOCALIZED_CLASS_NAMES_MALE
 local CLASS_COUNT = 0
@@ -21,7 +18,6 @@ local protected = { }
 
 -- DefaultRaidClasses
 local function DefaultRaidClasses()
-	if IsRetail then
 		return {
 			{enable = true, name = "WARRIOR"},
 			{enable = true, name = "DEATHKNIGHT"},
@@ -37,34 +33,7 @@ local function DefaultRaidClasses()
 			{enable = true, name = "DEMONHUNTER"},
 			{enable = true, name = "EVOKER"}
 		}
-	elseif IsPandaClassic then
-		return {
-			{enable = true, name = "WARRIOR"},
-			{enable = true, name = "DEATHKNIGHT"},
-			{enable = true, name = "ROGUE"},
-			{enable = true, name = "HUNTER"},
-			{enable = true, name = "MAGE"},
-			{enable = true, name = "WARLOCK"},
-			{enable = true, name = "PRIEST"},
-			{enable = true, name = "DRUID"},
-			{enable = true, name = "SHAMAN"},
-			{enable = true, name = "PALADIN"},
-			{enable = true, name = "MONK"},
-		}
-	else
-		return {
-			{enable = true, name = "WARRIOR"},
-			{enable = true, name = "ROGUE"},
-			{enable = true, name = "HUNTER"},
-			{enable = true, name = "MAGE"},
-			{enable = true, name = "WARLOCK"},
-			{enable = true, name = "PRIEST"},
-			{enable = true, name = "DRUID"},
-			{enable = true, name = "SHAMAN"},
-			{enable = true, name = "PALADIN"},
-		}
 	end
-end
 
 -- ValidateClassNames
 local function ValidateClassNames(part)
@@ -74,13 +43,8 @@ local function ValidateClassNames(part)
 	-- This should never happen, but I'm sure someone will find a way to break it
 
 	local list
-	if IsRetail then
-		list = {WARRIOR = false, MAGE = false, ROGUE = false, DRUID = false, HUNTER = false, SHAMAN = false, PRIEST = false, WARLOCK = false, PALADIN = false, DEATHKNIGHT = false, MONK = false, DEMONHUNTER = false, EVOKER = false}
-	elseif IsPandaClassic then
-		list = {WARRIOR = false, MAGE = false, ROGUE = false, DRUID = false, HUNTER = false, SHAMAN = false, PRIEST = false, WARLOCK = false, PALADIN = false, DEATHKNIGHT = false, MONK = false}
-	else
-		list = {WARRIOR = false, MAGE = false, ROGUE = false, DRUID = false, HUNTER = false, SHAMAN = false, PRIEST = false, WARLOCK = false, PALADIN = false}
-	end
+	list = {WARRIOR = false, MAGE = false, ROGUE = false, DRUID = false, HUNTER = false, SHAMAN = false, PRIEST = false, WARLOCK = false, PALADIN = false, DEATHKNIGHT = false, MONK = false, DEMONHUNTER = false, EVOKER = false}
+
 	local valid
 	if (part.class) then
 		local classCount = 0

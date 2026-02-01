@@ -12,10 +12,6 @@ XPerl_RequestConfig(function(new)
 	end
 end, "$Revision:  $")
 
-local IsClassic = WOW_PROJECT_ID >= WOW_PROJECT_CLASSIC
-local IsPandaClassic = WOW_PROJECT_ID == WOW_PROJECT_MISTS_CLASSIC
-local IsVanillaClassic = WOW_PROJECT_ID == WOW_PROJECT_CLASSIC
-
 -- Upvalues
 local _G = _G
 local format = format
@@ -138,7 +134,7 @@ function XPerl_Player_Pet_OnLoad(self)
 
 	--RegisterUnitWatch(self)
 	local events = {
-		IsClassic and "UNIT_HEALTH_FREQUENT" or "UNIT_HEALTH",
+		"UNIT_HEALTH",
 		"UNIT_MAXHEALTH",
 		"UNIT_LEVEL",
 		"UNIT_POWER_FREQUENT",
@@ -180,10 +176,6 @@ function XPerl_Player_Pet_OnLoad(self)
 				if pcall(self.RegisterUnitEvent, self, event, "pet") then
 					self:RegisterUnitEvent(event, "pet")
 				end
-			elseif IsVanillaClassic and event == "UNIT_HAPPINESS" and classFileName == "HUNTER" then
-				if pcall(self.RegisterUnitEvent, self, event, "pet") then
-					self:RegisterUnitEvent(event, "pet")
-				end
 			else
 				if pcall(self.RegisterUnitEvent, self, event, "pet", "player") then
 					self:RegisterUnitEvent(event, "pet", "player")
@@ -212,7 +204,7 @@ function XPerl_Player_Pet_OnLoad(self)
 	self:SetScript("OnShow", XPerl_Unit_UpdatePortrait)
 
 	if XPerl_ArcaneBar_RegisterFrame then
-		XPerl_ArcaneBar_RegisterFrame(self.nameFrame, (not IsVanillaClassic and UnitHasVehicleUI("player")) and "player" or "pet")
+		XPerl_ArcaneBar_RegisterFrame(self.nameFrame, (UnitHasVehicleUI("player")) and "player" or "pet")
 	end
 
 	XPerl_RegisterHighlight(self.highlight, 2)
@@ -286,14 +278,14 @@ local function XPerl_Player_Pet_UpdateAbsorbPrediction(self)
 	end
 end
 
--- XPerl_Player_Pet_UpdateHotsPrediction
-local function XPerl_Player_Pet_UpdateHotsPrediction(self)
-	if pconf.absorbs then
-		XPerl_SetExpectedHots(self)
-	else
-		self.statsFrame.expectedHots:Hide()
-	end
-end
+-- -- XPerl_Player_Pet_UpdateHotsPrediction
+-- local function XPerl_Player_Pet_UpdateHotsPrediction(self)
+-- 	if pconf.absorbs then
+-- 		XPerl_SetExpectedHots(self)
+-- 	else
+-- 		self.statsFrame.expectedHots:Hide()
+-- 	end
+-- end
 
 -- XPerl_Player_Pet_UpdateHealPrediction
 local function XPerl_Player_Pet_UpdateHealPrediction(self)
@@ -329,7 +321,7 @@ local function XPerl_Player_Pet_UpdateHealth(self)
 	XPerl_SetHealthBar(self, pethealth, pethealthmax)
 
 	XPerl_Player_Pet_UpdateAbsorbPrediction(self)
-	XPerl_Player_Pet_UpdateHotsPrediction(self)
+	-- XPerl_Player_Pet_UpdateHotsPrediction(self)
 	XPerl_Player_Pet_UpdateHealPrediction(self)
 	XPerl_Player_Pet_UpdateResurrectionStatus(self)
 
@@ -345,9 +337,10 @@ local function XPerl_Player_Pet_UpdateMana(self)
 	local petmana = UnitPower(partyid)
 	local petmanamax = UnitPowerMax(partyid)
 
+	--Set mana bar
 	self.statsFrame.manaBar:SetMinMaxValues(0, petmanamax)
 	self.statsFrame.manaBar:SetValue(petmana)
-
+	--Set mana bar text
 	self.statsFrame.manaBar.text:SetFormattedText("%d/%d", petmana, petmanamax)
 
 	if pconf.values then
@@ -384,49 +377,10 @@ local function XPerl_Player_Pet_Buff_UpdateAll(self)
 	end
 end
 
----------------
--- Happiness --
----------------
-local function XPerl_Player_Pet_SetHappiness(self)
-	if not IsVanillaClassic then
-		return
-	end
-
-	local happiness, damagePercentage, loyaltyRate = GetPetHappiness()
-	if not happiness then
-		happiness = 3
-	end
-
-	local icon = self.happyFrame.icon
-	icon.tex:SetTexCoord(0.5625 - (0.1875 * happiness), 0.75 - (0.1875 * happiness), 0, 0.359375)
-
-	if pconf.happiness.enable and (not pconf.happiness.onlyWhenSad or happiness < 3) then
-		self.happyFrame:Show()
-
-		icon.tooltip = _G[("PET_HAPPINESS"..happiness)]
-		icon.tooltipDamage = format(PET_DAMAGE_PERCENTAGE, damagePercentage)
-		if loyaltyRate < 0 then
-			icon.tooltipLoyalty = LOSING_LOYALTY
-		elseif (loyaltyRate > 0) then
-			icon.tooltipLoyalty = GAINING_LOYALTY
-		else
-			icon.tooltipLoyalty = nil
-		end
-
-		if pconf.happiness.flashWhenSad and happiness < 3 then
-			XPerl_FrameFlash(self.happyFrame)
-		else
-			XPerl_FrameFlashStop(self.happyFrame)
-		end
-	else
-		XPerl_FrameFlashStop(self.happyFrame)
-		self.happyFrame:Hide()
-	end
-end
 
 -- XPerl_Player_Pet_Update_Control
 local function XPerl_Player_Pet_Update_Control(self)
-	if UnitIsCharmed(self.partyid) and UnitIsPlayer(self.partyid) and (not IsVanillaClassic and not UnitInVehicle("player") or true) then
+	if UnitIsCharmed(self.partyid) and UnitIsPlayer(self.partyid) and (not UnitInVehicle("player") or true) then
 		self.nameFrame.warningIcon:Show()
 	else
 		self.nameFrame.warningIcon:Hide()
@@ -626,7 +580,7 @@ end
 
 -- PLAYER_ENTERING_WORLD
 function XPerl_Player_Pet_Events:PLAYER_ENTERING_WORLD()
-	if not IsVanillaClassic and UnitHasVehicleUI("player") then
+	if UnitHasVehicleUI("player") then
 		self.partyid = "player"
 		self.unit = self.partyid
 		self:SetAttribute("unit", "player")
@@ -704,12 +658,6 @@ end
 function XPerl_Player_Pet_Events:UNIT_HEAL_PREDICTION(unit)
 	if pconf.healprediction and unit == self.partyid then
 		XPerl_SetExpectedHealth(self)
-	end
-	if not IsPandaClassic then
-		return
-	end
-	if pconf.hotPrediction and unit == self.partyid then
-		XPerl_SetExpectedHots(self)
 	end
 end
 

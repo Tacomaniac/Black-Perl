@@ -11,11 +11,7 @@ XPerl_RequestConfig(function(New)
 	rconf = New.raidpet
 end, "$Revision:  $")
 
---local new, del, copy = XPerl_GetReusableTable, XPerl_FreeTable, XPerl_CopyTable
-
 local IsRetail = WOW_PROJECT_ID == WOW_PROJECT_MAINLINE
-local IsVanillaClassic = WOW_PROJECT_ID == WOW_PROJECT_CLASSIC
-local IsClassic = WOW_PROJECT_ID >= WOW_PROJECT_CLASSIC
 
 local pairs = pairs
 local strfind = strfind
@@ -121,7 +117,7 @@ local function XPerl_RaidPets_UpdateName(self)
 		return
 	end
 	local name
-	if (self.ownerid and not IsVanillaClassic and (UnitInVehicle(self.ownerid) or UnitHasVehicleUI(self.ownerid))) then
+	if (self.ownerid and (UnitInVehicle(self.ownerid) or UnitHasVehicleUI(self.ownerid))) then
 		name = UnitName(self.ownerid)
 		if (name) then
 			self.text:SetFormattedText("<%s>", name)
@@ -165,42 +161,20 @@ local function XPerl_RaidPets_UpdateHealth(self)
 	self.pethp = health
 	self.pethpmax = healthmax
 
-	-- PTR region fix
-	if not healthmax or healthmax <= 0 then
-		if healthmax > 0 then
-			healthmax = health
-		else
-			healthmax = 1
-		end
-	end
-
-	if (health > healthmax) then
-		-- New glitch with 1.12.1
-		if (UnitIsDeadOrGhost(partyid)) then
-			health = 0
-		else
-			health = healthmax
-		end
-	end
-
+	--set min/max health bars
 	self.healthBar:SetMinMaxValues(0, healthmax)
-	if (conf.bar.inverse) then
-		self.healthBar:SetValue(healthmax - health)
-	else
-		self.healthBar:SetValue(health)
-	end
-	XPerl_SetSmoothBarColor(self.healthBar, health / healthmax)
+	--set actual value
+	self.healthBar:SetValue(health)
+	--Set color curve
+	local percent = UnitHealthPercent(partyid,true,CurveConstants.ScaleTo100)
+	XPerl_SetSmoothBarColor(self.healthBar, percent)
 
 	if (UnitIsDead(partyid)) then
 		self.healthBar.text:SetText(XPERL_LOC_DEAD)
 		self.healthBar:SetStatusBarColor(0.5, 0.5, 0.5, 1)
 		self.healthBar.bg:SetVertexColor(0.5, 0.5, 0.5, 0.5)
 	else
-		if (healthmax == 0) then
-			self.healthBar.text:SetText("")
-		else
-			self.healthBar.text:SetFormattedText("%.0f%%", health / healthmax * 100)
-		end
+		self.healthBar.text:SetFormattedText("%.0f%%", percent)
 	end
 
 	XPerl_RaidPets_UpdateAbsorbPrediction(self)
@@ -226,7 +200,6 @@ local function XPerl_RaidPets_OnUpdate(self, elapsed)
 		end
 	end
 
-	if IsClassic then
 		local newGuid = UnitGUID(partyid)
 		local newName = UnitName(partyid)
 		local newHP = UnitIsGhost(partyid) and 1 or (UnitIsDead(partyid) and 0 or XPerl_Unit_GetHealth(self))
@@ -255,7 +228,7 @@ local function XPerl_RaidPets_OnUpdate(self, elapsed)
 			XPerl_RaidPets_UpdateHealth(self)
 		end
 
-	end
+
 end
 
 -- XPerl_Raid_Pet_GetUnitFrameByGUID
@@ -658,10 +631,9 @@ function XPerl_RaidPets_HideShow()
 		end
 	end
 
-	if not IsClassic then
 		local on = ((IsInRaid() and rconf.enable) or (IsInGroup() and XPerl_Raid_GrpPets:GetAttribute("showParty") and rconf.enable))
 		local events = {
-			IsClassic and "UNIT_HEALTH_FREQUENT" or "UNIT_HEALTH",
+			"UNIT_HEALTH",
 			"UNIT_MAXHEALTH",
 			"UNIT_NAME_UPDATE",
 			"UNIT_AURA",
@@ -674,7 +646,7 @@ function XPerl_RaidPets_HideShow()
 				XPerl_RaidPets_Frame:UnregisterEvent(event)
 			end
 		end
-	end
+
 
 	if (rconf.enable and not singleGroup) then
 		XPerl_Raid_GrpPets:Show()
@@ -736,7 +708,7 @@ function XPerl_RaidPets_Titles()
 end
 
 function XPerl_RaidPets_SetBits1(self)
-	if IsClassic or conf.rangeFinder.enabled then
+	if conf.rangeFinder.enabled then
 		if not self:GetScript("OnUpdate") then
 			self:SetScript("OnUpdate", XPerl_RaidPets_OnUpdate)
 		end

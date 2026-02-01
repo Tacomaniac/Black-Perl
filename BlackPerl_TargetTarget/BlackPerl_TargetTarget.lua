@@ -2,9 +2,6 @@
 -- Author: Tacomaniac
 -- License: GNU GPL v3, 18 October 2014
 
-local IsClassic = WOW_PROJECT_ID >= WOW_PROJECT_CLASSIC
-local IsVanillaClassic = WOW_PROJECT_ID == WOW_PROJECT_CLASSIC
-
 local max = max
 local pairs = pairs
 local strfind = strfind
@@ -71,7 +68,7 @@ function BlackPerl_TargetTarget_OnLoad(self)
 	XPerl_SetChildMembers(self)
 
 	local events = {
-		IsClassic and "UNIT_HEALTH_FREQUENT" or "UNIT_HEALTH",
+		"UNIT_HEALTH",
 		"UNIT_POWER_FREQUENT",
 		"UNIT_AURA",
 		"UNIT_TARGET",
@@ -97,10 +94,9 @@ function BlackPerl_TargetTarget_OnLoad(self)
 		self:SetScript("OnUpdate", XPerl_TargetTarget_OnUpdate)
 	elseif (self == XPerl_FocusTarget) then
 		self.parentid = "focus"
-		self.partyid = "focustarget"
-		if not IsVanillaClassic then
-			self:RegisterEvent("PLAYER_FOCUS_CHANGED")
-		end
+		self.partyid = "focustarget" 
+		self:RegisterEvent("PLAYER_FOCUS_CHANGED")
+
 		for i, event in pairs(events) do
 			self:RegisterUnitEvent(event, "focus")
 		end
@@ -366,7 +362,7 @@ end
 -- XPerl_TargetTarget_Update_Control
 local function XPerl_TargetTarget_Update_Control(self)
 	local partyid = self.partyid
-	if UnitIsVisible(partyid) and UnitIsCharmed(partyid) and UnitIsPlayer(self.partyid) and (not IsClassic and not UnitUsingVehicle(partyid) or true) then
+	if UnitIsVisible(partyid) and UnitIsCharmed(partyid) and UnitIsPlayer(self.partyid) and (not UnitUsingVehicle(partyid) or true) then
 		self.nameFrame.warningIcon:Show()
 	else
 		self.nameFrame.warningIcon:Hide()
@@ -394,37 +390,12 @@ function XPerl_TargetTarget_OnUpdate(self, elapsed)
 	local newManaMax = UnitPowerMax(partyid)
 	local newAFK = UnitIsAFK(partyid)
 
-	-- if (conf.showAFK and newAFK ~= self.afk) or (newHP ~= self.targethp) or (newHPMax ~= self.targethpmax) then
-	-- 	XPerl_Target_UpdateHealth(self)
-	-- end
-
 	if (conf.showAFK and newAFK ~= self.afk) then
 		XPerl_Target_UpdateHealth(self)
 	end
 
-
 	XPerl_Target_SetManaType(self)
 	XPerl_Target_SetMana(self)
-
-	-- if (newManaType ~= self.targetmanatype) then
-	-- 	XPerl_Target_SetManaType(self)
-	-- 	XPerl_Target_SetMana(self)
-	-- end
-
-	-- if (newMana ~= self.targetmana) or (newManaMax ~= self.targetmanamax) then
-	-- 	XPerl_Target_SetMana(self)
-	-- end
-
-	--[[if conf.showFD then
-		local _, class = UnitClass(partyid)
-		if class == "HUNTER" then
-			local feigning = UnitBuff(partyid, feignDeath)
-			if feigning ~= self.feigning then
-				self.feigning = feigning
-				XPerl_Target_UpdateHealth(self)
-			end
-		end
-	end--]]
 
 	if (newGuid ~= self.guid) then
 		XPerl_TargetTarget_UpdateDisplay(self)
@@ -469,17 +440,6 @@ function XPerl_TargetTargetTarget_OnUpdate(self, elapsed)
 	if (newMana ~= self.targetmana) then
 		XPerl_Target_SetMana(self)
 	end
-
-	--[[if conf.showFD then
-		local _, class = UnitClass(partyid)
-		if class == "HUNTER" then
-			local feigning = UnitBuff(partyid, feignDeath)
-			if feigning ~= self.feigning then
-				self.feigning = feigning
-				XPerl_Target_UpdateHealth(self)
-			end
-		end
-	end--]]
 
 	if (newGuid ~= self.guid) then
 		XPerl_TargetTarget_UpdateDisplay(self)
@@ -557,7 +517,7 @@ function XPerl_TargetTarget_Update(self)
 				end
 				offset = offset + 20
 				local name
-				if not IsVanillaClassic and C_UnitAuras then
+				if C_UnitAuras then
 					local auraData = C_UnitAuras.GetAuraDataByIndex("targettarget", 9, "HELPFUL")
 					if auraData then
 						name = auraData.name
