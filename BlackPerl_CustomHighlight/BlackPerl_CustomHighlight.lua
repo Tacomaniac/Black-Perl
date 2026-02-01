@@ -26,7 +26,7 @@ local UnitAura = UnitAura
 
 local SecureButton_GetUnit = SecureButton_GetUnit
 
-local CustomHighlight = CreateFrame("Frame", "ZPerl_Custom")
+local CustomHighlight = CreateFrame("Frame", "BlackPerl_Custom")
 CustomHighlight.active = {}
 CustomHighlight:RegisterEvent("PLAYER_ENTERING_WORLD")
 CustomHighlight:SetScript("OnEvent", function(self, event, ...)

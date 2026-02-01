@@ -1,17 +1,17 @@
-## Interface: 11508, 50502, 110207, 120000
-## Author: Resike
-## Title: Z-Perl |cffeda55fRaid Frames|r
-## Title-itIT: Z-Perl |cffeda55fIncursione|r
-## Title-ruRU: Z-Perl |cffeda55fРейд|r
-## Title-deDE: Z-Perl |cffeda55fSchlachtzugsfenster|r
-## Title-zhCN: Z-Perl |cffeda55f团队窗|r
-## Title-zhTW: Z-Perl |cffeda55f團隊框架|r
-## Notes: Z-Perl Raid frames
-## Notes-itIT: Finestre incursione di Z-Perl
+## Interface: 120000
+## Author: Tacomaniac
+## Title: BlackPerl |cffeda55fRaid Frames|r
+## Title-itIT: BlackPerl |cffeda55fIncursione|r
+## Title-ruRU: BlackPerl |cffeda55fРейд|r
+## Title-deDE: BlackPerl |cffeda55fSchlachtzugsfenster|r
+## Title-zhCN: BlackPerl |cffeda55f团队窗|r
+## Title-zhTW: BlackPerl |cffeda55f團隊框架|r
+## Notes: BlackPerl Raid frames
+## Notes-itIT: Finestre incursione di BlackPerl
 ## Notes-ruRU: Фреймы рейда.
-## Notes-deDE: Z-Perl |cffeda55fSchlachtzugfenster|r
-## Notes-zhTW: Z-Perl 團隊框架
-## Dependencies: ZPerl
-## SavedVariablesPerCharacter: ZPerl_Roster
+## Notes-deDE: BlackPerl |cffeda55fSchlachtzugfenster|r
+## Notes-zhTW: BlackPerl 團隊框架
+## Dependencies: BlackPerl
+## SavedVariablesPerCharacter: BlackPerl_Roster
 
-ZPerl_Raid.xml
+BlackPerl_Raid.xml

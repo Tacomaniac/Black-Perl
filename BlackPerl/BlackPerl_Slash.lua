@@ -1,5 +1,5 @@
--- Z-Perl UnitFrames
--- Author: Resike
+-- BlackPerl UnitFrames
+-- Author: Tacomaniac
 -- License: GNU GPL v3, 18 October 2014
 
 XPerl_SetModuleRevision("$Revision:  $")
@@ -36,7 +36,7 @@ local function XPerl_SlashHandler(msg)
 		if (args[2] == XPERL_CMD_LIST) then
 			local current
 			XPerl_Notice(XPERL_CONFIG_LIST)
-			for realmName, realmList in pairs(ZPerlConfigNew) do
+			for realmName, realmList in pairs(BlackPerlConfigNew) do
 				if (type(realmList) == "table" and realmName ~= "global" and realmName ~= "savedPositions") then
 					for playerName, realmSettings in pairs(realmList) do
 						if (strlower(realmName) == strlower(GetRealmName()) and strlower(playerName) == strlower(UnitName("player"))) then
@@ -52,11 +52,11 @@ local function XPerl_SlashHandler(msg)
 			if (args[3] and args[4]) then
 				local me = GetRealmName().."/"..UnitName("player")
 				if (strlower(args[3]) ~= strlower(GetRealmName()) and strlower(args[4]) ~= strlower(UnitName("player"))) then
-					for realmName, realmList in pairs(ZPerlConfigNew) do
+					for realmName, realmList in pairs(BlackPerlConfigNew) do
 						if (strlower(realmName) == strlower(args[3]) and type(realmList) == "table" and realmName ~= "global" and realmName ~= "savedPositions") then
 							for playerName, realmSettings in pairs(realmList) do
 								if (strlower(playerName) == strlower(args[4])) then
-									ZPerlConfigNew[realmName][playerName] = nil
+									BlackPerlConfigNew[realmName][playerName] = nil
 									XPerl_Notice(XPERL_CONFIG_DELETED, realmName, playerName)
 									return
 								end
@@ -76,6 +76,6 @@ local function XPerl_SlashHandler(msg)
 	end
 end
 
-SlashCmdList["ZPerl"] = XPerl_SlashHandler
-SLASH_ZPerl1 = "/zperl"
-SLASH_ZPerl2 = "/zp"
+SlashCmdList["BlackPerl"] = XPerl_SlashHandler
+SLASH_BlackPerl1 = "/bperl"
+SLASH_BlackPerl2 = "/bp"

@@ -1,6 +1,6 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd">
 
-	<Script file="ZPerl_FrameOptions.lua"/>
+	<Script file="BlackPerl_FrameOptions.lua"/>
 	<Script file="localization.lua"/>
 	<Script file="localization.deDE.lua"/>
 	<Script file="localization.frFR.lua"/>
@@ -238,16 +238,16 @@
 		<HitRectInsets>
 			<AbsInset left="6" right="6" top="4" bottom="4"/>
 		</HitRectInsets>
-		<NormalTexture file="Interface\Addons\ZPerl_Options\Images\LeftRightArrows">
+		<NormalTexture file="Interface\Addons\BlackPerl_Options\Images\LeftRightArrows">
 			<TexCoords left="0" right="0.25" top="0" bottom="0.5"/>
 		</NormalTexture>
-		<PushedTexture file="Interface\Addons\ZPerl_Options\Images\LeftRightArrows">
+		<PushedTexture file="Interface\Addons\BlackPerl_Options\Images\LeftRightArrows">
 			<TexCoords left="0.25" right="0.5" top="0" bottom="0.5"/>
 		</PushedTexture>
-		<DisabledTexture file="Interface\Addons\ZPerl_Options\Images\LeftRightArrows">
+		<DisabledTexture file="Interface\Addons\BlackPerl_Options\Images\LeftRightArrows">
 			<TexCoords left="0.5" right="0.75" top="0" bottom="0.5"/>
 		</DisabledTexture>
-		<HighlightTexture file="Interface\Addons\ZPerl_Options\Images\LeftRightArrows" alphaMode="ADD">
+		<HighlightTexture file="Interface\Addons\BlackPerl_Options\Images\LeftRightArrows" alphaMode="ADD">
 			<TexCoords left="0.75" right="1" top="0" bottom="0.5"/>
 		</HighlightTexture>
 	</Button>
@@ -259,16 +259,16 @@
 		<HitRectInsets>
 			<AbsInset left="6" right="6" top="4" bottom="4"/>
 		</HitRectInsets>
-		<NormalTexture file="Interface\Addons\ZPerl_Options\Images\LeftRightArrows">
+		<NormalTexture file="Interface\Addons\BlackPerl_Options\Images\LeftRightArrows">
 			<TexCoords left="0" right="0.25" top="0.5" bottom="1"/>
 		</NormalTexture>
-		<PushedTexture file="Interface\Addons\ZPerl_Options\Images\LeftRightArrows">
+		<PushedTexture file="Interface\Addons\BlackPerl_Options\Images\LeftRightArrows">
 			<TexCoords left="0.25" right="0.5" top="0.5" bottom="1"/>
 		</PushedTexture>
-		<DisabledTexture file="Interface\Addons\ZPerl_Options\Images\LeftRightArrows">
+		<DisabledTexture file="Interface\Addons\BlackPerl_Options\Images\LeftRightArrows">
 			<TexCoords left="0.5" right="0.75" top="0.5" bottom="1"/>
 		</DisabledTexture>
-		<HighlightTexture file="Interface\Addons\ZPerl_Options\Images\LeftRightArrows" alphaMode="ADD">
+		<HighlightTexture file="Interface\Addons\BlackPerl_Options\Images\LeftRightArrows" alphaMode="ADD">
 			<TexCoords left="0.75" right="1" top="0.5" bottom="1"/>
 		</HighlightTexture>
 	</Button>
@@ -441,7 +441,7 @@
 			</Layer>
 		</Layers>
 		<NormalTexture name="$parent_Colour" file="Interface\ChatFrame\ChatFrameColorSwatch"/>
-		<HighlightTexture file="Interface\Addons\ZPerl\Images\XPerl_Highlight" alphaMode="ADD">
+		<HighlightTexture file="Interface\Addons\BlackPerl\Images\XPerl_Highlight" alphaMode="ADD">
 			<TexCoords left="0" right="0.25" top="0" bottom="0.5"/>
 		</HighlightTexture>
 	</Button>
@@ -452,7 +452,7 @@
 		</Size>
 		<Layers>
 			<Layer level="BACKGROUND">
-				<Texture name="$parentEnabledLeft" file="Interface\Addons\ZPerl_Options\Images\ZPerl_Tabs" hidden="true">
+				<Texture name="$parentEnabledLeft" file="Interface\Addons\BlackPerl_Options\Images\BlackPerl_Tabs" hidden="true">
 					<Anchors>
 						<Anchor point="TOPLEFT"/>
 						<Anchor point="BOTTOMRIGHT" relativePoint="BOTTOMLEFT">
@@ -463,7 +463,7 @@
 					</Anchors>
 					<TexCoords left="0" right="0.125" top="0" bottom="0.25"/>
 				</Texture>
-				<Texture name="$parentEnabledRight" file="Interface\Addons\ZPerl_Options\Images\ZPerl_Tabs" hidden="true">
+				<Texture name="$parentEnabledRight" file="Interface\Addons\BlackPerl_Options\Images\BlackPerl_Tabs" hidden="true">
 					<Anchors>
 						<Anchor point="TOPRIGHT"/>
 						<Anchor point="BOTTOMLEFT" relativePoint="BOTTOMRIGHT">
@@ -474,14 +474,14 @@
 					</Anchors>
 					<TexCoords left="0.875" right="1" top="0" bottom="0.25"/>
 				</Texture>
-				<Texture name="$parentEnabledMiddle" file="Interface\Addons\ZPerl_Options\Images\ZPerl_Tabs" hidden="true">
+				<Texture name="$parentEnabledMiddle" file="Interface\Addons\BlackPerl_Options\Images\BlackPerl_Tabs" hidden="true">
 					<Anchors>
 						<Anchor point="TOPLEFT" relativeTo="$parentEnabledLeft" relativePoint="TOPRIGHT"/>
 						<Anchor point="BOTTOMRIGHT" relativeTo="$parentEnabledRight" relativePoint="BOTTOMLEFT"/>
 					</Anchors>
 					<TexCoords left="0.125" right="0.875" top="0" bottom="0.25"/>
 				</Texture>
-				<Texture name="$parentDisabledLeft" file="Interface\Addons\ZPerl_Options\Images\ZPerl_Tabs">
+				<Texture name="$parentDisabledLeft" file="Interface\Addons\BlackPerl_Options\Images\BlackPerl_Tabs">
 					<Anchors>
 						<Anchor point="TOPLEFT">
 							<Offset>
@@ -496,7 +496,7 @@
 					</Anchors>
 					<TexCoords left="0" right="0.125" top="0.26" bottom="0.5"/>
 				</Texture>
-				<Texture name="$parentDisabledRight" file="Interface\Addons\ZPerl_Options\Images\ZPerl_Tabs">
+				<Texture name="$parentDisabledRight" file="Interface\Addons\BlackPerl_Options\Images\BlackPerl_Tabs">
 					<Anchors>
 						<Anchor point="TOPRIGHT">
 							<Offset>
@@ -511,7 +511,7 @@
 					</Anchors>
 					<TexCoords left="0.875" right="1" top="0.26" bottom="0.5"/>
 				</Texture>
-				<Texture name="$parentDisabledMiddle" file="Interface\Addons\ZPerl_Options\Images\ZPerl_Tabs">
+				<Texture name="$parentDisabledMiddle" file="Interface\Addons\BlackPerl_Options\Images\BlackPerl_Tabs">
 					<Anchors>
 						<Anchor point="TOPLEFT" relativeTo="$parentDisabledLeft" relativePoint="TOPRIGHT"/>
 						<Anchor point="BOTTOMRIGHT" relativeTo="$parentDisabledRight" relativePoint="BOTTOMLEFT"/>
@@ -529,7 +529,7 @@
 		<NormalFont style="GameFontNormalSmall"/>
 		<HighlightFont style="GameFontHighlightSmall"/>
 		<DisabledFont style="GameFontDisableSmall"/>
-		<HighlightTexture name="$parentHighlightTexture" file="Interface\AddOns\ZPerl_Options\Images\ZPerl_Tabs" alphaMode="ADD">
+		<HighlightTexture name="$parentHighlightTexture" file="Interface\AddOns\BlackPerl_Options\Images\BlackPerl_Tabs" alphaMode="ADD">
 			<TexCoords left="0" right="1" top="0.75" bottom="1"/>
 			<Anchors>
 				<Anchor point="TOPLEFT">
@@ -619,7 +619,7 @@
 							sets[self.XconfigVar] = XPerl_GetCheck(self)
 						end
 					else
-						ZPerlConfigHelper[self.XconfigVar] = XPerl_GetCheck(self)
+						BlackPerlConfigHelper[self.XconfigVar] = XPerl_GetCheck(self)
 					end
 				end
 
@@ -647,7 +647,7 @@
 							end
 						end
 					else
-						if ZPerlConfigHelper[self.XconfigVar] == 1 then
+						if BlackPerlConfigHelper[self.XconfigVar] == 1 then
 							self:SetChecked(true)
 						else
 							self:SetChecked(false)
@@ -1014,7 +1014,7 @@
 			</OnMouseWheel>
 		</Scripts>
 		<NormalTexture file="Interface\TargetingFrame\UI-StatusBar"/>
-		<HighlightTexture file="Interface\Addons\ZPerl\Images\XPerl_Highlight" alphaMode="ADD">
+		<HighlightTexture file="Interface\Addons\BlackPerl\Images\XPerl_Highlight" alphaMode="ADD">
 			<TexCoords left="0" right="1" top="0.5" bottom="1"/>
 		</HighlightTexture>
 		<Layers>
@@ -2084,7 +2084,7 @@
 				</Anchors>
 				<Scripts>
 					<OnShow>
-						if (not C_AddOns.IsAddOnLoaded("ZPerl_PartyPet")) then
+						if (not C_AddOns.IsAddOnLoaded("BlackPerl_PartyPet")) then
 							_G[self:GetName().."_ScalePets"]:Hide()
 						end
 					</OnShow>
@@ -2769,16 +2769,16 @@
 								</Offset>
 							</Anchor>
 						</Anchors>
-						<NormalTexture file="Interface\Addons\ZPerl_RaidAdmin\Images\XPerl_Bin">
+						<NormalTexture file="Interface\Addons\BlackPerl_RaidAdmin\Images\XPerl_Bin">
 							<TexCoords left="0" right="0.5" top="0" bottom="0.5"/>
 						</NormalTexture>
-						<PushedTexture file="Interface\Addons\ZPerl_RaidAdmin\Images\XPerl_Bin">
+						<PushedTexture file="Interface\Addons\BlackPerl_RaidAdmin\Images\XPerl_Bin">
 							<TexCoords left="0.5" right="1" top="0" bottom="0.5"/>
 						</PushedTexture>
-						<DisabledTexture file="Interface\Addons\ZPerl_RaidAdmin\Images\XPerl_Bin">
+						<DisabledTexture file="Interface\Addons\BlackPerl_RaidAdmin\Images\XPerl_Bin">
 							<TexCoords left="0" right="0.5" top="0.5" bottom="1"/>
 						</DisabledTexture>
-						<HighlightTexture file="Interface\Addons\ZPerl_RaidAdmin\Images\XPerl_Bin" alphaMode="ADD">
+						<HighlightTexture file="Interface\Addons\BlackPerl_RaidAdmin\Images\XPerl_Bin" alphaMode="ADD">
 							<TexCoords left="0.5" right="1" top="0.5" bottom="1"/>
 						</HighlightTexture>
 						<Scripts>
@@ -3180,7 +3180,7 @@
 								XPerl_Options_TextureSelect:Show()
 							</OnClick>
 						</Scripts>
-						<HighlightTexture file="Interface\Addons\ZPerl\Images\XPerl_Highlight" alphaMode="ADD">
+						<HighlightTexture file="Interface\Addons\BlackPerl\Images\XPerl_Highlight" alphaMode="ADD">
 							<TexCoords left="0" right="1" top="0.5" bottom="1"/>
 						</HighlightTexture>
 					</Button>
@@ -4796,14 +4796,14 @@
 						<Scripts>
 							<OnLoad>
 								XPerl_OptionsSetMyText(self, "XPERL_CONF_MINIMAP_ICON")
-								self.flashFrame = ZPerl_MinimapButton_Frame
+								self.flashFrame = BlackPerl_MinimapButton_Frame
 								self.configBase = "XPerlDB.minimap"
 								self.configIndex = "enable"
 								self.configClick = function()
 									if (XPerlDB.minimap.enable) then
-										ZPerl_MinimapButton_Frame:Show()
+										BlackPerl_MinimapButton_Frame:Show()
 									else
-										ZPerl_MinimapButton_Frame:Hide()
+										BlackPerl_MinimapButton_Frame:Hide()
 									end
 								end
 							</OnLoad>
@@ -4895,7 +4895,7 @@
 								XPerl_OptionsSetMyText(self, "XPERL_CONF_SAVEPERCHARACTER")
 							</OnLoad>
 							<OnClick>
-								ZPerlConfigSavePerCharacter = self:GetChecked()
+								BlackPerlConfigSavePerCharacter = self:GetChecked()
 								XPerl_SetMyGlobal()
 								XPerl_Options_LoadSettings:Hide()
 								XPerl_Options_LoadSettings:Show()
@@ -4903,7 +4903,7 @@
 								XPerl_Options_DeleteSettings:Show()
 							</OnClick>
 							<OnShow>
-								self:SetChecked(ZPerlConfigSavePerCharacter)
+								self:SetChecked(BlackPerlConfigSavePerCharacter)
 							</OnShow>
 						</Scripts>
 					</CheckButton>
@@ -4961,7 +4961,7 @@
 								XPerl_Options_LoadSettings_OnLoad(self)
 							</OnLoad>
 							<OnShow>
-								if (not ZPerlConfigSavePerCharacter) then
+								if (not BlackPerlConfigSavePerCharacter) then
 									self:Hide()
 								end
 							</OnShow>
@@ -5007,7 +5007,7 @@
 								XPerl_Options_DeleteSettings_OnLoad(self)
 							</OnLoad>
 							<OnShow>
-								if (not ZPerlConfigSavePerCharacter) then
+								if (not BlackPerlConfigSavePerCharacter) then
 									self:Hide()
 								end
 							</OnShow>
@@ -5037,7 +5037,7 @@
 						self:SetScale(0.9)
 					</OnLoad>
 					<OnShow>
-						if (not C_AddOns.IsAddOnLoaded("ZPerl_ArcaneBar")) then
+						if (not C_AddOns.IsAddOnLoaded("BlackPerl_ArcaneBar")) then
 							local n = self:GetName().."_"
 							XPerl_Options_EnableCheck(_G[n.."ArcaneBar"])
 							XPerl_Options_EnableCheck(_G[n.."PreCast"])
@@ -5715,7 +5715,7 @@
 						</KeyValues>
 						<Scripts>
 							<OnShow>
-								if (not C_AddOns.IsAddOnLoaded("ZPerl_PlayerBuffs")) then
+								if (not C_AddOns.IsAddOnLoaded("BlackPerl_PlayerBuffs")) then
 									self:Hide()
 								end
 							</OnShow>
@@ -6694,7 +6694,7 @@
 						</KeyValues>
 						<Scripts>
 							<OnShow>
-								if (not C_AddOns.IsAddOnLoaded("ZPerl_TargetTarget")) then
+								if (not C_AddOns.IsAddOnLoaded("BlackPerl_TargetTarget")) then
 									self:Hide()
 								end
 							</OnShow>
@@ -7386,7 +7386,7 @@
 						self:SetScale(0.9)
 					</OnLoad>
 					<OnShow>
-						if (not C_AddOns.IsAddOnLoaded("ZPerl_ArcaneBar")) then
+						if (not C_AddOns.IsAddOnLoaded("BlackPerl_ArcaneBar")) then
 							XPerl_Options_EnableCheck(_G[self:GetName().."_".."ArcaneBar"])
 						end
 					</OnShow>
@@ -9320,7 +9320,7 @@
 						self:SetScale(0.9)
 					</OnLoad>
 					<OnShow>
-						if (not C_AddOns.IsAddOnLoaded("ZPerl_ArcaneBar")) then
+						if (not C_AddOns.IsAddOnLoaded("BlackPerl_ArcaneBar")) then
 							XPerl_Options_EnableCheck(_G[self:GetName().."_".."ArcaneBar"])
 						end
 					</OnShow>
@@ -10929,7 +10929,7 @@
 						self:SetScale(0.9)
 					</OnLoad>
 					<OnShow>
-						if (not C_AddOns.IsAddOnLoaded("ZPerl_ArcaneBar")) then
+						if (not C_AddOns.IsAddOnLoaded("BlackPerl_ArcaneBar")) then
 							XPerl_Options_EnableCheck(_G[self:GetName().."_".."ArcaneBar"])
 						end
 					</OnShow>
@@ -11915,7 +11915,7 @@
 								self:SetScale(0.9)
 							</OnLoad>
 							<OnShow>
-								if (not C_AddOns.IsAddOnLoaded("ZPerl_PartyPet")) then
+								if (not C_AddOns.IsAddOnLoaded("BlackPerl_PartyPet")) then
 									self:Hide()
 								end
 							</OnShow>
@@ -12236,13 +12236,13 @@
 								self.configBase = "XPerlDB.raid"
 								self.configIndex = "enable"
 								self.configClick = function()
-									if (not ZPerl_Custom) then
-										C_AddOns.LoadAddOn("ZPerl_CustomHighlight")
+									if (not BlackPerl_Custom) then
+										C_AddOns.LoadAddOn("BlackPerl_CustomHighlight")
 									end
-									if (ZPerl_Custom) then
-										ZPerl_Custom:PLAYER_ENTERING_WORLD()
+									if (BlackPerl_Custom) then
+										BlackPerl_Custom:PLAYER_ENTERING_WORLD()
 										if not XPerlDB.raid.enable or (XPerlDB.custom and not XPerlDB.custom.enable) then
-											ZPerl_Custom:ClearAll()
+											BlackPerl_Custom:ClearAll()
 										end
 									end
 									XPerl_Raid_OptionActions()
@@ -13550,7 +13550,7 @@
 						<Scripts>
 							<OnLoad>
 								self:OnBackdropLoaded()
-								local _, _, _, _, reason = C_AddOns.GetAddOnInfo("ZPerl_RaidPets")
+								local _, _, _, _, reason = C_AddOns.GetAddOnInfo("BlackPerl_RaidPets")
 								if (reason == "DISABLED" or reason == "MISSING") then
 									self:Hide()
 								end
@@ -13633,7 +13633,7 @@
 						<Scripts>
 							<OnLoad>
 								self:OnBackdropLoaded()
-								local _, _, _, _, reason = C_AddOns.GetAddOnInfo("ZPerl_CustomHighlight")
+								local _, _, _, _, reason = C_AddOns.GetAddOnInfo("BlackPerl_CustomHighlight")
 								if (reason == "DISABLED" or reason == "MISSING") then
 									self:Hide()
 								end
@@ -13666,13 +13666,13 @@
 										self.configBase = "XPerlDB.custom"
 										self.configIndex = "enable"
 										self.configClick = function()
-											if (not ZPerl_Custom) then
-												C_AddOns.LoadAddOn("ZPerl_CustomHighlight")
+											if (not BlackPerl_Custom) then
+												C_AddOns.LoadAddOn("BlackPerl_CustomHighlight")
 											end
-											if (ZPerl_Custom) then
-												ZPerl_Custom:PLAYER_ENTERING_WORLD()
+											if (BlackPerl_Custom) then
+												BlackPerl_Custom:PLAYER_ENTERING_WORLD()
 												if XPerlDB.custom and not XPerlDB.custom.enable then
-													ZPerl_Custom:ClearAll()
+													BlackPerl_Custom:ClearAll()
 												end
 											end
 										end
@@ -14207,13 +14207,13 @@
 										end
 									</OnLoad>
 									<OnShow>
-										self:SetChecked(C_AddOns.IsAddOnLoaded("ZPerl_Player"))
+										self:SetChecked(C_AddOns.IsAddOnLoaded("BlackPerl_Player"))
 									</OnShow>
 									<OnClick>
 										if (self:GetChecked()) then
-											C_AddOns.EnableAddOn("ZPerl_Player")
+											C_AddOns.EnableAddOn("BlackPerl_Player")
 										else
-											C_AddOns.DisableAddOn("ZPerl_Player")
+											C_AddOns.DisableAddOn("BlackPerl_Player")
 										end
 										self:Validate()
 									</OnClick>
@@ -14233,13 +14233,13 @@
 										XPerl_OptionsSetMyText(self, "XPERL_CONF_ADDON_PLAYERBUFFS")
 									</OnLoad>
 									<OnShow>
-										self:SetChecked(C_AddOns.IsAddOnLoaded("ZPerl_PlayerBuffs"))
+										self:SetChecked(C_AddOns.IsAddOnLoaded("BlackPerl_PlayerBuffs"))
 									</OnShow>
 									<OnClick>
 										if (self:GetChecked()) then
-											C_AddOns.EnableAddOn("ZPerl_PlayerBuffs")
+											C_AddOns.EnableAddOn("BlackPerl_PlayerBuffs")
 										else
-											C_AddOns.DisableAddOn("ZPerl_PlayerBuffs")
+											C_AddOns.DisableAddOn("BlackPerl_PlayerBuffs")
 										end
 									</OnClick>
 								</Scripts>
@@ -14258,13 +14258,13 @@
 										XPerl_OptionsSetMyText(self, "XPERL_CONF_ADDON_PET")
 									</OnLoad>
 									<OnShow>
-										self:SetChecked(C_AddOns.IsAddOnLoaded("ZPerl_PlayerPet"))
+										self:SetChecked(C_AddOns.IsAddOnLoaded("BlackPerl_PlayerPet"))
 									</OnShow>
 									<OnClick>
 										if (self:GetChecked()) then
-											C_AddOns.EnableAddOn("ZPerl_PlayerPet")
+											C_AddOns.EnableAddOn("BlackPerl_PlayerPet")
 										else
-											C_AddOns.DisableAddOn("ZPerl_PlayerPet")
+											C_AddOns.DisableAddOn("BlackPerl_PlayerPet")
 										end
 									</OnClick>
 								</Scripts>
@@ -14286,13 +14286,13 @@
 										end
 									</OnLoad>
 									<OnShow>
-										self:SetChecked(C_AddOns.IsAddOnLoaded("ZPerl_Target"))
+										self:SetChecked(C_AddOns.IsAddOnLoaded("BlackPerl_Target"))
 									</OnShow>
 									<OnClick>
 										if (self:GetChecked()) then
-											C_AddOns.EnableAddOn("ZPerl_Target")
+											C_AddOns.EnableAddOn("BlackPerl_Target")
 										else
-											C_AddOns.DisableAddOn("ZPerl_Target")
+											C_AddOns.DisableAddOn("BlackPerl_Target")
 										end
 										self:Validate()
 									</OnClick>
@@ -14312,13 +14312,13 @@
 										XPerl_OptionsSetMyText(self, "XPERL_CONF_ADDON_TARGETTARGET")
 									</OnLoad>
 									<OnShow>
-										self:SetChecked(C_AddOns.IsAddOnLoaded("ZPerl_TargetTarget"))
+										self:SetChecked(C_AddOns.IsAddOnLoaded("BlackPerl_TargetTarget"))
 									</OnShow>
 									<OnClick>
 										if (self:GetChecked()) then
-											C_AddOns.EnableAddOn("ZPerl_TargetTarget")
+											C_AddOns.EnableAddOn("BlackPerl_TargetTarget")
 										else
-											C_AddOns.DisableAddOn("ZPerl_TargetTarget")
+											C_AddOns.DisableAddOn("BlackPerl_TargetTarget")
 										end
 									</OnClick>
 								</Scripts>
@@ -14340,13 +14340,13 @@
 										end
 									</OnLoad>
 									<OnShow>
-										self:SetChecked(C_AddOns.IsAddOnLoaded("ZPerl_Party"))
+										self:SetChecked(C_AddOns.IsAddOnLoaded("BlackPerl_Party"))
 									</OnShow>
 									<OnClick>
 										if (self:GetChecked()) then
-											C_AddOns.EnableAddOn("ZPerl_Party")
+											C_AddOns.EnableAddOn("BlackPerl_Party")
 										else
-											C_AddOns.DisableAddOn("ZPerl_Party")
+											C_AddOns.DisableAddOn("BlackPerl_Party")
 										end
 										self:Validate()
 									</OnClick>
@@ -14366,13 +14366,13 @@
 										XPerl_OptionsSetMyText(self, "XPERL_CONF_ADDON_PARTYPET")
 									</OnLoad>
 									<OnShow>
-										self:SetChecked(C_AddOns.IsAddOnLoaded("ZPerl_PartyPet"))
+										self:SetChecked(C_AddOns.IsAddOnLoaded("BlackPerl_PartyPet"))
 									</OnShow>
 									<OnClick>
 										if (self:GetChecked()) then
-											C_AddOns.EnableAddOn("ZPerl_PartyPet")
+											C_AddOns.EnableAddOn("BlackPerl_PartyPet")
 										else
-											C_AddOns.DisableAddOn("ZPerl_PartyPet")
+											C_AddOns.DisableAddOn("BlackPerl_PartyPet")
 										end
 									</OnClick>
 								</Scripts>
@@ -14391,13 +14391,13 @@
 										XPerl_OptionsSetMyText(self, "XPERL_CONF_ADDON_ARCANE")
 									</OnLoad>
 									<OnShow>
-										self:SetChecked(C_AddOns.IsAddOnLoaded("ZPerl_ArcaneBar"))
+										self:SetChecked(C_AddOns.IsAddOnLoaded("BlackPerl_ArcaneBar"))
 									</OnShow>
 									<OnClick>
 										if (self:GetChecked()) then
-											C_AddOns.EnableAddOn("ZPerl_ArcaneBar")
+											C_AddOns.EnableAddOn("BlackPerl_ArcaneBar")
 										else
-											C_AddOns.DisableAddOn("ZPerl_ArcaneBar")
+											C_AddOns.DisableAddOn("BlackPerl_ArcaneBar")
 										end
 									</OnClick>
 								</Scripts>
@@ -14419,13 +14419,13 @@
 										end
 									</OnLoad>
 									<OnShow>
-										self:SetChecked(C_AddOns.IsAddOnLoaded("ZPerl_RaidFrames"))
+										self:SetChecked(C_AddOns.IsAddOnLoaded("BlackPerl_RaidFrames"))
 									</OnShow>
 									<OnClick>
 										if (self:GetChecked()) then
-											C_AddOns.EnableAddOn("ZPerl_RaidFrames")
+											C_AddOns.EnableAddOn("BlackPerl_RaidFrames")
 										else
-											C_AddOns.DisableAddOn("ZPerl_RaidFrames")
+											C_AddOns.DisableAddOn("BlackPerl_RaidFrames")
 										end
 										self:Validate()
 									</OnClick>
@@ -14445,13 +14445,13 @@
 										XPerl_OptionsSetMyText(self, "XPERL_CONF_ADDON_RAIDPETS")
 									</OnLoad>
 									<OnShow>
-										self:SetChecked(C_AddOns.IsAddOnLoaded("ZPerl_RaidPets"))
+										self:SetChecked(C_AddOns.IsAddOnLoaded("BlackPerl_RaidPets"))
 									</OnShow>
 									<OnClick>
 										if (self:GetChecked()) then
-											C_AddOns.EnableAddOn("ZPerl_RaidPets")
+											C_AddOns.EnableAddOn("BlackPerl_RaidPets")
 										else
-											C_AddOns.DisableAddOn("ZPerl_RaidPets")
+											C_AddOns.DisableAddOn("BlackPerl_RaidPets")
 										end
 									</OnClick>
 								</Scripts>
@@ -14470,13 +14470,13 @@
 										XPerl_OptionsSetMyText(self, "XPERL_CONF_ADDON_RAIDHELP")
 									</OnLoad>
 									<OnShow>
-										self:SetChecked(C_AddOns.IsAddOnLoaded("ZPerl_RaidHelper"))
+										self:SetChecked(C_AddOns.IsAddOnLoaded("BlackPerl_RaidHelper"))
 									</OnShow>
 									<OnClick>
 										if (self:GetChecked()) then
-											C_AddOns.EnableAddOn("ZPerl_RaidHelper")
+											C_AddOns.EnableAddOn("BlackPerl_RaidHelper")
 										else
-											C_AddOns.DisableAddOn("ZPerl_RaidHelper")
+											C_AddOns.DisableAddOn("BlackPerl_RaidHelper")
 										end
 									</OnClick>
 								</Scripts>
@@ -14495,13 +14495,13 @@
 										XPerl_OptionsSetMyText(self, "XPERL_CONF_ADDON_RAIDMONITOR")
 									</OnLoad>
 									<OnShow>
-										self:SetChecked(C_AddOns.IsAddOnLoaded("ZPerl_RaidMonitor"))
+										self:SetChecked(C_AddOns.IsAddOnLoaded("BlackPerl_RaidMonitor"))
 									</OnShow>
 									<OnClick>
 										if (self:GetChecked()) then
-											C_AddOns.EnableAddOn("ZPerl_RaidMonitor")
+											C_AddOns.EnableAddOn("BlackPerl_RaidMonitor")
 										else
-											C_AddOns.DisableAddOn("ZPerl_RaidMonitor")
+											C_AddOns.DisableAddOn("BlackPerl_RaidMonitor")
 										end
 									</OnClick>
 								</Scripts>
@@ -14520,13 +14520,13 @@
 										XPerl_OptionsSetMyText(self, "XPERL_CONF_ADDON_RAIDADMIN")
 									</OnLoad>
 									<OnShow>
-										self:SetChecked(C_AddOns.IsAddOnLoaded("ZPerl_RaidAdmin"))
+										self:SetChecked(C_AddOns.IsAddOnLoaded("BlackPerl_RaidAdmin"))
 									</OnShow>
 									<OnClick>
 										if (self:GetChecked()) then
-											C_AddOns.EnableAddOn("ZPerl_RaidAdmin")
+											C_AddOns.EnableAddOn("BlackPerl_RaidAdmin")
 										else
-											C_AddOns.DisableAddOn("ZPerl_RaidAdmin")
+											C_AddOns.DisableAddOn("BlackPerl_RaidAdmin")
 										end
 									</OnClick>
 								</Scripts>
@@ -14550,7 +14550,7 @@
 											local list = {"Player", "PlayerBuffs", "PlayerPet", "Target", "TargetTarget", "Party", "PartyPet", "ArcaneBar", "RaidFrames", "RaidPets", "RaidHelper", "RaidMonitor", "RaidAdmin"}
 											local enable
 											for i, name in pairs(list) do
-												if XPerl_Options_GetSiblingChecked(name, self) ~= C_AddOns.IsAddOnLoaded("ZPerl_"..name) then
+												if XPerl_Options_GetSiblingChecked(name, self) ~= C_AddOns.IsAddOnLoaded("BlackPerl_"..name) then
 													enable = true
 													break
 												end
@@ -16030,7 +16030,7 @@
 								end
 							</OnLoad>
 							<OnShow>
-								if ZPerlConfigHelper.RaidHelper == 1 then
+								if BlackPerlConfigHelper.RaidHelper == 1 then
 									self:SetChecked(true)
 								else
 									self:SetChecked(false)
@@ -16139,14 +16139,14 @@
 									return XPerlDB.player.healerMode.enable
 								end
 								self.setEnable = function(n)
-									ZPerlConfigHelper.HealerMode = n
+									BlackPerlConfigHelper.HealerMode = n
 									XPerl_MakeTankList()
 								end
 								self.getType = function()
 									return XPerlDB.player.healerMode.type
 								end
 								self.setType = function(n)
-									ZPerlConfigHelper.HealerModeType = n
+									BlackPerlConfigHelper.HealerModeType = n
 									XPerl_MakeTankList()
 								end
 								self:SetScale(0.9)
@@ -16174,15 +16174,15 @@
 								XPerl_OptionsSetMyText(self, "XPERL_CONF_RAIDHELP_MAXTANKS")
 							</OnLoad>
 							<OnShow>
-								self:SetValue(ZPerlConfigHelper.MaxMainTanks)
+								self:SetValue(BlackPerlConfigHelper.MaxMainTanks)
 							</OnShow>
 							<OnValueChanged>
-								if (ZPerlConfigHelper.MaxMainTanks ~= value) then
-									ZPerlConfigHelper.MaxMainTanks = value
+								if (BlackPerlConfigHelper.MaxMainTanks ~= value) then
+									BlackPerlConfigHelper.MaxMainTanks = value
 									XPerl_MakeTankList()
 									XPerl_SetTitle()
 								end
-								_G[self:GetName().."Current"]:SetText(ZPerlConfigHelper.MaxMainTanks)
+								_G[self:GetName().."Current"]:SetText(BlackPerlConfigHelper.MaxMainTanks)
 							</OnValueChanged>
 						</Scripts>
 					</Slider>
@@ -16211,15 +16211,15 @@
 								XPerl_OptionsSetMyText(self, "XPERL_CONF_RAIDHELP_UNITWIDTH")
 							</OnLoad>
 							<OnShow>
-								self:SetValue(ZPerlConfigHelper.UnitWidth)
+								self:SetValue(BlackPerlConfigHelper.UnitWidth)
 							</OnShow>
 							<OnValueChanged>
-								if (ZPerlConfigHelper.UnitWidth ~= value) then
-									ZPerlConfigHelper.UnitWidth = value
+								if (BlackPerlConfigHelper.UnitWidth ~= value) then
+									BlackPerlConfigHelper.UnitWidth = value
 									XPerl_RaidHelper_MTList_ApplyUnitSizes()
 									XPerl_SetFrameSizes()
 								end
-								_G[self:GetName().."Current"]:SetText(ZPerlConfigHelper.UnitWidth)
+								_G[self:GetName().."Current"]:SetText(BlackPerlConfigHelper.UnitWidth)
 							</OnValueChanged>
 						</Scripts>
 					</Slider>
@@ -16248,15 +16248,15 @@
 								XPerl_OptionsSetMyText(self, "XPERL_CONF_RAIDHELP_UNITHEIGHT")
 							</OnLoad>
 							<OnShow>
-								self:SetValue(ZPerlConfigHelper.UnitHeight)
+								self:SetValue(BlackPerlConfigHelper.UnitHeight)
 							</OnShow>
 							<OnValueChanged>
-								if (ZPerlConfigHelper.UnitHeight ~= value) then
-									ZPerlConfigHelper.UnitHeight = value
+								if (BlackPerlConfigHelper.UnitHeight ~= value) then
+									BlackPerlConfigHelper.UnitHeight = value
 									XPerl_RaidHelper_MTList_ApplyUnitSizes()
 									XPerl_SetFrameSizes()
 								end
-								_G[self:GetName().."Current"]:SetText(ZPerlConfigHelper.UnitHeight)
+								_G[self:GetName().."Current"]:SetText(BlackPerlConfigHelper.UnitHeight)
 							</OnValueChanged>
 						</Scripts>
 					</Slider>
@@ -16281,12 +16281,12 @@
 								XPerl_OptionsSetMyText(self, "XPERL_CONF_RAIDHELP_ALPHA")
 							</OnLoad>
 							<OnShow>
-								self:SetValue(floor(ZPerlConfigHelper.Targets_Transparency * 100))
+								self:SetValue(floor(BlackPerlConfigHelper.Targets_Transparency * 100))
 							</OnShow>
 							<OnValueChanged>
-								if (ZPerlConfigHelper.Targets_Transparency ~= value / 100) then
-									ZPerlConfigHelper.Targets_Transparency = value / 100
-									XPerl_RaidHelper_Frame:SetAlpha(ZPerlConfigHelper.Targets_Transparency)
+								if (BlackPerlConfigHelper.Targets_Transparency ~= value / 100) then
+									BlackPerlConfigHelper.Targets_Transparency = value / 100
+									XPerl_RaidHelper_Frame:SetAlpha(BlackPerlConfigHelper.Targets_Transparency)
 								end
 								_G[self:GetName().."Current"]:SetText(value.."%")
 							</OnValueChanged>
@@ -16313,13 +16313,13 @@
 								XPerl_OptionsSetMyText(self, "XPERL_CONF_RAIDHELP_BACKALPHA")
 							</OnLoad>
 							<OnShow>
-								self:SetValue(floor(ZPerlConfigHelper.Background_Transparency * 100))
+								self:SetValue(floor(BlackPerlConfigHelper.Background_Transparency * 100))
 							</OnShow>
 							<OnValueChanged>
-								if (ZPerlConfigHelper.Background_Transparency ~= value / 100) then
-									ZPerlConfigHelper.Background_Transparency = value / 100
+								if (BlackPerlConfigHelper.Background_Transparency ~= value / 100) then
+									BlackPerlConfigHelper.Background_Transparency = value / 100
 									if XPerl_RaidHelper_Frame then
-										XPerl_SetupFrameSimple(XPerl_RaidHelper_Frame, ZPerlConfigHelper.Background_Transparency)
+										XPerl_SetupFrameSimple(XPerl_RaidHelper_Frame, BlackPerlConfigHelper.Background_Transparency)
 									end
 								end
 								_G[self:GetName().."Current"]:SetText(value.."%")
@@ -16346,7 +16346,7 @@
 								self.XconfigVar = "Tooltips"
 							</OnLoad>
 							<OnShow>
-								self:SetChecked(ZPerlConfigHelper.Tooltips == 1)
+								self:SetChecked(BlackPerlConfigHelper.Tooltips == 1)
 								self:Validate()
 							</OnShow>
 						</Scripts>
@@ -16365,10 +16365,10 @@
 								XPerl_OptionsSetMyText(self, "XPERL_CONF_RAIDHELP_TOOLTIPS_TARGET")
 							</OnLoad>
 							<OnShow>
-								self:SetChecked(ZPerlConfigHelper.TooltipsWhich == 0)
+								self:SetChecked(BlackPerlConfigHelper.TooltipsWhich == 0)
 							</OnShow>
 							<OnClick>
-								ZPerlConfigHelper.TooltipsWhich = 0
+								BlackPerlConfigHelper.TooltipsWhich = 0
 								XPerl_Options_CheckRadio(self,{"TooltipTarget", "TooltipTank", "TooltipBoth"})
 							</OnClick>
 						</Scripts>
@@ -16387,10 +16387,10 @@
 								XPerl_OptionsSetMyText(self, "XPERL_CONF_RAIDHELP_TOOLTIPS_TANK")
 							</OnLoad>
 							<OnShow>
-								self:SetChecked(ZPerlConfigHelper.TooltipsWhich == 1)
+								self:SetChecked(BlackPerlConfigHelper.TooltipsWhich == 1)
 							</OnShow>
 							<OnClick>
-								ZPerlConfigHelper.TooltipsWhich = 1
+								BlackPerlConfigHelper.TooltipsWhich = 1
 								XPerl_Options_CheckRadio(self,{"TooltipTarget", "TooltipTank", "TooltipBoth"})
 							</OnClick>
 						</Scripts>
@@ -16409,10 +16409,10 @@
 								XPerl_OptionsSetMyText(self, "XPERL_CONF_RAIDHELP_TOOLTIPS_BOTH")
 							</OnLoad>
 							<OnShow>
-								self:SetChecked(ZPerlConfigHelper.TooltipsWhich == 2)
+								self:SetChecked(BlackPerlConfigHelper.TooltipsWhich == 2)
 							</OnShow>
 							<OnClick>
-								ZPerlConfigHelper.TooltipsWhich = 2
+								BlackPerlConfigHelper.TooltipsWhich = 2
 								XPerl_Options_CheckRadio(self,{"TooltipTarget", "TooltipTank", "TooltipBoth"})
 							</OnClick>
 						</Scripts>
@@ -16588,11 +16588,11 @@
 										XPerl_OptionsSetMyText(self, "XPERL_CONF_ASSIST_ALPHA")
 									</OnLoad>
 									<OnShow>
-										self:SetValue(floor(ZPerlConfigHelper.AssistsFrame_Transparency * 100))
+										self:SetValue(floor(BlackPerlConfigHelper.AssistsFrame_Transparency * 100))
 									</OnShow>
 									<OnValueChanged>
-										if (ZPerlConfigHelper.AssistsFrame_Transparency ~= value / 100) then
-											ZPerlConfigHelper.AssistsFrame_Transparency = value / 100
+										if (BlackPerlConfigHelper.AssistsFrame_Transparency ~= value / 100) then
+											BlackPerlConfigHelper.AssistsFrame_Transparency = value / 100
 											XPerl_SetupFrames()
 										end
 										_G[self:GetName().."Current"]:SetText(value.."%")
@@ -16620,13 +16620,13 @@
 										XPerl_OptionsSetMyText(self, "XPERL_CONF_ASSIST_BACKALPHA")
 									</OnLoad>
 									<OnShow>
-										self:SetValue(floor(ZPerlConfigHelper.Assists_BackTransparency * 100))
+										self:SetValue(floor(BlackPerlConfigHelper.Assists_BackTransparency * 100))
 									</OnShow>
 									<OnValueChanged>
-										if (ZPerlConfigHelper.Assists_BackTransparency ~= value / 100) then
-											ZPerlConfigHelper.Assists_BackTransparency = value / 100
+										if (BlackPerlConfigHelper.Assists_BackTransparency ~= value / 100) then
+											BlackPerlConfigHelper.Assists_BackTransparency = value / 100
 											if (XPerl_Assists_Frame) then
-												XPerl_SetupFrameSimple(XPerl_Assists_Frame, ZPerlConfigHelper.Assists_BackTransparency)
+												XPerl_SetupFrameSimple(XPerl_Assists_Frame, BlackPerlConfigHelper.Assists_BackTransparency)
 											end
 										end
 										_G[self:GetName().."Current"]:SetText(value.."%")
@@ -16662,7 +16662,7 @@
 						<Scripts>
 							<OnLoad>
 								XPerl_OptionsSetMyText(self, "XPERL_CONF_MONITOR_ENABLE")
-								self.XconfigVars = "ZPerlRaidMonConfig"
+								self.XconfigVars = "BlackPerlRaidMonConfig"
 								self.XconfigVar = "enabled"
 								self.Validate = function()
 									XPerl_Options_EnableSibling(self, "Priest")
@@ -16711,10 +16711,10 @@
 								XPerl_OptionsSetMyText(self, "XPERL_CONF_MONITOR_PRIEST")
 							</OnLoad>
 							<OnShow>
-								self:SetChecked(ZPerlRaidMonConfig.classes.PRIEST)
+								self:SetChecked(BlackPerlRaidMonConfig.classes.PRIEST)
 							</OnShow>
 							<OnClick>
-								ZPerlRaidMonConfig.classes.PRIEST = not ZPerlRaidMonConfig.classes.PRIEST
+								BlackPerlRaidMonConfig.classes.PRIEST = not BlackPerlRaidMonConfig.classes.PRIEST
 								XPerl_RaidMonitor_Frame:Init()
 							</OnClick>
 						</Scripts>
@@ -16736,10 +16736,10 @@
 								XPerl_OptionsSetMyText(self, "XPERL_CONF_MONITOR_DRUID")
 							</OnLoad>
 							<OnShow>
-								self:SetChecked(ZPerlRaidMonConfig.classes.DRUID)
+								self:SetChecked(BlackPerlRaidMonConfig.classes.DRUID)
 							</OnShow>
 							<OnClick>
-								ZPerlRaidMonConfig.classes.DRUID = not ZPerlRaidMonConfig.classes.DRUID
+								BlackPerlRaidMonConfig.classes.DRUID = not BlackPerlRaidMonConfig.classes.DRUID
 								XPerl_RaidMonitor_Frame:Init()
 							</OnClick>
 						</Scripts>
@@ -16761,10 +16761,10 @@
 								XPerl_OptionsSetMyText(self, "XPERL_CONF_MONITOR_SHAMAN")
 							</OnLoad>
 							<OnShow>
-								self:SetChecked(ZPerlRaidMonConfig.classes.SHAMAN)
+								self:SetChecked(BlackPerlRaidMonConfig.classes.SHAMAN)
 							</OnShow>
 							<OnClick>
-								ZPerlRaidMonConfig.classes.SHAMAN = not ZPerlRaidMonConfig.classes.SHAMAN
+								BlackPerlRaidMonConfig.classes.SHAMAN = not BlackPerlRaidMonConfig.classes.SHAMAN
 								XPerl_RaidMonitor_Frame:Init()
 							</OnClick>
 						</Scripts>
@@ -16786,10 +16786,10 @@
 								XPerl_OptionsSetMyText(self, "XPERL_CONF_MONITOR_PALADIN")
 							</OnLoad>
 							<OnShow>
-								self:SetChecked(ZPerlRaidMonConfig.classes.PALADIN)
+								self:SetChecked(BlackPerlRaidMonConfig.classes.PALADIN)
 							</OnShow>
 							<OnClick>
-								ZPerlRaidMonConfig.classes.PALADIN = not ZPerlRaidMonConfig.classes.PALADIN
+								BlackPerlRaidMonConfig.classes.PALADIN = not BlackPerlRaidMonConfig.classes.PALADIN
 								XPerl_RaidMonitor_Frame:Init()
 							</OnClick>
 						</Scripts>
@@ -16811,10 +16811,10 @@
 								XPerl_OptionsSetMyText(self, "XPERL_CONF_MONITOR_MAGE")
 							</OnLoad>
 							<OnShow>
-								self:SetChecked(ZPerlRaidMonConfig.classes.MAGE)
+								self:SetChecked(BlackPerlRaidMonConfig.classes.MAGE)
 							</OnShow>
 							<OnClick>
-								ZPerlRaidMonConfig.classes.MAGE = not ZPerlRaidMonConfig.classes.MAGE
+								BlackPerlRaidMonConfig.classes.MAGE = not BlackPerlRaidMonConfig.classes.MAGE
 								XPerl_RaidMonitor_Frame:Init()
 							</OnClick>
 						</Scripts>
@@ -16836,10 +16836,10 @@
 								XPerl_OptionsSetMyText(self, "XPERL_CONF_MONITOR_WARLOCK")
 							</OnLoad>
 							<OnShow>
-								self:SetChecked(ZPerlRaidMonConfig.classes.WARLOCK)
+								self:SetChecked(BlackPerlRaidMonConfig.classes.WARLOCK)
 							</OnShow>
 							<OnClick>
-								ZPerlRaidMonConfig.classes.WARLOCK = not ZPerlRaidMonConfig.classes.WARLOCK
+								BlackPerlRaidMonConfig.classes.WARLOCK = not BlackPerlRaidMonConfig.classes.WARLOCK
 								XPerl_RaidMonitor_Frame:Init()
 							</OnClick>
 						</Scripts>
@@ -16861,10 +16861,10 @@
 								XPerl_OptionsSetMyText(self, "XPERL_CONF_MONITOR_HUNTER")
 							</OnLoad>
 							<OnShow>
-								self:SetChecked(ZPerlRaidMonConfig.classes.HUNTER)
+								self:SetChecked(BlackPerlRaidMonConfig.classes.HUNTER)
 							</OnShow>
 							<OnClick>
-								ZPerlRaidMonConfig.classes.HUNTER = not ZPerlRaidMonConfig.classes.HUNTER
+								BlackPerlRaidMonConfig.classes.HUNTER = not BlackPerlRaidMonConfig.classes.HUNTER
 								XPerl_RaidMonitor_Frame:Init()
 							</OnClick>
 						</Scripts>
@@ -16886,10 +16886,10 @@
 								XPerl_OptionsSetMyText(self, "XPERL_CONF_MONITOR_ROGUE")
 							</OnLoad>
 							<OnShow>
-								self:SetChecked(ZPerlRaidMonConfig.classes.ROGUE)
+								self:SetChecked(BlackPerlRaidMonConfig.classes.ROGUE)
 							</OnShow>
 							<OnClick>
-								ZPerlRaidMonConfig.classes.ROGUE = not ZPerlRaidMonConfig.classes.ROGUE
+								BlackPerlRaidMonConfig.classes.ROGUE = not BlackPerlRaidMonConfig.classes.ROGUE
 								XPerl_RaidMonitor_Frame:Init()
 							</OnClick>
 						</Scripts>
@@ -16911,10 +16911,10 @@
 								XPerl_OptionsSetMyText(self, "XPERL_CONF_MONITOR_WARRIOR")
 							</OnLoad>
 							<OnShow>
-								self:SetChecked(ZPerlRaidMonConfig.classes.WARRIOR)
+								self:SetChecked(BlackPerlRaidMonConfig.classes.WARRIOR)
 							</OnShow>
 							<OnClick>
-								ZPerlRaidMonConfig.classes.WARRIOR = not ZPerlRaidMonConfig.classes.WARRIOR
+								BlackPerlRaidMonConfig.classes.WARRIOR = not BlackPerlRaidMonConfig.classes.WARRIOR
 								XPerl_RaidMonitor_Frame:Init()
 							</OnClick>
 						</Scripts>
@@ -16936,10 +16936,10 @@
 								XPerl_OptionsSetMyText(self, "XPERL_CONF_MONITOR_DEATHKNIGHT")
 							</OnLoad>
 							<OnShow>
-								self:SetChecked(ZPerlRaidMonConfig.classes.DEATHKNIGHT)
+								self:SetChecked(BlackPerlRaidMonConfig.classes.DEATHKNIGHT)
 							</OnShow>
 							<OnClick>
-								ZPerlRaidMonConfig.classes.DEATHKNIGHT = not ZPerlRaidMonConfig.classes.DEATHKNIGHT
+								BlackPerlRaidMonConfig.classes.DEATHKNIGHT = not BlackPerlRaidMonConfig.classes.DEATHKNIGHT
 								XPerl_RaidMonitor_Frame:Init()
 							</OnClick>
 						</Scripts>
@@ -16961,10 +16961,10 @@
 								XPerl_OptionsSetMyText(self, "XPERL_CONF_MONITOR_MONK")
 							</OnLoad>
 							<OnShow>
-								self:SetChecked(ZPerlRaidMonConfig.classes.MONK)
+								self:SetChecked(BlackPerlRaidMonConfig.classes.MONK)
 							</OnShow>
 							<OnClick>
-								ZPerlRaidMonConfig.classes.MONK = not ZPerlRaidMonConfig.classes.MONK
+								BlackPerlRaidMonConfig.classes.MONK = not BlackPerlRaidMonConfig.classes.MONK
 								XPerl_RaidMonitor_Frame:Init()
 							</OnClick>
 						</Scripts>
@@ -16986,10 +16986,10 @@
 								XPerl_OptionsSetMyText(self, "XPERL_CONF_MONITOR_DEMONHUNTER")
 							</OnLoad>
 							<OnShow>
-								self:SetChecked(ZPerlRaidMonConfig.classes.DEMONHUNTER)
+								self:SetChecked(BlackPerlRaidMonConfig.classes.DEMONHUNTER)
 							</OnShow>
 							<OnClick>
-								ZPerlRaidMonConfig.classes.DEMONHUNTER = not ZPerlRaidMonConfig.classes.DEMONHUNTER
+								BlackPerlRaidMonConfig.classes.DEMONHUNTER = not BlackPerlRaidMonConfig.classes.DEMONHUNTER
 								XPerl_RaidMonitor_Frame:Init()
 							</OnClick>
 						</Scripts>
@@ -17011,10 +17011,10 @@
 								XPerl_OptionsSetMyText(self, "XPERL_CONF_MONITOR_EVOKER")
 							</OnLoad>
 							<OnShow>
-								self:SetChecked(ZPerlRaidMonConfig.classes.EVOKER)
+								self:SetChecked(BlackPerlRaidMonConfig.classes.EVOKER)
 							</OnShow>
 							<OnClick>
-								ZPerlRaidMonConfig.classes.EVOKER = not ZPerlRaidMonConfig.classes.EVOKER
+								BlackPerlRaidMonConfig.classes.EVOKER = not BlackPerlRaidMonConfig.classes.EVOKER
 								XPerl_RaidMonitor_Frame:Init()
 							</OnClick>
 						</Scripts>
@@ -17040,13 +17040,13 @@
 								XPerl_OptionsSetMyText(self, "XPERL_CONF_MONITOR_LOWMANA")
 							</OnLoad>
 							<OnShow>
-								self:SetValue(ZPerlRaidMonConfig.LowMana)
+								self:SetValue(BlackPerlRaidMonConfig.LowMana)
 							</OnShow>
 							<OnValueChanged>
-								if (ZPerlRaidMonConfig.LowMana ~= value) then
-									ZPerlRaidMonConfig.LowMana = value
+								if (BlackPerlRaidMonConfig.LowMana ~= value) then
+									BlackPerlRaidMonConfig.LowMana = value
 								end
-								_G[self:GetName().."Current"]:SetText(ZPerlRaidMonConfig.LowMana)
+								_G[self:GetName().."Current"]:SetText(BlackPerlRaidMonConfig.LowMana)
 							</OnValueChanged>
 						</Scripts>
 					</Slider>
@@ -17071,13 +17071,13 @@
 								XPerl_OptionsSetMyText(self, "XPERL_CONF_MONITOR_HIGHMANA")
 							</OnLoad>
 							<OnShow>
-								self:SetValue(ZPerlRaidMonConfig.HighMana)
+								self:SetValue(BlackPerlRaidMonConfig.HighMana)
 							</OnShow>
 							<OnValueChanged>
-								if (ZPerlRaidMonConfig.HighMana ~= value) then
-									ZPerlRaidMonConfig.HighMana = value
+								if (BlackPerlRaidMonConfig.HighMana ~= value) then
+									BlackPerlRaidMonConfig.HighMana = value
 								end
-								_G[self:GetName().."Current"]:SetText(ZPerlRaidMonConfig.HighMana)
+								_G[self:GetName().."Current"]:SetText(BlackPerlRaidMonConfig.HighMana)
 							</OnValueChanged>
 						</Scripts>
 					</Slider>
@@ -17102,15 +17102,15 @@
 								XPerl_OptionsSetMyText(self, "XPERL_CONF_MONITOR_UNITWIDTH")
 							</OnLoad>
 							<OnShow>
-								self:SetValue(ZPerlRaidMonConfig.UnitWidth)
+								self:SetValue(BlackPerlRaidMonConfig.UnitWidth)
 							</OnShow>
 							<OnValueChanged>
-								if (ZPerlRaidMonConfig.UnitWidth ~= value) then
-									ZPerlRaidMonConfig.UnitWidth = value
+								if (BlackPerlRaidMonConfig.UnitWidth ~= value) then
+									BlackPerlRaidMonConfig.UnitWidth = value
 									XPerl_RaidMonitor_Frame:SetUnitSizes()
 									XPerl_RaidMonitor_Frame:SetFrameSizes()
 								end
-								_G[self:GetName().."Current"]:SetText(ZPerlRaidMonConfig.UnitWidth)
+								_G[self:GetName().."Current"]:SetText(BlackPerlRaidMonConfig.UnitWidth)
 							</OnValueChanged>
 						</Scripts>
 					</Slider>
@@ -17135,15 +17135,15 @@
 								XPerl_OptionsSetMyText(self, "XPERL_CONF_MONITOR_UNITHEIGHT")
 							</OnLoad>
 							<OnShow>
-								self:SetValue(ZPerlRaidMonConfig.UnitHeight)
+								self:SetValue(BlackPerlRaidMonConfig.UnitHeight)
 							</OnShow>
 							<OnValueChanged>
-								if (ZPerlRaidMonConfig.UnitHeight ~= value) then
-									ZPerlRaidMonConfig.UnitHeight = value
+								if (BlackPerlRaidMonConfig.UnitHeight ~= value) then
+									BlackPerlRaidMonConfig.UnitHeight = value
 									XPerl_RaidMonitor_Frame:SetUnitSizes()
 									XPerl_RaidMonitor_Frame:SetFrameSizes()
 								end
-								_G[self:GetName().."Current"]:SetText(ZPerlRaidMonConfig.UnitHeight)
+								_G[self:GetName().."Current"]:SetText(BlackPerlRaidMonConfig.UnitHeight)
 							</OnValueChanged>
 						</Scripts>
 					</Slider>
@@ -17168,15 +17168,15 @@
 								XPerl_OptionsSetMyText(self, "XPERL_CONF_MONITOR_TARGETWIDTH")
 							</OnLoad>
 							<OnShow>
-								self:SetValue(ZPerlRaidMonConfig.TargetWidth)
+								self:SetValue(BlackPerlRaidMonConfig.TargetWidth)
 							</OnShow>
 							<OnValueChanged>
-								if (ZPerlRaidMonConfig.TargetWidth ~= value) then
-									ZPerlRaidMonConfig.TargetWidth = value
+								if (BlackPerlRaidMonConfig.TargetWidth ~= value) then
+									BlackPerlRaidMonConfig.TargetWidth = value
 									XPerl_RaidMonitor_Frame:SetUnitSizes()
 									XPerl_RaidMonitor_Frame:SetFrameSizes()
 								end
-								_G[self:GetName().."Current"]:SetText(ZPerlRaidMonConfig.TargetWidth)
+								_G[self:GetName().."Current"]:SetText(BlackPerlRaidMonConfig.TargetWidth)
 							</OnValueChanged>
 						</Scripts>
 					</Slider>
@@ -17196,7 +17196,7 @@
 							<OnLoad>
 								XPerl_Options_RegisterProtected(self)
 								XPerl_OptionsSetMyText(self, "XPERL_CONF_MONITOR_GROWUP")
-								self.configBase = "ZPerlRaidMonConfig"
+								self.configBase = "BlackPerlRaidMonConfig"
 								self.configIndex = "GrowUp"
 								self.configClick = function()
 									XPerl_RaidMonitor_Frame:Init()
@@ -17217,7 +17217,7 @@
 						<Scripts>
 							<OnLoad>
 								XPerl_OptionsSetMyText(self, "XPERL_CONF_MONITOR_TOOLTIPS")
-								self.configBase = "ZPerlRaidMonConfig"
+								self.configBase = "BlackPerlRaidMonConfig"
 								self.configIndex = "Tooltips"
 							</OnLoad>
 						</Scripts>
@@ -17243,14 +17243,14 @@
 								XPerl_SliderSetup(self)
 							</OnLoad>
 							<OnShow>
-								self:SetValue(floor(100 * ZPerlRaidMonConfig.Alpha + 0.5))
+								self:SetValue(floor(100 * BlackPerlRaidMonConfig.Alpha + 0.5))
 							</OnShow>
 							<OnValueChanged>
-								if (floor(100 * ZPerlRaidMonConfig.Alpha + 0.5) ~= value) then
-									ZPerlRaidMonConfig.Alpha = value / 100
+								if (floor(100 * BlackPerlRaidMonConfig.Alpha + 0.5) ~= value) then
+									BlackPerlRaidMonConfig.Alpha = value / 100
 									XPerl_RaidMonitor_Frame:SetupAlpha()
 								end
-								_G[self:GetName().."Current"]:SetText(floor(100 * ZPerlRaidMonConfig.Alpha + 0.5).."%")
+								_G[self:GetName().."Current"]:SetText(floor(100 * BlackPerlRaidMonConfig.Alpha + 0.5).."%")
 							</OnValueChanged>
 						</Scripts>
 					</Slider>
@@ -17275,14 +17275,14 @@
 								XPerl_SliderSetup(self)
 							</OnLoad>
 							<OnShow>
-								self:SetValue(floor(100 * ZPerlRaidMonConfig.BackgroundAlpha + 0.5))
+								self:SetValue(floor(100 * BlackPerlRaidMonConfig.BackgroundAlpha + 0.5))
 							</OnShow>
 							<OnValueChanged>
-								if (floor(100 * ZPerlRaidMonConfig.BackgroundAlpha + 0.5) ~= value) then
-									ZPerlRaidMonConfig.BackgroundAlpha = value / 100
+								if (floor(100 * BlackPerlRaidMonConfig.BackgroundAlpha + 0.5) ~= value) then
+									BlackPerlRaidMonConfig.BackgroundAlpha = value / 100
 									XPerl_RaidMonitor_Frame:SetupAlpha()
 								end
-								_G[self:GetName().."Current"]:SetText(floor(100 * ZPerlRaidMonConfig.BackgroundAlpha + 0.5).."%")
+								_G[self:GetName().."Current"]:SetText(floor(100 * BlackPerlRaidMonConfig.BackgroundAlpha + 0.5).."%")
 							</OnValueChanged>
 						</Scripts>
 					</Slider>
@@ -17314,7 +17314,7 @@
 						<Scripts>
 							<OnLoad>
 								XPerl_OptionsSetMyText(self, "XPERL_CONF_ADMIN_AUTOHIDESHOW")
-								self.XconfigVars = "ZPerl_Admin"
+								self.XconfigVars = "BlackPerl_Admin"
 								self.XconfigVar = "AutoHideShow"
 								self.configClick = XPerl_AdminCheckMyRank
 							</OnLoad>
@@ -17341,16 +17341,16 @@
 								XPerl_OptionsSetMyText(self, "XPERL_CONF_ADMIN_ALPHA")
 							</OnLoad>
 							<OnShow>
-								self:SetValue(floor(100 * ZPerl_Admin.Transparency + 0.5))
+								self:SetValue(floor(100 * BlackPerl_Admin.Transparency + 0.5))
 							</OnShow>
 							<OnValueChanged>
-								if (floor(100 * ZPerl_Admin.Transparency + 0.5) ~= value) then
-									ZPerl_Admin.Transparency = value / 100
+								if (floor(100 * BlackPerl_Admin.Transparency + 0.5) ~= value) then
+									BlackPerl_Admin.Transparency = value / 100
 									if (XPerl_AdminSetupFrames) then
 										XPerl_AdminSetupFrames()
 									end
 								end
-								_G[self:GetName().."Current"]:SetText(floor(100 * ZPerl_Admin.Transparency + 0.5).."%")
+								_G[self:GetName().."Current"]:SetText(floor(100 * BlackPerl_Admin.Transparency + 0.5).."%")
 							</OnValueChanged>
 						</Scripts>
 					</Slider>
@@ -17641,11 +17641,11 @@
 								XPerl_OptionsSetMyText(self, "XPERL_CONF_RAID_CUSTOM_DEFAULTS")
 							</OnLoad>
 							<OnClick>
-								if (not ZPerl_Custom) then
-									C_AddOns.LoadAddOn("ZPerl_CustomHighlight")
+								if (not BlackPerl_Custom) then
+									C_AddOns.LoadAddOn("BlackPerl_CustomHighlight")
 								end
-								if (ZPerl_Custom) then
-									ZPerl_Custom:SetDefaults()
+								if (BlackPerl_Custom) then
+									BlackPerl_Custom:SetDefaults()
 									XPerl_Custom_Config.listzone:FillList()
 									XPerl_Custom_Config.listdebuff:FillList()
 								end

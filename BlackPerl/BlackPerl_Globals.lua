@@ -1,10 +1,8 @@
--- X-Perl UnitFrames
--- Author: Resike
+-- BlackPerl UnitFrames
+-- Author: Tacomaniac
 -- License: GNU GPL v3, 29 June 2007 (see LICENSE.txt)
 
 local IsRetail = WOW_PROJECT_ID == WOW_PROJECT_MAINLINE
-local IsPandaClassic = WOW_PROJECT_ID == WOW_PROJECT_MISTS_CLASSIC
-local IsVanillaClassic = WOW_PROJECT_ID == WOW_PROJECT_CLASSIC
 
 XPerlLocked = 1
 local conf
@@ -38,7 +36,7 @@ XPerl_Tooltip_Edge_6 = {
 }
 
 XPerl_Frame_Backdrop_32_16_3333 = {
-	bgFile = "Interface\\Addons\\ZPerl\\Images\\XPerl_FrameBack",
+	bgFile = "Interface\\Addons\\BlackPerl\\Images\\XPerl_FrameBack",
 	edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
 	tile = true,
 	tileSize = 32,
@@ -47,7 +45,7 @@ XPerl_Frame_Backdrop_32_16_3333 = {
 }
 
 XPerl_Frame_Backdrop_32_16_4444 = {
-	bgFile = "Interface\\Addons\\ZPerl\\Images\\XPerl_FrameBack",
+	bgFile = "Interface\\Addons\\BlackPerl\\Images\\XPerl_FrameBack",
 	edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
 	tile = true,
 	tileSize = 32,
@@ -56,7 +54,7 @@ XPerl_Frame_Backdrop_32_16_4444 = {
 }
 
 XPerl_Frame_Backdrop_16_16_4444 = {
-	bgFile = "Interface\\Addons\\ZPerl\\Images\\XPerl_FrameBack",
+	bgFile = "Interface\\Addons\\BlackPerl\\Images\\XPerl_FrameBack",
 	edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
 	tile = true,
 	tileSize = 16,
@@ -65,7 +63,7 @@ XPerl_Frame_Backdrop_16_16_4444 = {
 }
 
 XPerl_Frame_Backdrop_8_16_3333 = {
-	bgFile = "Interface\\Addons\\ZPerl\\Images\\XPerl_FrameBack",
+	bgFile = "Interface\\Addons\\BlackPerl\\Images\\XPerl_FrameBack",
 	edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
 	tile = true,
 	tileSize = 8,
@@ -83,8 +81,8 @@ XPerl_Icon_Backdrop_8_16_3333 = {
 }
 
 XPerl_Frame_Backdrop_256_10_1211 = {
-	bgFile = "Interface\\AddOns\\ZPerl\\Images\\XPerl_FrameBack",
-	edgeFile = "Interface\\Addons\\ZPerl\\Images\\XPerl_ThinEdge",
+	bgFile = "Interface\\AddOns\\BlackPerl\\Images\\XPerl_FrameBack",
+	edgeFile = "Interface\\Addons\\BlackPerl\\Images\\XPerl_ThinEdge",
 	tile = true,
 	tileSize = 256,
 	edgeSize = 10,
@@ -92,7 +90,7 @@ XPerl_Frame_Backdrop_256_10_1211 = {
 }
 
 XPerl_Raid_Backdrop_16_9_3333 = {
-	bgFile = "Interface\\AddOns\\ZPerl_RaidHelper\\Images\\XPerl_FrameBack",
+	bgFile = "Interface\\AddOns\\BlackPerl_RaidHelper\\Images\\XPerl_FrameBack",
 	edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
 	tile = true,
 	tileSize = 16,
@@ -101,7 +99,7 @@ XPerl_Raid_Backdrop_16_9_3333 = {
 }
 
 XPerl_Raid_Backdrop_32_16_3333 = {
-	bgFile = "Interface\\AddOns\\ZPerl_RaidHelper\\Images\\XPerl_FrameBack",
+	bgFile = "Interface\\AddOns\\BlackPerl_RaidHelper\\Images\\XPerl_FrameBack",
 	edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
 	tile = true,
 	tileSize = 32,
@@ -110,7 +108,7 @@ XPerl_Raid_Backdrop_32_16_3333 = {
 }
 
 XPerl_Options_Backdrop_256_16_3333 = {
-	bgFile = "Interface\\Addons\\ZPerl_Options\\Images\\ZPerl_FancyBack",
+	bgFile = "Interface\\Addons\\BlackPerl_Options\\Images\\BlackPerl_FancyBack",
 	edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
 	tile = true,
 	tileSize = 256,
@@ -119,7 +117,7 @@ XPerl_Options_Backdrop_256_16_3333 = {
 }
 
 XPerl_Options_Backdrop_256_16_5555 = {
-	bgFile = "Interface\\Addons\\ZPerl_Options\\Images\\ZPerl_FancyBack",
+	bgFile = "Interface\\Addons\\BlackPerl_Options\\Images\\BlackPerl_FancyBack",
 	edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
 	tile = true,
 	tileSize = 256,
@@ -290,26 +288,26 @@ local function CurrentConfig()
 		return set.player and set.pet and set.colour and set.target and set.targettarget and set.focus and set.party and set.partypet and set.raid and set.rangeFinder and set.highlight and set.highlightDebuffs and set.buffs and set.buffHelper and set.bar
 	end
 
-	if (ZPerlConfigSavePerCharacter) then
-		if (not ZPerlConfigNew[GetRealmName()]) then
-			ZPerlConfigNew[GetRealmName()] = {}
+	if (BlackPerlConfigSavePerCharacter) then
+		if (not BlackPerlConfigNew[GetRealmName()]) then
+			BlackPerlConfigNew[GetRealmName()] = {}
 		end
 
-		if (not ZPerlConfigNew[GetRealmName()][playerName] or not QuickValidate(ZPerlConfigNew[GetRealmName()][playerName])) then
+		if (not BlackPerlConfigNew[GetRealmName()][playerName] or not QuickValidate(BlackPerlConfigNew[GetRealmName()][playerName])) then
 			local new = {}
 			XPerl_Defaults(new)
-			ZPerlConfigNew[GetRealmName()][playerName] = new -- TODO: use last used config
+			BlackPerlConfigNew[GetRealmName()][playerName] = new -- TODO: use last used config
 		end
 
-		ret = ZPerlConfigNew[GetRealmName()][playerName]
+		ret = BlackPerlConfigNew[GetRealmName()][playerName]
 	else
-		if (not ZPerlConfigNew.global or not QuickValidate(ZPerlConfigNew.global)) then
+		if (not BlackPerlConfigNew.global or not QuickValidate(BlackPerlConfigNew.global)) then
 			local new = {}
 			XPerl_Defaults(new)
-			ZPerlConfigNew.global = new -- TODO: use last used config
+			BlackPerlConfigNew.global = new -- TODO: use last used config
 		end
 
-		ret = ZPerlConfigNew.global
+		ret = BlackPerlConfigNew.global
 	end
 
 	return ret
@@ -333,10 +331,10 @@ function XPerl_ResetDefaults()
 
 	XPerl_Defaults(conf)
 
-	if (ZPerlConfigSavePerCharacter) then
-		ZPerlConfigNew[GetRealmName()][playerName] = conf
+	if (BlackPerlConfigSavePerCharacter) then
+		BlackPerlConfigNew[GetRealmName()][playerName] = conf
 	else
-		ZPerlConfigNew.global = conf
+		BlackPerlConfigNew.global = conf
 	end
 
 	GiveConfig()
@@ -407,28 +405,28 @@ end
 
 -- ImportOldConfigs()
 local function ImportOldConfigs()
-	if (ZPerlConfig_Global) then
+	if (BlackPerlConfig_Global) then
 		-- Convert old global configs
-		ZPerlConfigNew = {}
+		BlackPerlConfigNew = {}
 
-		for realm, realmList in pairs(ZPerlConfig_Global) do
-			ZPerlConfigNew[realm] = {}
+		for realm, realmList in pairs(BlackPerlConfig_Global) do
+			BlackPerlConfigNew[realm] = {}
 			for player, settings in pairs(realmList) do
-				ZPerlConfigNew[realm][player] = XPerl_ImportOldConfig(settings)
+				BlackPerlConfigNew[realm][player] = XPerl_ImportOldConfig(settings)
 			end
 		end
 
-		ZPerlConfig_Global = nil
+		BlackPerlConfig_Global = nil
 	end
-	if (ZPerlConfig) then
+	if (BlackPerlConfig) then
 		-- Convert old config
-		if (not ZPerlConfigNew) then
-			ZPerlConfigNew = {}
+		if (not BlackPerlConfigNew) then
+			BlackPerlConfigNew = {}
 		end
 
-		if (ZPerlConfig) then
-			ZPerlConfigNew.global = XPerl_ImportOldConfig(ZPerlConfig)
-			ZPerlConfig = nil
+		if (BlackPerlConfig) then
+			BlackPerlConfigNew.global = XPerl_ImportOldConfig(BlackPerlConfig)
+			BlackPerlConfig = nil
 		end
 	end
 end
@@ -475,22 +473,22 @@ local function settingspart1(self, event)
 	playerName = UnitName("player")
 	self:UnregisterEvent(event)
 
-	local newUser = not ZPerlConfigNew and not ZPerlConfig
+	local newUser = not BlackPerlConfigNew and not BlackPerlConfig
 
-	if (not ZPerlConfigNew) then
-		if (ZPerlConfig_Global or ZPerlConfig) then
+	if (not BlackPerlConfigNew) then
+		if (BlackPerlConfig_Global or BlackPerlConfig) then
 			XPerl_pcall(ImportOldConfigs)
 		else
-			ZPerlConfigNew = {}
+			BlackPerlConfigNew = {}
 		end
 	end
 
 	GiveConfig()
 
 	-- Variable checking only occurs for new install and version number change
-	if (not ZPerlConfigNew.ConfigVersion or ZPerlConfigNew.ConfigVersion ~= XPerl_VersionNumber) then
+	if (not BlackPerlConfigNew.ConfigVersion or BlackPerlConfigNew.ConfigVersion ~= XPerl_VersionNumber) then
 		XPerl_pcall(XPerl_UpgradeSettings)
-		ZPerlConfigNew.ConfigVersion = XPerl_VersionNumber
+		BlackPerlConfigNew.ConfigVersion = XPerl_VersionNumber
 	end
 
 	ImportOldConfigs = nil
@@ -503,30 +501,30 @@ local function settingspart1(self, event)
 end
 
 local function startupCheckSettings(self,event)
-	ZPerl_Init()
+	BlackPerl_Init()
 	XPerl_BlizzFrameDisable = nil
 	XPerl_RegisterLDB()
 
-	lastConfigMode = ZPerlConfigSavePerCharacter
+	lastConfigMode = BlackPerlConfigSavePerCharacter
 	XPerl_Globals_AddonLoaded = nil
 end
 
-function ZPerl_ForceImportAll()
+function BlackPerl_ForceImportAll()
 	if C_AddOns.IsAddOnLoaded("XPerl") then
 		if (XPerlConfig) then
-			ZPerlConfig = XPerlConfig
+			BlackPerlConfig = XPerlConfig
 		end
 		if (XPerlConfig_Global) then
-			ZPerlConfig_Global = XPerlConfig_Global
+			BlackPerlConfig_Global = XPerlConfig_Global
 		end
 		if (XPerlConfigNew) then
-			ZPerlConfigNew = XPerlConfigNew
+			BlackPerlConfigNew = XPerlConfigNew
 		end
 		if (XPerlConfigSavePerCharacter) then
-			ZPerlConfigSavePerCharacter = XPerlConfigSavePerCharacter
+			BlackPerlConfigSavePerCharacter = XPerlConfigSavePerCharacter
 		end
 		C_AddOns.DisableAddOn("XPerl")
-		print("Z-Perl: Profile importing done, please reload you UI for the process to complete.")
+		print("BlackPerl: Profile importing done, please reload you UI for the process to complete.")
 	else
 		print("X-Perl is not loaded. You must load it first, to access it's variables for the import.")
 	end
@@ -534,8 +532,8 @@ end
 
 -- XPerl_GetLayout
 function XPerl_GetLayout(name)
-	if (ZPerlConfigNew.savedPositions) then
-		for realmName, realmList in pairs(ZPerlConfigNew.savedPositions) do
+	if (BlackPerlConfigNew.savedPositions) then
+		for realmName, realmList in pairs(BlackPerlConfigNew.savedPositions) do
 			for playerName, frames in pairs(realmList) do
 				local find
 				if (realmName == "saved") then
@@ -560,10 +558,10 @@ function XPerl_LoadFrameLayout(name)
 		local name = UnitName("player")
 		local realm = GetRealmName()
 
-		if (not ZPerlConfigNew.savedPositions) then
-			ZPerlConfigNew.savedPositions = { }
+		if (not BlackPerlConfigNew.savedPositions) then
+			BlackPerlConfigNew.savedPositions = { }
 		end
-		local c = ZPerlConfigNew.savedPositions
+		local c = BlackPerlConfigNew.savedPositions
 		if (not c[realm]) then
 			c[realm] = { }
 		end
@@ -589,26 +587,26 @@ end
 
 -- XPerl_Globals_OnEvent
 function XPerl_Globals_OnEvent(self, event, arg1, ...)
-	if (event == "ADDON_LOADED" and arg1 == "ZPerl") then
-		if not C_AddOns.IsAddOnLoaded("XPerl") and (not ZPerlConfig and not ZPerlConfig_Global and not ZPerlConfigNew and not ZPerlConfigSavePerCharacter) then
+	if (event == "ADDON_LOADED" and arg1 == "BlackPerl") then
+		if not C_AddOns.IsAddOnLoaded("XPerl") and (not BlackPerlConfig and not BlackPerlConfig_Global and not BlackPerlConfigNew and not BlackPerlConfigSavePerCharacter) then
 			C_AddOns.EnableAddOn("XPerl")
 		end
-		if C_AddOns.IsAddOnLoaded("XPerl") and not ZPerlImportDone then
+		if C_AddOns.IsAddOnLoaded("XPerl") and not BlackPerlImportDone then
 			if (XPerlConfig) then
-				ZPerlConfig = XPerlConfig
+				BlackPerlConfig = XPerlConfig
 			end
 			if (XPerlConfig_Global) then
-				ZPerlConfig_Global = XPerlConfig_Global
+				BlackPerlConfig_Global = XPerlConfig_Global
 			end
 			if (XPerlConfigNew) then
-				ZPerlConfigNew = XPerlConfigNew
+				BlackPerlConfigNew = XPerlConfigNew
 			end
 			if (XPerlConfigSavePerCharacter) then
-				ZPerlConfigSavePerCharacter = XPerlConfigSavePerCharacter
+				BlackPerlConfigSavePerCharacter = XPerlConfigSavePerCharacter
 			end
 			C_AddOns.DisableAddOn("XPerl")
-			ZPerlImportDone = true
-			print("Z-Perl: Profile importing done, please reload you UI for the process to complete.")
+			BlackPerlImportDone = true
+			print("BlackPerl: Profile importing done, please reload you UI for the process to complete.")
 		end
 		if C_AddOns.IsAddOnLoaded("XPerl") then
 			C_AddOns.DisableAddOn("XPerl")
@@ -618,7 +616,7 @@ function XPerl_Globals_OnEvent(self, event, arg1, ...)
 	elseif (event == "PLAYER_LOGIN") then
 		self:UnregisterEvent(event)
 		startupCheckSettings(self, event)
-		ZPerl_MinimapButton_Init(ZPerl_MinimapButton_Frame)
+		BlackPerl_MinimapButton_Init(BlackPerl_MinimapButton_Frame)
 	elseif (event == "PLAYER_ENTERING_WORLD") then
 		self:UnregisterEvent(event)
 		self:UnregisterAllEvents()
@@ -635,41 +633,41 @@ end
 function XPerl_SetMyGlobal()
 	local realm = GetRealmName()
 
-	if (not lastConfigMode and ZPerlConfigSavePerCharacter) then
-		if (not ZPerlConfigNew[realm]) then
-			ZPerlConfigNew[realm] = {}
+	if (not lastConfigMode and BlackPerlConfigSavePerCharacter) then
+		if (not BlackPerlConfigNew[realm]) then
+			BlackPerlConfigNew[realm] = {}
 		end
-		if (ZPerlConfigNew.global) then
-			ZPerlConfigNew[realm][playerName] = XPerl_CopyTable(ZPerlConfigNew.global)
+		if (BlackPerlConfigNew.global) then
+			BlackPerlConfigNew[realm][playerName] = XPerl_CopyTable(BlackPerlConfigNew.global)
 		else
 			XPerl_LoadOptions()
-			ZPerlConfigNew[realm][playerName] = {}
-			XPerl_Options_Defaults(ZPerlConfigNew[realm][playerName])
+			BlackPerlConfigNew[realm][playerName] = {}
+			XPerl_Options_Defaults(BlackPerlConfigNew[realm][playerName])
 		end
 
-	elseif (lastConfigMode and not ZPerlConfigSavePerCharacter) then
-		if (ZPerlConfigNew[realm] and ZPerlConfigNew[realm][playerName]) then
-			ZPerlConfigNew.global = XPerl_CopyTable(ZPerlConfigNew[realm][playerName])
+	elseif (lastConfigMode and not BlackPerlConfigSavePerCharacter) then
+		if (BlackPerlConfigNew[realm] and BlackPerlConfigNew[realm][playerName]) then
+			BlackPerlConfigNew.global = XPerl_CopyTable(BlackPerlConfigNew[realm][playerName])
 		else
 			XPerl_LoadOptions()
-			ZPerlConfigNew.global = {}
-			XPerl_Options_Defaults(ZPerlConfigNew.global)
+			BlackPerlConfigNew.global = {}
+			XPerl_Options_Defaults(BlackPerlConfigNew.global)
 		end
 	end
 
-	lastConfigMode = ZPerlConfigSavePerCharacter
+	lastConfigMode = BlackPerlConfigSavePerCharacter
 
 	GiveConfig()
 end
 
 -- XPerl_LoadOptions
 function XPerl_LoadOptions()
-	if (not C_AddOns.IsAddOnLoaded("ZPerl_Options")) then
-		C_AddOns.EnableAddOn("ZPerl_Options")
-		local ok, reason = C_AddOns.LoadAddOn("ZPerl_Options")
+	if (not C_AddOns.IsAddOnLoaded("BlackPerl_Options")) then
+		C_AddOns.EnableAddOn("BlackPerl_Options")
+		local ok, reason = C_AddOns.LoadAddOn("BlackPerl_Options")
 
 		if (not ok) then
-			XPerl_Notice("Failed to load Z-Perl Options ("..tostring(reason)..")")
+			XPerl_Notice("Failed to load BlackPerl Options ("..tostring(reason)..")")
 		--[[else
 			collectgarbage()]]			-- Reclaims about 1.4Mb from loading options
 		end

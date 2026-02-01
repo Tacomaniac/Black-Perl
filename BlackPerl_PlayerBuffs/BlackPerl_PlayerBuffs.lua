@@ -1,5 +1,5 @@
 -- X-Perl UnitFrames
--- Author: Resike
+-- Author: Tacomaniac
 -- License: GNU GPL v3, 29 June 2007 (see LICENSE.txt)
 
 local conf, pconf
@@ -200,7 +200,7 @@ local function XPerl_Player_Buffs_Set_Bits(self)
 
 	XPerl_Player_BuffSetup(self)
 
-	self.state:SetFrameRef("ZPerlPlayerBuffs", self.buffFrame)
+	self.state:SetFrameRef("BlackPerlPlayerBuffs", self.buffFrame)
 	self.state:SetAttribute("buffsAbove", pconf.buffs.above)
 
 	local buffs = self.buffFrame

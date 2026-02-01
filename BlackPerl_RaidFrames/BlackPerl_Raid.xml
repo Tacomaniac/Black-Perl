@@ -8,7 +8,7 @@
 	<Script file="localization.ruRU.lua"/>
 	<Script file="localization.zhCN.lua"/>
 	<Script file="localization.zhTW.lua"/>
-	<Script file="ZPerl_Raid.lua"/>
+	<Script file="BlackPerl_Raid.lua"/>
 
 	<StatusBar name="XPerlRaidStatusBar" virtual="true">
 		<BarTexture name="$parenttex" file="Interface\TargetingFrame\UI-StatusBar"/>

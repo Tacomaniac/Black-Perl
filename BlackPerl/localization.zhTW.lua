@@ -1,5 +1,5 @@
 -- X-Perl UnitFrames
--- Author: Resike
+-- Author: Tacomaniac
 -- License: GNU GPL v3, 29 June 2007 (see LICENSE.txt)
 -- Thanks 星塵、Player Lin for translations
 
@@ -79,15 +79,15 @@ if GetLocale() == "zhTW" then
 	XPERL_LOC_HUGENUMTAG		= "億"
 	XPERL_LOC_VERYHUGENUMTAG	= "兆"
 
-	BINDING_HEADER_ZPERL = "Z-Perl 快捷鍵設定"
-	BINDING_NAME_ZPERL_TOGGLERAID = "開/關團隊視窗"
-	BINDING_NAME_ZPERL_TOGGLERAIDSORT = "切換團隊排序方式為 職業/隊伍"
-	BINDING_NAME_ZPERL_TOGGLERAIDPETS = "切換是否使用團隊寵物"
-	BINDING_NAME_ZPERL_TOGGLEOPTIONS = "開/關設定視窗"
-	BINDING_NAME_ZPERL_TOGGLEBUFFTYPE = "切換 增益/減益/無"
-	BINDING_NAME_ZPERL_TOGGLEBUFFCASTABLE = "切換顯示可施加/解除的增益/減益效果"
-	BINDING_NAME_ZPERL_TEAMSPEAKMONITOR = "顯示 Teamspeak 監看圖標"
-	BINDING_NAME_ZPERL_TOGGLERANGEFINDER = "切換距離偵測開啟/關閉"
+	BINDING_HEADER_BlackPerl = "BlackPerl 快捷鍵設定"
+	BINDING_NAME_BlackPerl_TOGGLERAID = "開/關團隊視窗"
+	BINDING_NAME_BlackPerl_TOGGLERAIDSORT = "切換團隊排序方式為 職業/隊伍"
+	BINDING_NAME_BlackPerl_TOGGLERAIDPETS = "切換是否使用團隊寵物"
+	BINDING_NAME_BlackPerl_TOGGLEOPTIONS = "開/關設定視窗"
+	BINDING_NAME_BlackPerl_TOGGLEBUFFTYPE = "切換 增益/減益/無"
+	BINDING_NAME_BlackPerl_TOGGLEBUFFCASTABLE = "切換顯示可施加/解除的增益/減益效果"
+	BINDING_NAME_BlackPerl_TEAMSPEAKMONITOR = "顯示 Teamspeak 監看圖標"
+	BINDING_NAME_BlackPerl_TOGGLERANGEFINDER = "切換距離偵測開啟/關閉"
 
 	XPERL_KEY_NOTICE_RAID_BUFFANY = "顯示所有 增益/減益效果"
 	XPERL_KEY_NOTICE_RAID_BUFFCURECAST = "只有 可施加/可解除 的增益/減益效果顯示"

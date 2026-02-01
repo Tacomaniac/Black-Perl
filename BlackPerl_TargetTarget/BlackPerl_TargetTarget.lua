@@ -1,9 +1,6 @@
--- Z-Perl UnitFrames
--- Author: Resike
+-- BlackPerl UnitFrames
+-- Author: Tacomaniac
 -- License: GNU GPL v3, 18 October 2014
-
-local IsClassic = WOW_PROJECT_ID >= WOW_PROJECT_CLASSIC
-local IsVanillaClassic = WOW_PROJECT_ID == WOW_PROJECT_CLASSIC
 
 local max = max
 local pairs = pairs
@@ -64,14 +61,14 @@ end, "$Revision:  $")
 
 local buffSetup
 
--- ZPerl_TargetTarget_OnLoad
-function ZPerl_TargetTarget_OnLoad(self)
+-- BlackPerl_TargetTarget_OnLoad
+function BlackPerl_TargetTarget_OnLoad(self)
 	self:RegisterForClicks("AnyUp")
 	self:RegisterForDrag("LeftButton")
 	XPerl_SetChildMembers(self)
 
 	local events = {
-		IsClassic and "UNIT_HEALTH_FREQUENT" or "UNIT_HEALTH",
+		"UNIT_HEALTH",
 		"UNIT_POWER_FREQUENT",
 		"UNIT_AURA",
 		"UNIT_TARGET",
@@ -97,10 +94,9 @@ function ZPerl_TargetTarget_OnLoad(self)
 		self:SetScript("OnUpdate", XPerl_TargetTarget_OnUpdate)
 	elseif (self == XPerl_FocusTarget) then
 		self.parentid = "focus"
-		self.partyid = "focustarget"
-		if not IsVanillaClassic then
-			self:RegisterEvent("PLAYER_FOCUS_CHANGED")
-		end
+		self.partyid = "focustarget" 
+		self:RegisterEvent("PLAYER_FOCUS_CHANGED")
+
 		for i, event in pairs(events) do
 			self:RegisterUnitEvent(event, "focus")
 		end
@@ -189,7 +185,7 @@ function ZPerl_TargetTarget_OnLoad(self)
 	end
 
 	if XPerl_TargetTarget and XPerl_FocusTarget and XPerl_PetTarget and XPerl_TargetTargetTarget then
-		ZPerl_TargetTarget_OnLoad = nil
+		BlackPerl_TargetTarget_OnLoad = nil
 	end
 end
 
@@ -366,7 +362,7 @@ end
 -- XPerl_TargetTarget_Update_Control
 local function XPerl_TargetTarget_Update_Control(self)
 	local partyid = self.partyid
-	if UnitIsVisible(partyid) and UnitIsCharmed(partyid) and UnitIsPlayer(self.partyid) and (not IsClassic and not UnitUsingVehicle(partyid) or true) then
+	if UnitIsVisible(partyid) and UnitIsCharmed(partyid) and UnitIsPlayer(self.partyid) and (not UnitUsingVehicle(partyid) or true) then
 		self.nameFrame.warningIcon:Show()
 	else
 		self.nameFrame.warningIcon:Hide()
@@ -394,37 +390,12 @@ function XPerl_TargetTarget_OnUpdate(self, elapsed)
 	local newManaMax = UnitPowerMax(partyid)
 	local newAFK = UnitIsAFK(partyid)
 
-	-- if (conf.showAFK and newAFK ~= self.afk) or (newHP ~= self.targethp) or (newHPMax ~= self.targethpmax) then
-	-- 	XPerl_Target_UpdateHealth(self)
-	-- end
-
 	if (conf.showAFK and newAFK ~= self.afk) then
 		XPerl_Target_UpdateHealth(self)
 	end
 
-
 	XPerl_Target_SetManaType(self)
 	XPerl_Target_SetMana(self)
-
-	-- if (newManaType ~= self.targetmanatype) then
-	-- 	XPerl_Target_SetManaType(self)
-	-- 	XPerl_Target_SetMana(self)
-	-- end
-
-	-- if (newMana ~= self.targetmana) or (newManaMax ~= self.targetmanamax) then
-	-- 	XPerl_Target_SetMana(self)
-	-- end
-
-	--[[if conf.showFD then
-		local _, class = UnitClass(partyid)
-		if class == "HUNTER" then
-			local feigning = UnitBuff(partyid, feignDeath)
-			if feigning ~= self.feigning then
-				self.feigning = feigning
-				XPerl_Target_UpdateHealth(self)
-			end
-		end
-	end--]]
 
 	if (newGuid ~= self.guid) then
 		XPerl_TargetTarget_UpdateDisplay(self)
@@ -469,17 +440,6 @@ function XPerl_TargetTargetTarget_OnUpdate(self, elapsed)
 	if (newMana ~= self.targetmana) then
 		XPerl_Target_SetMana(self)
 	end
-
-	--[[if conf.showFD then
-		local _, class = UnitClass(partyid)
-		if class == "HUNTER" then
-			local feigning = UnitBuff(partyid, feignDeath)
-			if feigning ~= self.feigning then
-				self.feigning = feigning
-				XPerl_Target_UpdateHealth(self)
-			end
-		end
-	end--]]
 
 	if (newGuid ~= self.guid) then
 		XPerl_TargetTarget_UpdateDisplay(self)
@@ -557,7 +517,7 @@ function XPerl_TargetTarget_Update(self)
 				end
 				offset = offset + 20
 				local name
-				if not IsVanillaClassic and C_UnitAuras then
+				if C_UnitAuras then
 					local auraData = C_UnitAuras.GetAuraDataByIndex("targettarget", 9, "HELPFUL")
 					if auraData then
 						name = auraData.name
@@ -681,7 +641,7 @@ function XPerl_TargetTarget_Set_Bits()
 
 	if conf.targettargettarget.enable then
 		if not XPerl_TargetTargetTarget then
-			local ttt = CreateFrame("Button", "XPerl_TargetTargetTarget", UIParent, "ZPerl_TargetTarget_Template")
+			local ttt = CreateFrame("Button", "XPerl_TargetTargetTarget", UIParent, "BlackPerl_TargetTarget_Template")
 			ttt:ClearAllPoints()
 			ttt:SetPoint("TOPLEFT", XPerl_TargetTarget.statsFrame, "TOPRIGHT", 5, 0)
 		end
@@ -689,7 +649,7 @@ function XPerl_TargetTarget_Set_Bits()
 
 	if conf.focustarget.enable then
 		if not XPerl_FocusTarget then
-			local ft = CreateFrame("Button", "XPerl_FocusTarget", UIParent, "ZPerl_TargetTarget_Template")
+			local ft = CreateFrame("Button", "XPerl_FocusTarget", UIParent, "BlackPerl_TargetTarget_Template")
 			ft:ClearAllPoints()
 			ft:SetPoint("TOPLEFT", XPerl_Focus.levelFrame, "TOPRIGHT", 5, 0)
 		end
@@ -697,7 +657,7 @@ function XPerl_TargetTarget_Set_Bits()
 
 	if conf.pettarget.enable and XPerl_Player_Pet then
 		if not XPerl_PetTarget then
-			local pt = CreateFrame("Button", "XPerl_PetTarget", XPerl_Player_Pet, "ZPerl_TargetTarget_Template")
+			local pt = CreateFrame("Button", "XPerl_PetTarget", XPerl_Player_Pet, "BlackPerl_TargetTarget_Template")
 			pt:ClearAllPoints()
 			pt:SetPoint("BOTTOMLEFT", XPerl_Player_Pet.statsFrame, "BOTTOMRIGHT", 5, 0)
 		end

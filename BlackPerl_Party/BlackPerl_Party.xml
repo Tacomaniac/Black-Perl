@@ -1,5 +1,5 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd">
-	<Script file="ZPerl_Party.lua"/>
+	<Script file="BlackPerl_Party.lua"/>
 	<Button name="XPerl_Party_FrameTemplate" inherits="SecureUnitButtonTemplate" virtual="true" clampedToScreen="true" frameStrata="LOW" hidden="true">
 		<Size>
 			<AbsDimension x="220" y="62"/>
@@ -8,9 +8,9 @@
 			<OnLoad>
 				self:RegisterForClicks("AnyUp")
 				self:RegisterForDrag("LeftButton")
-				ZPerl_Party_OnLoad(self)
-				self:SetScript("OnEnter", ZPerl_Unit_OnEnter)
-				self:SetScript("OnLeave", ZPerl_Unit_OnLeave)
+				BlackPerl_Party_OnLoad(self)
+				self:SetScript("OnEnter", BlackPerl_Unit_OnEnter)
+				self:SetScript("OnLeave", BlackPerl_Unit_OnLeave)
 			</OnLoad>
 			<OnDragStart>
 				if (XPerlLocked == 0) then
@@ -44,10 +44,10 @@
 						self:RegisterForDrag("LeftButton")
 						XPerl_RegisterUnitText(_G[self:GetName().."text"])
 						self:SetScript("OnEnter", function(self)
-							ZPerl_Unit_OnEnter(self:GetParent())
+							BlackPerl_Unit_OnEnter(self:GetParent())
 						end)
 						self:SetScript("OnLeave", function(self)
-							ZPerl_Unit_OnLeave(self:GetParent())
+							BlackPerl_Unit_OnLeave(self:GetParent())
 						end)
 					</OnLoad>
 					<OnDragStart>
@@ -92,7 +92,7 @@
 							</Anchors>
 						</Texture>
 						<!-- 40 Yard Range Icon -->
-						<Texture name="$parentrangeIcon" file="Interface\Addons\ZPerl\Images\XPerl_30Yard" hidden="true">
+						<Texture name="$parentrangeIcon" file="Interface\Addons\BlackPerl\Images\XPerl_30Yard" hidden="true">
 							<Size>
 								<AbsDimension x="48" y="19"/>
 							</Size>
@@ -307,8 +307,8 @@
 						self:SetAttribute("type2", "togglemenu")
 						self:SetAttribute("useparent-unit", true)
 						self:SetAttribute("unitsuffix", "target")
-						self:SetScript("OnEnter", ZPerl_Unit_OnEnter)
-						self:SetScript("OnLeave", ZPerl_Unit_OnLeave)
+						self:SetScript("OnEnter", BlackPerl_Unit_OnEnter)
+						self:SetScript("OnLeave", BlackPerl_Unit_OnLeave)
 					</OnLoad>
 				</Scripts>
 				<Size>
@@ -528,7 +528,7 @@
 			</Frame>
 		</Frames>
 	</Frame>
-	<Frame name="ZPerl_Party_SecureHeader" parent="XPerl_Party_Anchor" clampedToScreen="true" inherits="XPerlBackdropTemplate,SecurePartyHeaderTemplate" frameStrata="LOW" virtual="false" hidden="true">
+	<Frame name="BlackPerl_Party_SecureHeader" parent="XPerl_Party_Anchor" clampedToScreen="true" inherits="XPerlBackdropTemplate,SecurePartyHeaderTemplate" frameStrata="LOW" virtual="false" hidden="true">
 		<Size>
 			<AbsDimension x="100" y="60"/>
 		</Size>
@@ -543,7 +543,7 @@
 			<Attribute name="xOffset" type="number" value="0"/>
 		</Attributes>-->
 	</Frame>
-	<Frame name="ZPerl_Party_SecureState" inherits="SecureHandlerStateTemplate" parent="UIParent" protected="true">
+	<Frame name="BlackPerl_Party_SecureState" inherits="SecureHandlerStateTemplate" parent="UIParent" protected="true">
 		<Attributes>
 			<Attribute name="_onstate-partymonitor" value="
 				if not self:GetAttribute('partyEnabled') then
@@ -566,7 +566,7 @@
 		<Scripts>
 			<OnLoad>
 				SecureHandler_OnLoad(self)
-				self:SetFrameRef("partyHeader", ZPerl_Party_SecureHeader)
+				self:SetFrameRef("partyHeader", BlackPerl_Party_SecureHeader)
 				self:SetAttribute("partyEnabled", XPerlDB.party.enable)
 				self:SetAttribute("partyInRaid", XPerlDB.party.inRaid)
 				self:SetAttribute("partySmallRaid", XPerlDB.party.smallRaid)
@@ -575,11 +575,11 @@
 		</Scripts>
 	</Frame>
 	<!-- The Real Frames -->
-	<Button name="XPerl_party1" inherits="XPerl_Party_FrameTemplate" parent="ZPerl_Party_SecureHeader" id="1"/>
-	<Button name="XPerl_party2" inherits="XPerl_Party_FrameTemplate" parent="ZPerl_Party_SecureHeader" id="2"/>
-	<Button name="XPerl_party3" inherits="XPerl_Party_FrameTemplate" parent="ZPerl_Party_SecureHeader" id="3"/>
-	<Button name="XPerl_party4" inherits="XPerl_Party_FrameTemplate" parent="ZPerl_Party_SecureHeader" id="4"/>
-	<Button name="XPerl_party5" inherits="XPerl_Party_FrameTemplate" parent="ZPerl_Party_SecureHeader" id="5"/>
+	<Button name="XPerl_party1" inherits="XPerl_Party_FrameTemplate" parent="BlackPerl_Party_SecureHeader" id="1"/>
+	<Button name="XPerl_party2" inherits="XPerl_Party_FrameTemplate" parent="BlackPerl_Party_SecureHeader" id="2"/>
+	<Button name="XPerl_party3" inherits="XPerl_Party_FrameTemplate" parent="BlackPerl_Party_SecureHeader" id="3"/>
+	<Button name="XPerl_party4" inherits="XPerl_Party_FrameTemplate" parent="BlackPerl_Party_SecureHeader" id="4"/>
+	<Button name="XPerl_party5" inherits="XPerl_Party_FrameTemplate" parent="BlackPerl_Party_SecureHeader" id="5"/>
 	<Frame name="XPerl_Party_Events_Frame">
 		<Scripts>
 			<OnLoad function="XPerl_Party_Events_OnLoad"/>

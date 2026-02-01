@@ -1,39 +1,39 @@
 local AddonName, Addon = ...
 
-local ZPerl = CreateFrame("Frame", BackdropTemplateMixin and "BackdropTemplate")
+local BlackPerl = CreateFrame("Frame", BackdropTemplateMixin and "BackdropTemplate")
 
-ZPerl:RegisterEvent("ADDON_LOADED")
+BlackPerl:RegisterEvent("ADDON_LOADED")
 
-ZPerl:SetScript("OnEvent", function(self, event, ...)
-	if not ZPerl[event] then
+BlackPerl:SetScript("OnEvent", function(self, event, ...)
+	if not BlackPerl[event] then
 		return
 	end
 
-	ZPerl[event](ZPerl, ...)
+	BlackPerl[event](BlackPerl, ...)
 end)
 
-function ZPerl:ADDON_LOADED(addon)
+function BlackPerl:ADDON_LOADED(addon)
 	if addon ~= AddonName then
 		return
 	end
 
-	C_ChatInfo.RegisterAddonMessagePrefix("ZPerlVersion")
+	C_ChatInfo.RegisterAddonMessagePrefix("BlackPerlVersion")
 
 	self:RegisterEvents()
 
 	self.playerName = string.gsub(UnitName("player").."-"..GetRealmName(), "%s+", "")
-	self.version = C_AddOns.GetAddOnMetadata and C_AddOns.GetAddOnMetadata("ZPerl", "Version") or "7.6.2"
+	self.version = C_AddOns.GetAddOnMetadata and C_AddOns.GetAddOnMetadata("BlackPerl", "Version") or "7.6.2"
 
 	self:UnregisterEvent("ADDON_LOADED")
 end
 
-function ZPerl:PLAYER_ENTERING_WORLD()
+function BlackPerl:PLAYER_ENTERING_WORLD()
 	self.timer = C_Timer.NewTimer(3, self.SendVersion)
 
 	self:UnregisterEvent("PLAYER_ENTERING_WORLD")
 end
 
-function ZPerl:GROUP_MEMBERS_JOINED()
+function BlackPerl:GROUP_MEMBERS_JOINED()
 	if self.timer and self.timer.Cancel then
 		self.timer:Cancel()
 	end
@@ -41,7 +41,7 @@ function ZPerl:GROUP_MEMBERS_JOINED()
 	self.timer = C_Timer.NewTimer(3, self.SendVersion)
 end
 
-function ZPerl:GROUP_ROSTER_UPDATE()
+function BlackPerl:GROUP_ROSTER_UPDATE()
 	local num = GetNumGroupMembers()
 
 	if num ~= self.groupSize then
@@ -53,13 +53,13 @@ function ZPerl:GROUP_ROSTER_UPDATE()
 	end
 end
 
-function ZPerl:CHAT_MSG_ADDON(prefix, msg, channel, sender)
-	if prefix ~= "ZPerlVersion" or sender == self.playerName then
+function BlackPerl:CHAT_MSG_ADDON(prefix, msg, channel, sender)
+	if prefix ~= "BlackPerlVersion" or sender == self.playerName then
 		return
 	end
 
 	if self:CompareVersion(msg) then
-		print("|cFF50C0FFZ-Perl|r:", XPERL_NEW_VERSION_DETECTED, "|cFFFF0000"..msg.."|r", XPERL_DOWNLOAD_LATEST, XPERL_DOWNLOAD_LOCATION)
+		print("|cFF50C0FFBlackPerl|r:", XPERL_NEW_VERSION_DETECTED, "|cFFFF0000"..msg.."|r", XPERL_DOWNLOAD_LATEST, XPERL_DOWNLOAD_LOCATION)
 
 		self.newVersion = msg
 
@@ -67,13 +67,13 @@ function ZPerl:CHAT_MSG_ADDON(prefix, msg, channel, sender)
 	end
 end
 
-function ZPerl:RegisterEvents()
+function BlackPerl:RegisterEvents()
 	self:RegisterEvent("PLAYER_ENTERING_WORLD")
 	self:RegisterEvent("GROUP_ROSTER_UPDATE")
 	self:RegisterEvent("CHAT_MSG_ADDON")
 end
 
-function ZPerl:CompareVersion(version)
+function BlackPerl:CompareVersion(version)
 	local _, _, major, minor, build = string.find(self.version, "(%d+)%.(%d+)%.(%d+)")
 
 	local _, _, newMajor, newMinor, newBuild = string.find(version, "(%d+)%.(%d+)%.(%d+)")
@@ -99,7 +99,7 @@ function ZPerl:CompareVersion(version)
 	return false
 end
 
-function ZPerl:SendVersion()
+function BlackPerl:SendVersion()
 	local channel
 
 	if IsInRaid() then
@@ -111,12 +111,12 @@ function ZPerl:SendVersion()
 	end
 
 	if channel then
-		local version = ZPerl.version
+		local version = BlackPerl.version
 
-		if ZPerl.newVersion then
-			version = ZPerl.newVersion
+		if BlackPerl.newVersion then
+			version = BlackPerl.newVersion
 		end
 
-		C_ChatInfo.SendAddonMessage("ZPerlVersion", version, channel)
+		C_ChatInfo.SendAddonMessage("BlackPerlVersion", version, channel)
 	end
 end

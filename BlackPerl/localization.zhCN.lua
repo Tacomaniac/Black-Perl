@@ -1,5 +1,5 @@
 -- X-Perl UnitFrames
--- Author: Resike
+-- Author: Tacomaniac
 -- License: GNU GPL v3, 29 June 2007 (see LICENSE.txt)
 
 if GetLocale() == "zhCN" then
@@ -71,15 +71,15 @@ if GetLocale() == "zhCN" then
 	XPERL_LOC_HUGENUMTAG		= "亿"
 	XPERL_LOC_VERYHUGENUMTAG	= "兆"
 
-	BINDING_HEADER_ZPERL = "Z-Perl 快捷键"
-	BINDING_NAME_ZPERL_TOGGLERAID = "切换团队窗口"
-	BINDING_NAME_ZPERL_TOGGLERAIDSORT = "切换团队排列方式"
-	BINDING_NAME_ZPERL_TOGGLERAIDPETS = "切换团队宠物窗口"
-	BINDING_NAME_ZPERL_TOGGLEOPTIONS = "切换选项窗"
-	BINDING_NAME_ZPERL_TOGGLEBUFFTYPE = "切换增益/减益/无"
-	BINDING_NAME_ZPERL_TOGGLEBUFFCASTABLE = "切换显示可施加/解除的增益/减益魔法"
-	BINDING_NAME_ZPERL_TEAMSPEAKMONITOR = "显示 Teamspeak 监控图标"
-	BINDING_NAME_ZPERL_TOGGLERANGEFINDER = "切换距离侦测"
+	BINDING_HEADER_BlackPerl = "BlackPerl 快捷键"
+	BINDING_NAME_BlackPerl_TOGGLERAID = "切换团队窗口"
+	BINDING_NAME_BlackPerl_TOGGLERAIDSORT = "切换团队排列方式"
+	BINDING_NAME_BlackPerl_TOGGLERAIDPETS = "切换团队宠物窗口"
+	BINDING_NAME_BlackPerl_TOGGLEOPTIONS = "切换选项窗"
+	BINDING_NAME_BlackPerl_TOGGLEBUFFTYPE = "切换增益/减益/无"
+	BINDING_NAME_BlackPerl_TOGGLEBUFFCASTABLE = "切换显示可施加/解除的增益/减益魔法"
+	BINDING_NAME_BlackPerl_TEAMSPEAKMONITOR = "显示 Teamspeak 监控图标"
+	BINDING_NAME_BlackPerl_TOGGLERANGEFINDER = "切换距离侦测"
 
 	XPERL_KEY_NOTICE_RAID_BUFFANY = "显示所有的增益/减益魔法"
 	XPERL_KEY_NOTICE_RAID_BUFFCURECAST = "只显示可施放/解除的的增益/减益魔法"

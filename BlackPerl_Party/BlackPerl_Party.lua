@@ -1,9 +1,8 @@
 -- X-Perl UnitFrames
--- Author: Resike
+-- Author: Tacomaniac
 -- License: GNU GPL v3, 29 June 2007 (see LICENSE.txt)
 
 local XPerl_Party_Events = { }
---local checkRaidNextUpdate
 local PartyFrames = { }
 local startupDone
 local conf, pconf
@@ -18,9 +17,6 @@ end, "$Revision:  $")
 local percD = "%d"..PERCENT_SYMBOL
 
 local IsRetail = WOW_PROJECT_ID == WOW_PROJECT_MAINLINE
-local IsPandaClassic = WOW_PROJECT_ID == WOW_PROJECT_MISTS_CLASSIC
-local IsClassic = WOW_PROJECT_ID >= WOW_PROJECT_CLASSIC
-local IsVanillaClassic = WOW_PROJECT_ID == WOW_PROJECT_CLASSIC
 
 local ceil = ceil
 local floor = floor
@@ -112,7 +108,7 @@ function XPerl_Party_Events_OnLoad(self)
 		"UNIT_ABSORB_AMOUNT_CHANGED",
 		"UNIT_POWER_FREQUENT",
 		"UNIT_MAXPOWER",
-		IsClassic and "UNIT_HEALTH_FREQUENT" or "UNIT_HEALTH",
+		"UNIT_HEALTH",
 		"UNIT_MAXHEALTH",
 		"UNIT_LEVEL",
 		"UNIT_DISPLAYPOWER",
@@ -137,13 +133,8 @@ function XPerl_Party_Events_OnLoad(self)
 
 	UIParent:UnregisterEvent("GROUP_ROSTER_UPDATE") -- IMPORTANT! Stops raid framerate lagging when members join/leave/zone
 
-	if IsRetail then
-		XPerl_BlizzFrameDisable(PartyFrame)
-	else
-		for i = 1, 4 do
-			XPerl_BlizzFrameDisable(_G["PartyMemberFrame"..i])
-		end
-	end
+	XPerl_BlizzFrameDisable(PartyFrame)
+
 
 	self:SetScript("OnEvent", XPerl_Party_OnEvent)
 	XPerl_RegisterOptionChanger(XPerl_Party_Set_Bits)
@@ -218,12 +209,12 @@ local function onAttrChanged(self, name, value)
 	end
 end
 
--- ZPerl_Party_OnLoad
-function ZPerl_Party_OnLoad(self)
+-- BlackPerl_Party_OnLoad
+function BlackPerl_Party_OnLoad(self)
 	XPerl_SetChildMembers(self)
 	self.targetFrame.statsFrame = self.targetFrame.healthBar -- So the healthbar fades as part of pseudo statsFrame
 
-	partyHeader = ZPerl_Party_SecureHeader
+	partyHeader = BlackPerl_Party_SecureHeader
 	partyAnchor = XPerl_Party_Anchor
 
 	local id = strmatch(self:GetName(), ".+(%d)")
@@ -325,7 +316,7 @@ function ZPerl_Party_OnLoad(self)
 	XPerl_Party_Set_Bits1(self)
 
 	--[[if (XPerl_party1 and XPerl_party2 and XPerl_party3 and XPerl_party4) then
-		ZPerl_Party_OnLoad = nil
+		BlackPerl_Party_OnLoad = nil
 	end]]
 end
 
@@ -359,17 +350,6 @@ local function XPerl_Party_UpdateAbsorbPrediction(self)
 		self.statsFrame.expectedAbsorbs:Hide()
 	end
 end
--- XPerl_Party_UpdateHotsPrediction
-local function XPerl_Party_UpdateHotsPrediction(self)
-	if not IsPandaClassic then
-		return
-	end
-	if pconf.hotPrediction then
-		XPerl_SetExpectedHots(self)
-	else
-		self.statsFrame.expectedHots:Hide()
-	end
-end
 
 local function XPerl_Party_UpdateResurrectionStatus(self)
 	if UnitHasIncomingResurrection(self.partyid) then
@@ -396,34 +376,21 @@ local function XPerl_Party_UpdateHealth(self)
 	local Partyhealth, Partyhealthmax = UnitIsGhost(partyid) and 1 or (UnitIsDead(partyid) and 0 or UnitHealth(partyid)), UnitHealthMax(partyid)
 	local reason
 
-	--[[if (self.feigning and not UnitBuff(partyid, feignDeath)) then
-		self.feigning = nil
-	end]]
-
 	XPerl_SetHealthBar(self, Partyhealth, Partyhealthmax)
 
 	XPerl_Party_UpdateAbsorbPrediction(self)
 	XPerl_Party_UpdateHealPrediction(self)
-	XPerl_Party_UpdateHotsPrediction(self)
 	XPerl_Party_UpdateResurrectionStatus(self)
 
 	if (not UnitIsConnected(partyid)) then
 		reason = XPERL_LOC_OFFLINE
 	else
-		--[[if (UnitBuff(partyid, feignDeath) and conf.showFD) then
-			reason = XPERL_LOC_FEIGNDEATH
-		else--]]if (self.afk and conf.showAFK) then
+		if (self.afk and conf.showAFK) then
 			reason = CHAT_MSG_AFK
 		elseif (UnitIsDead(partyid)) then
 			reason = XPERL_LOC_DEAD
 		elseif (UnitIsGhost(partyid)) then
 			reason = XPERL_LOC_GHOST
-		elseif not IsRetail then
-			if ((Partyhealth == 1) and (Partyhealthmax == 1)) then
-				reason = XPERL_LOC_UPDATING
-			end
-		--[[elseif (UnitBuff(partyid, spiritOfRedemption)) then
-			reason = XPERL_LOC_DEAD--]]
 		end
 	end
 
@@ -686,7 +653,7 @@ local function UpdateAssignedRoles(self)
 	local icon = self.nameFrame.roleIcon
 	local isTank, isHealer, isDamage
 	local inInstance, instanceType = IsInInstance()
-	if not IsVanillaClassic and instanceType == "party" then
+	if instanceType == "party" then
 		-- No point getting it otherwise, as they can be wrong. Usually the values you had
 		-- from previous instance if you're running more than one with the same people
 
@@ -721,7 +688,7 @@ local function UpdateAssignedRoles(self)
 			icon:SetTexture("Interface\\GroupFrame\\UI-Group-MainTankIcon")
 			icon:Show()
 		elseif isHealer then
-			icon:SetTexture("Interface\\AddOns\\ZPerl\\Images\\XPerl_RoleHealer_old")
+			icon:SetTexture("Interface\\AddOns\\BlackPerl\\Images\\XPerl_RoleHealer_old")
 			icon:Show()
 		elseif isDamage then
 			icon:SetTexture("Interface\\GroupFrame\\UI-Group-MainAssistIcon")
@@ -731,13 +698,13 @@ local function UpdateAssignedRoles(self)
 		end
 	else
 		if isTank then
-			icon:SetTexture("Interface\\AddOns\\ZPerl\\Images\\XPerl_RoleTank")
+			icon:SetTexture("Interface\\AddOns\\BlackPerl\\Images\\XPerl_RoleTank")
 			icon:Show()
 		elseif isHealer then
-			icon:SetTexture("Interface\\AddOns\\ZPerl\\Images\\XPerl_RoleHealer")
+			icon:SetTexture("Interface\\AddOns\\BlackPerl\\Images\\XPerl_RoleHealer")
 			icon:Show()
 		elseif isDamage then
-			icon:SetTexture("Interface\\AddOns\\ZPerl\\Images\\XPerl_RoleDamage")
+			icon:SetTexture("Interface\\AddOns\\BlackPerl\\Images\\XPerl_RoleDamage")
 			icon:Show()
 		else
 			icon:Hide()
@@ -757,7 +724,7 @@ end
 -- UpdatePhaseIndicators
 local function UpdatePhasingDisplays(self)
 	local unit = self.partyid
-	local inPhase = not IsClassic and UnitPhaseReason(unit)
+	local inPhase = UnitPhaseReason(unit)
 
 	if ( not inPhase or not UnitExists(unit) or not UnitIsConnected(unit)) then
 		self.phasingIcon:Hide()
@@ -802,7 +769,7 @@ local function XPerl_Party_UpdatePVP(self)
 	elseif pconf.pvpIcon and factionGroup and factionGroup ~= "Neutral" and UnitIsPVP(partyid) then
 		pvpIcon:SetTexture("Interface\\TargetingFrame\\UI-PVP-"..factionGroup)
 
-		if not IsClassic and UnitIsMercenary(partyid) then
+		if UnitIsMercenary(partyid) then
 			if factionGroup == "Horde" then
 				pvpIcon:SetTexture("Interface\\TargetingFrame\\UI-PVP-Alliance")
 			elseif factionGroup == "Alliance" then
@@ -834,7 +801,7 @@ local function XPerl_Party_UpdateCombat(self)
 			self.nameFrame.combatIcon:Hide()
 		end
 
-		if UnitIsCharmed(partyid) and UnitIsPlayer(partyid) and (not IsClassic and (self.ownerid and not UnitUsingVehicle(self.ownerid)) or true) then
+		if UnitIsCharmed(partyid) and UnitIsPlayer(partyid) and ((self.ownerid and not UnitUsingVehicle(self.ownerid)) or true) then
 			self.nameFrame.warningIcon:Show()
 		else
 			self.nameFrame.warningIcon:Hide()
@@ -872,43 +839,13 @@ local function XPerl_Party_UpdateMana(self)
 	local unitPower = UnitPower(partyid, powerType)
 	local unitPowerMax = UnitPowerMax(partyid, powerType)
 
-	-- -- Begin 4.3 division by 0 work around to ensure we don't divide if max is 0
+	--Set party power percent
 	local powerPercent
-	if IsRetail then
-		powerPercent = UnitPowerPercent(partyid, powerType, true, CurveConstants.ScaleTo100)
-		self.statsFrame.manaBar.percent:SetFormattedText(percD,powerPercent)
-	else
-		if unitPower > 0 and unitPowerMax == 0 then -- We have current mana but max mana failed.
-			unitPowerMax = unitPower -- Make max mana at least equal to current health
-			powerPercent = 1 -- And percent 100% cause a number divided by itself is 1, duh.
-		elseif unitPower == 0 and unitPowerMax == 0 then -- Probably doesn't use mana or is oom?
-			powerPercent = 0 -- So just automatically set percent to 0 and avoid division of 0/0 all together in this situation.
-		else
-			powerPercent = unitPower / unitPowerMax -- Everything is dandy, so just do it right way.
-		end
-		--end division by 0 check
-
-		--Added this section here as also cannot be done in retail due to secret values
-		if powerType >= 1 then
-			self.statsFrame.manaBar.percent:SetText(unitPower)
-		else
-			self.statsFrame.manaBar.percent:SetFormattedText(percD, 100 * powerPercent)
-		end
-	end
-
-	--[[if (Partymanamax == 1 and Partymana > Partymanamax) then
-		Partymanamax = Partymana
-	end--]]
-
+	powerPercent = UnitPowerPercent(partyid, powerType, true, CurveConstants.ScaleTo100)
+	self.statsFrame.manaBar.percent:SetFormattedText(percD,powerPercent)
+	--Set party power text
 	self.statsFrame.manaBar:SetMinMaxValues(0, unitPowerMax)
 	self.statsFrame.manaBar:SetValue(unitPower)
-
-	--[[if (pconf.values) then
-		self.statsFrame.manaBar.text:Show()
-	else
-		self.statsFrame.manaBar.text:Hide()
-	end]]
-
 	self.statsFrame.manaBar.text:SetFormattedText("%d/%d", unitPower, unitPowerMax)
 
 	if (not UnitIsConnected(partyid)) then
@@ -917,10 +854,6 @@ local function XPerl_Party_UpdateMana(self)
 			self.statsFrame:SetGrey()
 		end
 	end
-end
-
-local function NotSecretValue(value)
-    return issecretvalue(value) == false
 end
 
 -- XPerl_Party_UpdateRange
@@ -935,32 +868,16 @@ local function XPerl_Party_Update_Range(self, overrideUnit)
 		return
 	end
 
-	if IsRetail then -- in order to get range in retail unit has to be in party or raid all other units cannot be compared and will return secret values
-        local inRange, checkedRange = UnitInRange(partyid)
-        if NotSecretValue(checkedRange) and checkedRange and not inRange then 
-				self.nameFrame.rangeIcon:Show()
-				self.nameFrame.rangeIcon:SetAlpha(1)
-		else
-				self.nameFrame.rangeIcon:Hide()
-        end	
-	else
-		local inRange = false
-		local range, checkedRange = UnitInRange(partyid)
-		if not checkedRange then
-			inRange = true
-		end
+	--Checking a different piece of code for this
+	DoRangeCheck(partyid, self)
 
-		if not UnitIsConnected(partyid) or inRange then
-			self.nameFrame.rangeIcon:Hide()
-		else
-			self.nameFrame.rangeIcon:Show()
-			self.nameFrame.rangeIcon:SetAlpha(1)
-		end
-		--[[if (UnitInVehicle(self.partyid) and pconf.range30yard) then -- Not sure if this is proper way to do it, so this pretty much forces anyone in a vehicle to show out of range.
-			self.nameFrame.rangeIcon:Show()
-			self.nameFrame.rangeIcon:SetAlpha(1)
-		end]]
-	end
+	-- local inRange, checkedRange = UnitInRange(partyid)
+	-- if not issecretvalue(checkedRange) and checkedRange and not inRange then 
+	-- 	self.nameFrame.rangeIcon:Show()
+	-- 	self.nameFrame.rangeIcon:SetAlpha(1)
+	-- else
+	-- 	self.nameFrame.rangeIcon:Hide()
+	-- end
 end
 
 -- XPerl_Party_SingleGroup
@@ -995,21 +912,17 @@ local function CheckRaid()
 		local singleGroup = XPerl_Party_SingleGroup()
 
 		if (not pconf or ((pconf.inRaid and IsInRaid()) or (pconf.smallRaid and singleGroup) or (GetNumGroupMembers() > 0 and not IsInRaid()))) then -- or GetNumGroupMembers() > 0
-			if not IsClassic then
-				if not C_PetBattles.IsInBattle() then
+
+		if not C_PetBattles.IsInBattle() then
 					if (not partyHeader:IsShown()) then
 						partyHeader:Show()
 					end
-				else
+		else
 					if (partyHeader:IsShown()) then
 						partyHeader:Hide()
 					end
-				end
-			else
-				if (not partyHeader:IsShown()) then
-					partyHeader:Show()
-				end
-			end
+		end
+
 		else
 			if (partyHeader:IsShown()) then
 				partyHeader:Hide()
@@ -1040,42 +953,23 @@ end
 local function XPerl_Party_TargetUpdateHealth(self)
 	local tf = self.targetFrame
 	local targetid = self.targetid
-	local hp, hpMax, heal, absorb = UnitIsGhost(targetid) and 1 or (UnitIsDead(targetid) and 0 or UnitHealth(targetid)), UnitHealthMax(targetid), not IsVanillaClassic and UnitGetIncomingHeals(targetid), not IsClassic and UnitGetTotalAbsorbs(targetid)
+	local hp, hpMax, heal, absorb = UnitIsGhost(targetid) and 1 or (UnitIsDead(targetid) and 0 or UnitHealth(targetid)), UnitHealthMax(targetid), UnitGetIncomingHeals(targetid), UnitGetTotalAbsorbs(targetid)
 	tf.lastHP, tf.lastHPMax, tf.lastHeal, tf.lastAbsorb = hp, hpMax, heal, absorb
 	tf.lastUpdate = GetTime()
 
-	--tf.healthBar:SetMinMaxValues(0, hpMax)
-	--tf.healthBar:SetValue(hp)
-	-- Begin 4.3 division by 0 work around to ensure we don't divide if max is 0
+	--Get and set percent for xperl party target health
 	local percent
 	if UnitIsDeadOrGhost(targetid) then -- Probably dead target
 		percent = 0 -- So just automatically set percent to 0 and avoid division of 0/0 all together in this situation.
-	elseif IsRetail then
-		-- Retail has secret health values so we cannot do any of this division by 0 work arounds
+	else
 		percent = UnitHealthPercent(targetid, true, CurveConstants.ScaleTo100)
-	elseif hp > 0 and hpMax == 0 then -- We have current ho but max hp failed.
-		hpMax = hp -- Make max hp at least equal to current health
-		percent = 1 -- And percent 100% cause a number divided by itself is 1, duh.
-	else
-		if not IsRetail then
-			if hpMax > 0 then
-				percent = hp / hpMax--Everything is dandy, so just do it right way.
-			end
-		end
 	end
-	--tf.healthBar:SetAlpha(1)
-	-- end division by 0 check
-	if IsRetail then
-		tf.healthBar.text:SetFormattedText(percD, percent)
-		tf.healthBar:SetMinMaxValues(0, hpMax)
-		tf.healthBar:SetValue(hp)
-	else
-		if (hpMax > 0) then
-			tf.healthBar.text:SetFormattedText(percD, 100 * percent)	-- XPerl_Percent[floor(100 * hp / hpMax)])
-			tf.healthBar:SetMinMaxValues(0, hpMax)
-			tf.healthBar:SetValue(hp)
-		end
-	end
+	
+	tf.healthBar.text:SetFormattedText(percD, percent)
+
+	--get and set health text for party target
+	tf.healthBar:SetMinMaxValues(0, hpMax)
+	tf.healthBar:SetValue(hp)
 	tf.healthBar.text:Show()
 
 	XPerl_Party_TargetUpdateAbsorbPrediction(self.targetFrame)
@@ -1090,14 +984,7 @@ local function XPerl_Party_TargetUpdateHealth(self)
 			tf.healthBar.text:SetText(XPERL_LOC_GHOST)
 		end
 	else
-		--XPerl_ColourHealthBar(self.targetFrame, hp / hpMax, targetid)
-		if IsRetail then 
-			XPerl_SetSmoothBarColor(self.targetFrame.healthBar, percent)
-		else 
-		   if hpMax > 0 then
-			XPerl_SetSmoothBarColor(self.targetFrame.healthBar, percent)
-		   end
-		end
+		XPerl_SetSmoothBarColor(self.targetFrame.healthBar, percent)
 	end
 
 	if (UnitAffectingCombat(targetid)) then
@@ -1128,22 +1015,14 @@ local function XPerl_Party_UpdateTarget(self)
 	if (pconf.target.enable) then
 		local targetid = self.targetid
 		local partyid = self.partyid
+
 		if (targetid and UnitIsConnected(partyid) and UnitExists(partyid) and UnitIsVisible(partyid)) then
 			local targetname = UnitName(targetid)
 
-			if IsRetail then
-				--Just set the target name and dont care about the rest?
-				self.targetFrame.text:SetText(targetname)
-				XPerl_SetUnitNameColor(self.targetFrame.text, targetid)
-				XPerl_Party_TargetUpdateHealth(self)
-				XPerl_Party_TargetRaidIcon(self)
-			elseif (targetname and targetname ~= UNKNOWNOBJECT) then
-				--self.targetFrame:SetAlpha(1)
-				self.targetFrame.text:SetText(targetname)
-				XPerl_SetUnitNameColor(self.targetFrame.text, targetid)
-				XPerl_Party_TargetUpdateHealth(self)
-				XPerl_Party_TargetRaidIcon(self)
-			end
+			self.targetFrame.text:SetText(targetname)
+			XPerl_SetUnitNameColor(self.targetFrame.text, targetid)
+			XPerl_Party_TargetUpdateHealth(self)
+			XPerl_Party_TargetRaidIcon(self)
 		end
 	end
 end
@@ -1163,9 +1042,6 @@ function XPerl_Party_OnUpdate(self, elapsed)
 		XPerl_Party_CombatFlash(self, elapsed, false)
 	end
 
-	--self.time = self.time + elapsed
-	--if (self.time >= 0.2) then
-		--self.time = 0
 		local targetid = self.targetid
 
 		self.flagsCheck = self.flagsCheck + 1
@@ -1175,13 +1051,9 @@ function XPerl_Party_OnUpdate(self, elapsed)
 		end
 
 		if (pconf.target.large and self.targetFrame:IsShown()) then
-			local hp, hpMax, heal, absorb = UnitIsGhost(targetid) and 1 or (UnitIsDead(targetid) and 0 or UnitHealth(targetid)), UnitHealthMax(targetid), not IsVanillaClassic and UnitGetIncomingHeals(targetid), not IsClassic and UnitGetTotalAbsorbs(targetid)
-			
-			if IsRetail then
-				XPerl_Party_TargetUpdateHealth(self)
-			elseif (hp ~= self.targetFrame.lastHP or hpMax ~= self.targetFrame.lastHPMax or heal ~= self.targetFrame.lastHeal or absorb ~= self.targetFrame.lastAbsorb or GetTime() > self.targetFrame.lastUpdate + 5000) then
-				XPerl_Party_TargetUpdateHealth(self)
-			end
+			local hp, hpMax, heal, absorb = UnitIsGhost(targetid) and 1 or (UnitIsDead(targetid) and 0 or UnitHealth(targetid)), UnitHealthMax(targetid), UnitGetIncomingHeals(targetid), UnitGetTotalAbsorbs(targetid)
+
+			XPerl_Party_TargetUpdateHealth(self)
 		end
 
 		self.time = self.time + elapsed
@@ -1573,12 +1445,6 @@ end
 function XPerl_Party_Events:UNIT_HEAL_PREDICTION(unit)
 	if pconf.healprediction and unit == self.partyid then
 		XPerl_SetExpectedHealth(self)
-	end
-	if not IsPandaClassic then
-		return
-	end
-	if pconf.hotPrediction and unit == self.partyid then
-		XPerl_SetExpectedHots(self)
 	end
 end
 
@@ -2006,11 +1872,11 @@ function XPerl_Party_Set_Bits()
 	partyAnchor:SetScale(pconf.scale)
 	XPerl_SavePosition(partyAnchor, true)
 
-	ZPerl_Party_SecureHeader:SetAttribute("showPlayer", pconf.showPlayer)
+	BlackPerl_Party_SecureHeader:SetAttribute("showPlayer", pconf.showPlayer)
 
-	ZPerl_Party_SecureState:SetAttribute("partyEnabled", pconf.enable)
-	ZPerl_Party_SecureState:SetAttribute("partyInRaid", pconf.inRaid)
-	ZPerl_Party_SecureState:SetAttribute("partySmallRaid", pconf.smallRaid)
+	BlackPerl_Party_SecureState:SetAttribute("partyEnabled", pconf.enable)
+	BlackPerl_Party_SecureState:SetAttribute("partyInRaid", pconf.inRaid)
+	BlackPerl_Party_SecureState:SetAttribute("partySmallRaid", pconf.smallRaid)
 
 	if (XPerlDB) then
 		conf = XPerlDB

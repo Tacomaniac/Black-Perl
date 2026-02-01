@@ -1,10 +1,9 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd">
 
-	<Script file="ZPerl.lua"/>
-	<!--<Script file="ZPerl_Usage.lua"/>-->
-	<Script file="ZPerl_Highlight.lua"/>
+	<Script file="BlackPerl.lua"/>
+	<Script file="BlackPerl_Highlight.lua"/>
 
-	<Button name="ZPerl_MinimapButton_Frame" frameStrata="MEDIUM" parent="Minimap" enableMouse="true" movable="true">
+	<Button name="BlackPerl_MinimapButton_Frame" frameStrata="MEDIUM" parent="Minimap" enableMouse="true" movable="true">
 		<Size>
 			<AbsDimension x="33" y="33"/>
 		</Size>
@@ -13,7 +12,7 @@
 		</Anchors>
 		<Layers>
 			<Layer level="BACKGROUND">
-				<Texture name="XPerl_MinimapButton_Icon" file="Interface\Icons\INV_Misc_Gem_Pearl_02">
+				<Texture name="XPerl_MinimapButton_Icon" file="Interface\Icons\Inv_misc_gem_pearl_01">
 					<Size>
 						<AbsDimension x="21" y="21"/>
 					</Size>
@@ -86,6 +85,7 @@
 			</Layer>
 		</Layers>
 	</Frame>
+
 	<Frame name="XPerl_OutOfControlFrame" parent="UIParent" setAllPoints="true" hidden="true">
 		<Layers>
 			<Layer level="BACKGROUND">

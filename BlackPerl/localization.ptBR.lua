@@ -1,5 +1,5 @@
 -- X-Perl UnitFrames
--- Author: Resike
+-- Author: Tacomaniac
 -- License: GNU GPL v3, 29 June 2007 (see LICENSE.txt)
 
 if GetLocale() == "ptBR" then
@@ -10,8 +10,8 @@ if GetLocale() == "ptBR" then
 	XPERL_MINIMAP_HELP2 = "|c00FFFFFFClique direito|r para arrastar este ícone"
 	XPERL_MINIMAP_HELP3 = "\rMembros da raide: |c00FFFF80%d|r\rMembros do grupo: |c00FFFF80%d|r"
 	XPERL_MINIMAP_HELP4 = "\rVocê é o líder do grupo/raide"
-	XPERL_MINIMAP_HELP5 = "|c00FFFFFFAlt|r para ver o uso de memória de Z-Perl"
-	XPERL_MINIMAP_HELP6 = "|c00FFFFFF+Shift|r para ver o uso de memória de Z-Perl desde o início"
+	XPERL_MINIMAP_HELP5 = "|c00FFFFFFAlt|r para ver o uso de memória de BlackPerl"
+	XPERL_MINIMAP_HELP6 = "|c00FFFFFF+Shift|r para ver o uso de memória de BlackPerl desde o início"
 
 	XPERL_MINIMENU_OPTIONS = "Opções"
 	XPERL_MINIMENU_ASSIST = "Mostrar quadro de assistente"
@@ -87,15 +87,15 @@ if GetLocale() == "ptBR" then
 	XPERL_LOC_HUGENUMTAG = "M"
 	XPERL_LOC_VERYHUGENUMTAG = "G"
 
-	BINDING_HEADER_ZPERL = XPerl_ProductName
-	BINDING_NAME_ZPERL_TOGGLERAID = "Mostrar/ocultar janelas de raide"
-	BINDING_NAME_ZPERL_TOGGLERAIDSORT = "Mostrar/ocultar ordenação de raide por classe/grupo"
-	BINDING_NAME_ZPERL_TOGGLERAIDPETS = "Mostrar/ocultar mascotes de raide"
-	BINDING_NAME_ZPERL_TOGGLEOPTIONS = "Mostrar/ocultar janela de opções"
-	BINDING_NAME_ZPERL_TOGGLEBUFFTYPE = "Mostrar/ocultar Bônus/perjuízos/nenhum"
-	BINDING_NAME_ZPERL_TOGGLEBUFFCASTABLE = "Mostrar/ocultar lançáveis/curáveis"
-	BINDING_NAME_ZPERL_TEAMSPEAKMONITOR = "Monitor de Teamspeak"
-	BINDING_NAME_ZPERL_TOGGLERANGEFINDER = "Mostrar/ocultar buscador de alcance"
+	BINDING_HEADER_BlackPerl = XPerl_ProductName
+	BINDING_NAME_BlackPerl_TOGGLERAID = "Mostrar/ocultar janelas de raide"
+	BINDING_NAME_BlackPerl_TOGGLERAIDSORT = "Mostrar/ocultar ordenação de raide por classe/grupo"
+	BINDING_NAME_BlackPerl_TOGGLERAIDPETS = "Mostrar/ocultar mascotes de raide"
+	BINDING_NAME_BlackPerl_TOGGLEOPTIONS = "Mostrar/ocultar janela de opções"
+	BINDING_NAME_BlackPerl_TOGGLEBUFFTYPE = "Mostrar/ocultar Bônus/perjuízos/nenhum"
+	BINDING_NAME_BlackPerl_TOGGLEBUFFCASTABLE = "Mostrar/ocultar lançáveis/curáveis"
+	BINDING_NAME_BlackPerl_TEAMSPEAKMONITOR = "Monitor de Teamspeak"
+	BINDING_NAME_BlackPerl_TOGGLERANGEFINDER = "Mostrar/ocultar buscador de alcance"
 
 	XPERL_KEY_NOTICE_RAID_BUFFANY = "Todos os bônus/perjuízos mostrados"
 	XPERL_KEY_NOTICE_RAID_BUFFCURECAST = "Apenas bônus ou penalidades lançáveis/curáveis mostrados"
@@ -138,7 +138,7 @@ if GetLocale() == "ptBR" then
 	XPERL_CMD_CONFIG = "config"
 	XPERL_CMD_LIST = "lista"
 	XPERL_CMD_DELETE = "excluir"
-	XPERL_CMD_HELP = "|c00FFFF80Uso: |c00FFFFFF/zperl menu | bloquear | desbloquear | config lista | config excluir <reino> <nome>"
+	XPERL_CMD_HELP = "|c00FFFF80Uso: |c00FFFFFF/BlackPerl menu | bloquear | desbloquear | config lista | config excluir <reino> <nome>"
 
 	XPERL_CANNOT_DELETE_CURRENT = "Não é possível excluir sua configuração atual"
 	XPERL_CONFIG_DELETED = "Configuração excluída para %s/%s"

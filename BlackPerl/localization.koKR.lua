@@ -1,5 +1,5 @@
 -- X-Perl UnitFrames
--- Author: Resike
+-- Author: Tacomaniac
 -- License: GNU GPL v3, 29 June 2007 (see LICENSE.txt)
 
 if GetLocale() == "koKR" then
@@ -64,15 +64,15 @@ if GetLocale() == "koKR" then
 	XPERL_LOC_HUGENUMTAG		= "M"
 	XPERL_LOC_VERYHUGENUMTAG	= "G"
 
-	BINDING_HEADER_ZPERL = "Z-Perl 단축키 설정"
-	BINDING_NAME_ZPERL_TOGGLERAID = "공격대 창 켜기/끄기"
-	BINDING_NAME_ZPERL_TOGGLERAIDSORT = "공격대 정렬 직업별/파티별"
-	BINDING_NAME_ZPERL_TOGGLERAIDPETS = "공격대 소환수창 켜기/끄기"
-	BINDING_NAME_ZPERL_TOGGLEOPTIONS = "설정창 열기/닫기"
-	BINDING_NAME_ZPERL_TOGGLEBUFFTYPE = "버프/디버프/없음 변경"
-	BINDING_NAME_ZPERL_TOGGLEBUFFCASTABLE = "시전가능/해제가능 변경"
-	BINDING_NAME_ZPERL_TEAMSPEAKMONITOR = "음성대화 현황"
-	BINDING_NAME_ZPERL_TOGGLERANGEFINDER = "거리 측정 켜기/끄기"
+	BINDING_HEADER_BlackPerl = "BlackPerl 단축키 설정"
+	BINDING_NAME_BlackPerl_TOGGLERAID = "공격대 창 켜기/끄기"
+	BINDING_NAME_BlackPerl_TOGGLERAIDSORT = "공격대 정렬 직업별/파티별"
+	BINDING_NAME_BlackPerl_TOGGLERAIDPETS = "공격대 소환수창 켜기/끄기"
+	BINDING_NAME_BlackPerl_TOGGLEOPTIONS = "설정창 열기/닫기"
+	BINDING_NAME_BlackPerl_TOGGLEBUFFTYPE = "버프/디버프/없음 변경"
+	BINDING_NAME_BlackPerl_TOGGLEBUFFCASTABLE = "시전가능/해제가능 변경"
+	BINDING_NAME_BlackPerl_TEAMSPEAKMONITOR = "음성대화 현황"
+	BINDING_NAME_BlackPerl_TOGGLERANGEFINDER = "거리 측정 켜기/끄기"
 
 	XPERL_KEY_NOTICE_RAID_BUFFANY = "모든 버프/디버프 표시"
 	XPERL_KEY_NOTICE_RAID_BUFFCURECAST = "오직 시전가능/해제가능 한 버프 또는 디버프만 표시"

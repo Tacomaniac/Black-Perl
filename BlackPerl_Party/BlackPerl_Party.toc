@@ -1,17 +1,17 @@
-## Interface: 11508, 50502, 110207, 120000
-## Author: Resike
-## Title: Z-Perl |cffeda55fParty|r
-## Title-itIT: Z-Perl |cffeda55fGruppo|r
-## Title-ruRU: Z-Perl |cffeda55fГруппа|r
-## Title-deDE: Z-Perl |cffeda55fGruppe|r
-## Title-zhCN: Z-Perl |cffeda55f小队窗|r
-## Title-zhTW: Z-Perl |cffeda55f隊伍框架|r
+## Interface: 120000
+## Author: Tacomaniac
+## Title: BlackPerl |cffeda55fParty|r
+## Title-itIT: BlackPerl |cffeda55fGruppo|r
+## Title-ruRU: BlackPerl |cffeda55fГруппа|r
+## Title-deDE: BlackPerl |cffeda55fGruppe|r
+## Title-zhCN: BlackPerl |cffeda55f小队窗|r
+## Title-zhTW: BlackPerl |cffeda55f隊伍框架|r
 ## Notes: Replaces the default party frames.
 ## Notes-itIT: Rimpiazza la finestra del gruppo.
 ## Notes-ruRU: Заменяет стандартные фреймы группы.
 ## Notes-deDE: Ersetzt die Gruppenfenster.
-## Notes-zhTW: Z-Perl 隊伍框架 替換內建的隊伍框架
-## RequiredDeps: ZPerl
-## OptionalDeps: ZPerl_ArcaneBar
+## Notes-zhTW: BlackPerl 隊伍框架 替換內建的隊伍框架
+## RequiredDeps: BlackPerl
+## OptionalDeps: BlackPerl_ArcaneBar
 
-ZPerl_Party.xml
+BlackPerl_Party.xml

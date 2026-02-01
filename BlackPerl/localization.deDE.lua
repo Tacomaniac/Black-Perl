@@ -1,5 +1,5 @@
 -- X-Perl UnitFrames
--- Author: Resike
+-- Author: Tacomaniac
 -- License: GNU GPL v3, 29 June 2007 (see LICENSE.txt)
 
 if GetLocale() == "deDE" then
@@ -74,15 +74,15 @@ if GetLocale() == "deDE" then
 	XPERL_LOC_HUGENUMTAG		= "M"
 	XPERL_LOC_VERYHUGENUMTAG	= "G"
 
-	BINDING_HEADER_ZPERL 				= XPerl_ProductName
-	BINDING_NAME_ZPERL_TOGGLERAID 			= "Schalter f\195\188r die Schlachtzugsfenster"
-	BINDING_NAME_ZPERL_TOGGLERAIDSORT 		= "Schalter f\195\188r Schlachtzug sortieren nach Klasse/Gruppe"
-	BINDING_NAME_ZPERL_TOGGLERAIDPETS 		= "Schalter f\195\188r Schlachtzugsbegleiter"
-	BINDING_NAME_ZPERL_TOGGLEOPTIONS 		= "Schalter f\195\188r das Optionenfenster"
-	BINDING_NAME_ZPERL_TOGGLEBUFFTYPE 		= "Schalter f\195\188r Buffs/Debuffs/Keine"
-	BINDING_NAME_ZPERL_TOGGLEBUFFCASTABLE 	= "Schalter f\195\188r Zauberbar/Heilbar"
-	BINDING_NAME_ZPERL_TEAMSPEAKMONITOR 	= "Teamspeak Monitor"
-	BINDING_NAME_ZPERL_TOGGLERANGEFINDER 	= "Schalter f\195\188r Reichweiten-Finder"
+	BINDING_HEADER_BlackPerl 				= XPerl_ProductName
+	BINDING_NAME_BlackPerl_TOGGLERAID 			= "Schalter f\195\188r die Schlachtzugsfenster"
+	BINDING_NAME_BlackPerl_TOGGLERAIDSORT 		= "Schalter f\195\188r Schlachtzug sortieren nach Klasse/Gruppe"
+	BINDING_NAME_BlackPerl_TOGGLERAIDPETS 		= "Schalter f\195\188r Schlachtzugsbegleiter"
+	BINDING_NAME_BlackPerl_TOGGLEOPTIONS 		= "Schalter f\195\188r das Optionenfenster"
+	BINDING_NAME_BlackPerl_TOGGLEBUFFTYPE 		= "Schalter f\195\188r Buffs/Debuffs/Keine"
+	BINDING_NAME_BlackPerl_TOGGLEBUFFCASTABLE 	= "Schalter f\195\188r Zauberbar/Heilbar"
+	BINDING_NAME_BlackPerl_TEAMSPEAKMONITOR 	= "Teamspeak Monitor"
+	BINDING_NAME_BlackPerl_TOGGLERANGEFINDER 	= "Schalter f\195\188r Reichweiten-Finder"
 
 	XPERL_KEY_NOTICE_RAID_BUFFANY 		= "Alle Buffs/Debuffs anzeigen"
 	XPERL_KEY_NOTICE_RAID_BUFFCURECAST 	= "Nur zauberbare/heilbare Buffs oder Debuffs anzeigen"

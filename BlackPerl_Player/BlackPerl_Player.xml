@@ -1,6 +1,6 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd">
 
-	<Script file="ZPerl_Player.lua"/>
+	<Script file="BlackPerl_Player.lua"/>
 
 	<Button name="XPerl_Player" inherits="SecureUnitButtonTemplate" clampedToScreen="true" frameStrata="LOW" movable="true" parent="UIParent">
 		<Size>
@@ -21,8 +21,8 @@
 				self:RegisterForClicks("AnyUp")
 				self:RegisterForDrag("LeftButton")
 				XPerl_Player_OnLoad(self)
-				self:SetScript("OnEnter", ZPerl_Unit_OnEnter)
-				self:SetScript("OnLeave", ZPerl_Unit_OnLeave)
+				self:SetScript("OnEnter", BlackPerl_Unit_OnEnter)
+				self:SetScript("OnLeave", BlackPerl_Unit_OnLeave)
 			</OnLoad>
 			<OnDragStart>
 				if (XPerlLocked == 0) then
@@ -47,10 +47,10 @@
 						self:RegisterForClicks("AnyUp")
 						self:RegisterForDrag("LeftButton")
 						self:SetScript("OnEnter", function(self)
-							ZPerl_Unit_OnEnter(self:GetParent())
+							BlackPerl_Unit_OnEnter(self:GetParent())
 						end)
 						self:SetScript("OnLeave", function(self)
-							ZPerl_Unit_OnLeave(self:GetParent())
+							BlackPerl_Unit_OnLeave(self:GetParent())
 						end)
 					</OnLoad>
 					<OnDragStart>
@@ -84,10 +84,10 @@
 						XPerl_RegisterUnitText(_G[self:GetName().."text"])
 						XPerl_RegisterUnitText(_G[self:GetName().."group"])
 						self:SetScript("OnEnter", function(self)
-							ZPerl_Unit_OnEnter(self:GetParent())
+							BlackPerl_Unit_OnEnter(self:GetParent())
 						end)
 						self:SetScript("OnLeave", function(self)
-							ZPerl_Unit_OnLeave(self:GetParent())
+							BlackPerl_Unit_OnLeave(self:GetParent())
 						end)
 					</OnLoad>
 					<OnDragStart>
@@ -346,10 +346,10 @@
 						self:RegisterForClicks("AnyUp")
 						self:RegisterForDrag("LeftButton")
 						self:SetScript("OnEnter", function(self)
-							ZPerl_Unit_OnEnter(self:GetParent())
+							BlackPerl_Unit_OnEnter(self:GetParent())
 						end)
 						self:SetScript("OnLeave", function(self)
-							ZPerl_Unit_OnLeave(self:GetParent())
+							BlackPerl_Unit_OnLeave(self:GetParent())
 						end)
 					</OnLoad>
 					<OnDragStart>

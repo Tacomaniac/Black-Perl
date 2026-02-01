@@ -9,10 +9,10 @@
 	<Script file="localization.koKR.lua"/>
 	<Script file="localization.ruRU.lua"/>
 	<Script file="localization.itIT.lua"/>
-	<Script file="ZPerl_Globals.lua"/>
-	<Script file="ZPerl_Init.lua"/>
-	<!--<Script file="ZPerl_Voice.lua"/>-->
-	<Script file="ZPerl_Slash.lua"/>
+	<Script file="BlackPerl_Globals.lua"/>
+	<Script file="BlackPerl_Init.lua"/>
+	<!--<Script file="BlackPerl_Voice.lua"/>-->
+	<Script file="BlackPerl_Slash.lua"/>
 
 	<Frame name="XPerlBackdropTemplate" mixin="XPerlBackdropTemplateMixin" virtual="true">
 		<Scripts>
@@ -718,7 +718,7 @@
 		</Scripts>
 		<Layers>
 			<Layer level="OVERLAY">
-				<Texture name="$parenttex" hidden="true" file="Interface\Addons\ZPerl\Images\XPerl_Highlight" alphaMode="ADD">
+				<Texture name="$parenttex" hidden="true" file="Interface\Addons\BlackPerl\Images\XPerl_Highlight" alphaMode="ADD">
 					<TexCoords left="0.25" right="0.75" top="0" bottom="0.5"/>
 				</Texture>
 			</Layer>
@@ -733,12 +733,12 @@
 		</Scripts>
 		<Layers>
 			<Layer level="BACKGROUND">
-				<Texture name="$parentbackground" file="Interface\Addons\ZPerl\Images\GaugeCircle" setAllPoints="true" alphaMode="ADD">
+				<Texture name="$parentbackground" file="Interface\Addons\BlackPerl\Images\GaugeCircle" setAllPoints="true" alphaMode="ADD">
 					<Color r="1" g="1" b="1" a="0.5"/>
 				</Texture>
 			</Layer>
 			<Layer level="ARTWORK">
-				<Texture name="$parentneedle" file="Interface\Addons\ZPerl\Images\GaugeCircleNeedle" setAllPoints="true">
+				<Texture name="$parentneedle" file="Interface\Addons\BlackPerl\Images\GaugeCircleNeedle" setAllPoints="true">
 					<Color r="1" g="1" b="1" a="0.8"/>
 				</Texture>
 				<FontString name="$parenttext" inherits="GameFontNormalSmall" text="0">
@@ -763,7 +763,7 @@
 		</Scripts>
 		<Layers>
 			<Layer level="ARTWORK">
-				<Texture name="$parentneedle" file="Interface\Addons\ZPerl\Images\GaugeBarNeedle">
+				<Texture name="$parentneedle" file="Interface\Addons\BlackPerl\Images\GaugeBarNeedle">
 					<Size>
 						<AbsDimension x="20" y="20"/>
 					</Size>
