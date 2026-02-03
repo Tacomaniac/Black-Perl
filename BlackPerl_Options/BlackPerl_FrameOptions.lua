@@ -153,6 +153,8 @@ function XPerl_OptionsSetMyText(f, str, keep)
 	end
 end
 
+
+
 -- XPerl_Options_CheckButton_OnEnter
 function XPerl_Options_CheckButton_OnEnter(self)
 	if (self.flashFrame and not InCombatLockdown()) then
@@ -1710,10 +1712,7 @@ function XPerl_Options_ImportOldConfig(old)
 		bar = {
 			texture		= old.BarTexture,
 			background	= Convert(old.BackgroundTextures),
-			fading		= Convert(old.FadingBars), -- 1.8.9
-			fadeTime	= old.FadingBarsTime or 0.5, -- 1.9.1
 			fat			= Convert(old.FatHealthBars),
-			inverse		= Convert(old.InverseBars), -- 1.8.6
 		},
 		transparency = {
 			frame		= old.Transparency			or 1,
@@ -1768,7 +1767,7 @@ function XPerl_Options_ImportOldConfig(old)
 		tooltip = {
 			enable		= Convert(old.UnitTooltips),				-- 2.0.5
 			enableBuffs	= 1,							-- 2.3.4a
-			fading		= Convert(old.FadingTooltip),				-- 1.8.3
+			-- fading		= Convert(old.FadingTooltip),				-- 1.8.3
 			xperlInfo	= Convert(old.XPerlTooltipInfo),			-- 1.8.6
 			modifier	= old.UnitTooltipsModifiers	or "all",		-- 2.0.6
 		},
@@ -1783,11 +1782,11 @@ function XPerl_Options_ImportOldConfig(old)
 		rangeFinder = old.RangeFinder or XPerl_DefaultRangeFinder(),
 		highlight = {
 			enable			= Convert(old.RaidHighlights),
-			HOT			= Convert(old.RaidHighlightHoTs),
+			HOT				= Convert(old.RaidHighlightHoTs),
 			SHIELD			= Convert(old.RaidHighlightShields),
 			AGGRO			= Convert(old.RaidHighlightAggro),
 			MISSING			= Convert(old.RaidHighlightMissing),
-			all			= Convert(old.RaidHighlightMissingAll),
+			all				= Convert(old.RaidHighlightMissingAll),
 		},
 		player = {
 			enable			= 1,
@@ -1799,6 +1798,9 @@ function XPerl_Options_ImportOldConfig(old)
 			portrait		= Convert(old.ShowPlayerPortrait),
 			portrait3D		= Convert(old.ShowPlayerPortrait3D),
 			hitIndicator	= Convert(old.CombatHitIndicator),
+			healthStyle = {
+				healthType = 1
+			},
 			level			= Convert(old.ShowPlayerLevel),
 			classIcon		= Convert(old.ShowPlayerClassIcon),
 			xpBar			= Convert(old.ShowPlayerXPBar),
@@ -1812,7 +1814,6 @@ function XPerl_Options_ImportOldConfig(old)
 			showRunes		= 1,
 			dockRunes		= 1,
 			lockRunes		= 1,
-
 
 			fullScreen = {
 				enable		= Convert(old.FullScreenStatus),
@@ -2251,13 +2252,13 @@ local function XPerl_Global_ConfigDefault(default)
 	default.highlightSelection	= 1
 	default.combatFlash	= 1
 	default.maximumScale	= 1.5
-	default.optionsColour	= {r = 0.7, g = 0.2, b = 0.2}	-- 1.8.3
-	default.showAFK		= 1				-- 2.2.4
+	default.optionsColour	= {r = 0.7, g = 0.2, b = 0.2}
+	default.showAFK		= 1	
 	default.xperlOldroleicons = 1
 
 	default.minimap = {
 		pos		= 186,
-		radius = IsRetail and 101 or 78,
+		radius =  78,
 		enable		= 1,
 	}
 
@@ -2270,31 +2271,29 @@ local function XPerl_Global_ConfigDefault(default)
 
 	default.buffHelper = {
 		enable		= 1,
-		sort		= "group",		-- 2.2.5
-		visible		= 1,			-- 2.2.9
+		sort		= "group",
+		visible		= 1,
 	}
 
 	default.buffs = {
-		cooldown	= 1,			-- 2.2.3
-		countdown	= 1,			-- 2.2.2
-		countdownStart	= 20,			-- 2.2.2
+		cooldown	= 1,
+		countdown	= 1,
+		countdownStart	= 20,
 	}
 
 	default.rangeFinder = XPerl_DefaultRangeFinder()
 
 	default.tooltip = {
-		enable		= 1,			-- 2.0.5
-		enableBuffs	= 1,			-- 2.3.4a
---		fading		= nil,			-- 1.8.3
---		xperlInfo	= nil,			-- 1.8.6
-		modifier	= "all",		-- 2.0.6
+		enable		= 1,
+		enableBuffs	= 1,
+		modifier	= "all",
 	}
 
 	default.colour = {
 		border		= {r = 0.5, g = 0.5, b = 0.5, a = 1},
 		frame		= {r = 0, g = 0, b = 0, a = 1},
 		class		= 1,
-		guildList	= 1,		-- 1.8.9
+		guildList	= 1,
 		classic		= 1,
 		bar		= XPerl_DefaultBarColours(),
 		reaction	= XPerl_DefaultReactionColours(),
@@ -2304,10 +2303,8 @@ local function XPerl_Global_ConfigDefault(default)
 	default.bar = {
 		texture		= {"Perl v2", "Interface\\Addons\\BlackPerl\\Images\\XPerl_StatusBar"},
 		background	= 1,
---		fading		= nil,		-- 1.8.9
-		fadeTime	= 0.5,		-- 1.9.1
+		fadeTime	= 0.5,
 		fat		= 1,
---		inverse		= nil,		-- 1.8.6
 	}
 
 	default.highlight = {
@@ -2315,8 +2312,6 @@ local function XPerl_Global_ConfigDefault(default)
 		HOT			= 1,
 		SHIELD			= 1,
 		AGGRO			= 1,
---		MISSING			= nil,
---		all			= nil,
 	}
 
 end
@@ -2338,18 +2333,19 @@ local function XPerl_Target_ConfigDefault(default, section)
 		castBar = {
 			enable		= 1,
 		},
-		hitIndicator	= 1,			-- 2.1.7
+		hitIndicator	= 1,
+		healthStyle = {
+				healthType = 1
+			},
 		threat			= 1,
 		threatMode		= "portraitFrame",
 		classIcon		= 1,
---		classText		= nil,			-- 2.0.6
 		mobType			= 1,
 		level			= 1,
 		healprediction	= 1,
 		hotPrediction	= 1,
 		absorbs			= 1,
 		elite			= 1,
---		eliteGfx		= nil,
 		mana			= 1,
 		percent			= 1,
 		values			= 1,
@@ -2359,15 +2355,14 @@ local function XPerl_Target_ConfigDefault(default, section)
 			pos		= "top",
 		},
 		comboindicator = {
-			enable		= 1,			-- 5.0.4
+			enable		= 1,
 		},
-		pvpIcon			= 1,			-- 1.8.3
+		pvpIcon			= 1,
 		scale			= 0.8,
 		raidIconAlternate	= 1,
 		buffs = {
 			enable		= 1,
 			wrap		= 1,
---			above		= nil,
 			size		= 22,
 			rows		= 3,
 			castable	= 0,
@@ -2376,7 +2371,7 @@ local function XPerl_Target_ConfigDefault(default, section)
 			enable		= 1,
 			size		= 29,
 			curable		= 0,
-			big			= 1,			-- 2.3.6
+			big			= 1,
 		},
 --		reactionHighlight	= nil,		-- 1.8.6
 		healerMode = {
@@ -2407,7 +2402,10 @@ local function XPerl_Party_ConfigDefault(default)
 		enable			= 1,			-- 4.0.0
 		portrait		= 1,
 		portrait3D		= 1,
-		hitIndicator	= 1,			-- 2.1.7
+		hitIndicator	= 1,
+		healthStyle = {
+				healthType = 1
+			},
 		threat			= 1,
 		threatMode		= "portraitFrame",
 		target = {
@@ -2458,6 +2456,9 @@ local function XPerl_PartyPet_ConfigDefault(default)
 		enable			= 1,
 		scale			= 0.7,
 		name			= 1,
+		healthStyle = {
+				healthType = 1
+			},
 		buffs = {
 			enable		= 1,
 			castable	= 0,
@@ -2481,12 +2482,13 @@ local function XPerl_Player_ConfigDefault(default)
 	default.player = {
 		castBar = {
 			enable		= 1,
---			original	= nil,
---			castTime	= nil,
 		},
 		portrait		= 1,
 		portrait3D		= 1,
 		hitIndicator	= 1,
+		healthStyle = {
+				healthType = 1
+			},
 		threat			= 1,
 		threatMode		= "portraitFrame",
 		level			= 1,
@@ -2494,14 +2496,11 @@ local function XPerl_Player_ConfigDefault(default)
 		absorbs			= 1,
 		hotPrediction	= 1,
 		classIcon		= 1,
---		xpBar			= nil,
---		repBar			= nil,
 		pvpIcon			= 1,
 		values			= 1,
 		percent			= 1,
 		scale			= 0.9,
 		partyNumber		= 1,
---		withName		= nil,
 		showRunes		= 1,
 		dockRunes		= 1,
 		lockRunes		= 1,
@@ -2513,16 +2512,14 @@ local function XPerl_Player_ConfigDefault(default)
 		},
 
 		healerMode = {
---			enable		= nil,
 			type		= 1,
 		},
 
 		buffs = {
 			enable		= 1,
---			above		= nil,
 			size		= 25,
-			wrap		= 1,			-- 2.3.5
-			rows		= 2,			-- 2.3.5
+			wrap		= 1,
+			rows		= 2,
 			hideBlizzard	= 1,
 			count		= 40,
 			cooldown	= 1,
@@ -2547,6 +2544,9 @@ local function XPerl_Pet_ConfigDefault(default)
 		portrait = 1,
 		portrait3D = 1,
 		hitIndicator= 1,
+		healthStyle = {
+				healthType = 1
+			},
 		happiness = {
 			enable = 1,
 			onlyWhenSad	= 1,
@@ -2606,7 +2606,9 @@ local function XPerl_TargetTarget_ConfigDefault(default, section)
 		pvpIcon			= 1,
 		percent			= 1,
 		values			= 1,
---		level			= nil,
+		healthStyle = {
+				healthType = 1
+			},
 		healprediction	= 1,
 		absorbs			= 1,
 		hotPrediction	= 1,
@@ -2628,8 +2630,11 @@ local function XPerl_Raid_ConfigDefault(default)
 		disableDefault	= nil,
 --		sortByClass		= nil,
 		sortByRole 		= nil,
---		sortAlpha		= nil,
-		group = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+		healthStyle = {
+				healthType = 1
+		},
+		-- group = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+		group = {1, 1, 1, 1, 1, 1, 1, 1},
 		class = {
 			{enable = 1, name = "WARRIOR"},
 			{enable = 1, name = "ROGUE"},

@@ -3,7 +3,6 @@
 ]]
 
 local IsRetail = WOW_PROJECT_ID == WOW_PROJECT_MAINLINE
-local IsPandaClassic = WOW_PROJECT_ID == WOW_PROJECT_MISTS_CLASSIC
 
 -- Tabs
 XPERL_CONF_TITLE1						= "Global"
@@ -260,6 +259,11 @@ XPERL_CONF_PLAYER_EXTENDPORTRAIT		= "Extend Portrait"
 XPERL_CONF_PLAYER_EXTENDPORTRAIT_DESC	= "Allow portrait to extend to bottom of stats frame when extra bars are shown."
 XPERL_CONF_HIT_INDICATOR				= "Hit Indicators"
 XPERL_CONF_HIT_INDICATOR_DESC			= "Enable display of combat hit indicators over player portrait."
+XPERL_CONF_HEALTH_STYLE					= "Health Style"
+XPERL_CONFIG_HEALTH_OPTION_CURRENTHEALTH   = "Current Health Example: 104240"
+XPERL_CONFIG_HEALTH_OPTION_CURRENTANDMAXHEALTH    = "Current Health /Max Health Example: 104240/104240"
+XPERL_CONFIG_HEALTH_OPTION_ABBREVTEXT_CURRENTHEALTH   = "Abbreviated Text Current Health - Example: 104k"
+XPERL_CONFIG_HEALTH_OPTION_ABBREVTEXT_CURRENTANDMAXHEALTH   = "Abbreviated Text Current Health /Max Health Example: 104k/104k"
 XPERL_CONF_PLAYER_SHOW_RUNES			= "Show special bar"
 XPERL_CONF_PLAYER_SHOW_RUNES_DESC		= "Show the special Combo/Runes/Shards/ArcanePower/ChiPower/HolyPower bar display."
 XPERL_CONF_PLAYER_DOCKRUNES				= "Docked with Player"

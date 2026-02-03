@@ -654,9 +654,6 @@ local function XPerl_Raid_UpdateHealth(self)
 			if IsRetail then 
 				local percentHp = UnitHealthPercent(partyid, true, CurveConstants.ScaleTo100)
 
-				if (rconf.healerMode.enable) then
-					--self.statsFrame.healthBar.text:SetText(-(healthmax - health))
-				else
 					if rconf.values then
 						self.statsFrame.healthBar.text:SetFormattedText("%d/%d", health, healthmax)
 					elseif rconf.precisionPercent then
@@ -664,7 +661,6 @@ local function XPerl_Raid_UpdateHealth(self)
 					else
 						self.statsFrame.healthBar.text:SetFormattedText(perc1F or "%.1f%%",percentHp)
 					end
-				end
 			else 
 				-- Begin 4.3 division by 0 work around to ensure we don't divide if max is 0
 				local percentHp
@@ -676,11 +672,7 @@ local function XPerl_Raid_UpdateHealth(self)
 				else
 					percentHp = health / healthmax -- Everything is dandy, so just do it right way.
 				end
-
-				--end division by 0 check
-				if (rconf.healerMode.enable) then
-					self.statsFrame.healthBar.text:SetText(-(healthmax - health))
-				else
+ 
 					if rconf.values then
 						self.statsFrame.healthBar.text:SetFormattedText("%d/%d", health, healthmax)
 					elseif rconf.precisionPercent then
@@ -692,8 +684,7 @@ local function XPerl_Raid_UpdateHealth(self)
 						else
 							self.statsFrame.healthBar.text:SetFormattedText(percD or "%d%%", percentHp == 1 and 100 or percentHp * 100 + 0.5)
 						end
-					end
-				end
+					end 
 			end
 
 			-- XPerl_SetSmoothBarColor(self.statsFrame.healthBar, percentHp)

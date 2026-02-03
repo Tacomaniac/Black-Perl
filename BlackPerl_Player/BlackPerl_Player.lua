@@ -592,14 +592,6 @@ local function XPerl_Player_UpdatePVP(self)
 	end
 
 	XPerl_Player_UpdatePVPTimer(self)
-
-	--[[local pvp = pconf.pvpIcon and ((UnitIsPVPFreeForAll("player") and "FFA") or (UnitIsPVP("player") and (UnitFactionGroup("player") ~= "Neutral") and UnitFactionGroup("player")))
-	if (pvp) then
-		nf.pvp.icon:SetTexture("Interface\\TargetingFrame\\UI-PVP-"..pvp)
-		nf.pvp:Show()
-	else
-		nf.pvp:Hide()
-	end]]
 end
 
 -- CreateBar(self, name)
@@ -747,8 +739,10 @@ local function XPerl_Player_UpdateHealth(self)
 
 	self.afk = UnitIsAFK(partyid) and conf.showAFK == 1
 
-	XPerl_SetHealthBar(self, playerhealth, playerhealthmax)
-	
+	--get style for the health text
+	local healthConfigStyle = pconf.healthStyle.healthType
+
+	SetUnitHealth(self,healthConfigStyle)
 	XPerl_Player_UpdateAbsorbPrediction(self)
 	XPerl_Player_UpdateHealPrediction(self)
 	XPerl_Player_UpdateResurrectionStatus(self)

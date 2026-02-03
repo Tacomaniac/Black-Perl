@@ -199,9 +199,6 @@ local function onAttrChanged(self, name, value)
 				if (conf) then
 					XPerl_Party_UpdateDisplay(self, true)
 				end
-				--[[if (XPerl_ArcaneBar_RegisterFrame) then
-					XPerl_ArcaneBar_RegisterFrame(self.nameFrame, value)
-				end]]
 			end
 		else
 			SetFrameArray(self)
@@ -376,7 +373,9 @@ local function XPerl_Party_UpdateHealth(self)
 	local Partyhealth, Partyhealthmax = UnitIsGhost(partyid) and 1 or (UnitIsDead(partyid) and 0 or UnitHealth(partyid)), UnitHealthMax(partyid)
 	local reason
 
-	XPerl_SetHealthBar(self, Partyhealth, Partyhealthmax)
+	
+	SetUnitHealth(self)
+	--XPerl_SetHealthBar(self, Partyhealth, Partyhealthmax)
 
 	XPerl_Party_UpdateAbsorbPrediction(self)
 	XPerl_Party_UpdateHealPrediction(self)

@@ -879,12 +879,95 @@ function XPerl_ColourHealthBar(self, healthPct, partyid)
 	XPerl_SetSmoothBarColor(bar, healthPct)
 end
 
--- XPerl_SetValuedText
-function XPerl_SetValuedText(self, unitHealth, unitHealthMax, suffix)
-	local locale = GetLocale()
 
-	-- need to add abbreviated numbers here
-	self:SetFormattedText("%d/%d%s", unitHealth, unitHealthMax, suffix or "")
+function SetUnitHealth(self, frameConfigStyle)
+	local bar = self.statsFrame.healthBar
+
+	--set to normal default if not populated
+	if frameConfigStyle == nil then 
+		frameConfigStyle = 1
+	end 
+
+	local percent
+	--Get health bar percent for unit
+	percent = UnitHealthPercent(self.partyid, true, CurveConstants.ScaleTo100)
+	
+	--set the color of the healthBar
+	XPerl_ColourHealthBar(self, percent)
+	
+	--Set percent bar for health
+	if (bar.percent) then
+		bar.percent:SetFormattedText(percD, percent)
+	end
+
+	if (bar.text) then 
+		local hbt = bar.text
+
+		local success = pcall(function()
+					-- Show current / max health
+					local curr = UnitHealth(self.partyid, true)
+					local max = UnitHealthMax(self.partyid, true)
+
+					if curr and max then
+						if frameConfigStyle == 1 then -- "Current Health Example: 104240"
+							hbt:SetFormattedText("%s", curr)
+						elseif frameConfigStyle == 2 then --"Current Health /Max Health Example: 104240/104240"
+							hbt:SetFormattedText("%s / %s", curr, max)
+						elseif frameConfigStyle == 3 then --"Abbreviated Text Current Health - Example: 104k"
+							hbt:SetFormattedText("%s", AbbreviateLargeNumbers(curr))
+						elseif frameConfigStyle == 4 then --"Abbreviated Text Current Health /Max Health Example: 104k/104k"
+							hbt:SetFormattedText("%s / %s", AbbreviateLargeNumbers(curr), AbbreviateLargeNumbers(max))
+						end 
+					end
+				end)
+		
+		if not success then
+			hbt:SetText("Bad")
+		end
+	end
+end
+
+
+-- function SetUnitPower(self)
+-- 	local bar = self.statsFrame.manaBar
+
+-- 	local percent
+-- 	--Get health bar percent for unit
+-- 	percent = UnitPowerPercent(self.partyid, true, CurveConstants.ScaleTo100)
+	
+-- 	--set the color of the healthBar
+-- 	XPerl_ColourHealthBar(self, percent)
+	
+-- 	--Set percent bar for health
+-- 	if (bar.percent) then
+-- 		bar.percent:SetFormattedText(percD, percent)
+-- 	end
+
+-- 	largeNumTag = 'K'
+
+-- 	if (bar.text) then 
+-- 		local hbt = bar.text
+-- 		local success = pcall(function()
+-- 					-- Show current / max health
+-- 					local curr = UnitHealth(self.partyid, true)
+-- 					local max = UnitHealthMax(self.partyid, true)
+
+-- 					if curr and max then
+-- 						-- hbt:SetFormattedText("%.2f/%.2f",AbbreviateNumbers(curr), AbbreviateNumbers(max))
+-- 						-- hbt:SetFormattedText("%s / %s", AbbreviateNumbers(curr), AbbreviateNumbers(max))
+-- 						hbt:SetFormattedText("%s / %s", AbbreviateLargeNumbers(curr), AbbreviateLargeNumbers(max))
+-- 					end
+-- 				end)
+		
+-- 		if not success then
+-- 			hbt:SetText("Bad")
+-- 		end
+-- 	end
+-- end
+
+-- XPerl_SetValuedText
+function XPerl_SetValuedText(self, unitValue, unitValueMax, suffix)
+	self:SetFormattedText("%d/%d%s", unitValue, unitValueMax, suffix or "")
 end
 
 local SetValuedText = XPerl_SetValuedText 
@@ -903,30 +986,13 @@ function XPerl_SetHealthBar(self, hp, Max)
 	
 	--Set percent bar for health
 	if (bar.percent) then
-		if (self.conf.healerMode and self.conf.healerMode.enable and self.conf.healerMode.type == 2) then
-			local locale = GetLocale()
-			if locale == "zhCN" or locale == "zhTW" then
-				bar.percent:SetFormattedText(percD, percent)
-			else
-				bar.percent:SetFormattedText(percD, percent)
-			end
-		else
-			bar.percent:SetFormattedText(percD, percent)
-		end
+		bar.percent:SetFormattedText(percD, percent)
 	end
 
 	--Set health bar text
 	if (bar.text) then
 		local hbt = bar.text
-		if (self.conf.healerMode.enable and self.conf.healerMode.type ~= 2) then
-			if (self.conf.healerMode.type == 1) then
-				SetValuedText(hbt, health, Max)
-			else
-				hbt:SetFormattedText("%d", health)
-			end
-		else
-			SetValuedText(hbt, hp, Max)
-		end
+		SetValuedText(hbt, hp, Max)
 	end
 end
 
@@ -3675,50 +3741,6 @@ function XPerl_SetExpectedAbsorbs(self)
 		bar:Hide()
 	end
 end
-
--- -- XPerl_SetExpectedHots
--- function XPerl_SetExpectedHots(self) --no hots bar in on any player or party frame def (there is one in the raid frame def but not sure how its used)
--- 	if WOW_PROJECT_ID ~= WOW_PROJECT_MISTS_CLASSIC then
--- 		return
--- 	end
--- 	local bar
--- 	if self.statsFrame and self.statsFrame.expectedHots then
--- 		bar = self.statsFrame.expectedHots
--- 	else
--- 		bar = self.expectedHots
--- 	end
--- 	if (bar) then
--- 		local unit = self.partyid
-
--- 		if not unit then
--- 			unit = self:GetParent().targetid
--- 		end
-
--- 		local amount
--- 		if IsVanillaClassic then
--- 			local guid = UnitGUID(unit)
--- 			amount = (HealComm:GetHealAmount(guid, HealComm.OVERTIME_HEALS, GetTime() + 3) or 0) * HealComm:GetHealModifier(guid)
--- 		end
-
--- 		if (amount and amount > 0 and not UnitIsDeadOrGhost(unit)) then
--- 			local healthMax = UnitHealthMax(unit)
--- 			local health = UnitIsGhost(unit) and 1 or (UnitIsDead(unit) and 0 or UnitHealth(unit))
-
--- 			if UnitIsAFK(unit) then
--- 				bar:SetStatusBarColor(0.2, 0.2, 0.2, 0.7)
--- 			else
--- 				bar:SetStatusBarColor(conf.colour.bar.hot.r, conf.colour.bar.hot.g, conf.colour.bar.hot.b, conf.colour.bar.hot.a)
--- 			end
-
--- 			bar:Show()
--- 			bar:SetMinMaxValues(0, healthMax)
--- 			bar:SetValue(min(healthMax, health + amount))
-
--- 			return
--- 		end
--- 		bar:Hide()
--- 	end
--- end
 
 -- XPerl_SetExpectedHealth
 function XPerl_SetExpectedHealth(self)
