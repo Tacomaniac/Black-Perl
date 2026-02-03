@@ -1155,28 +1155,6 @@ function XPerl_Raid_OnUpdate(self, elapsed)
 					XPerl_Raid_CombatFlash(frame, elapsed, false)
 				end
 
-				--[[if (someUpdate) then
-					local unit = frame.partyid -- frame:GetAttribute("unit")
-					if (unit) then
-						local name = UnitName(unit)
-						if (name) then
-							local myRoster = BlackPerl_Roster[name]
-							if (myRoster) then
-								if (frame.statsFrame.greyMana) then
-									if (myRoster.offline and UnitIsConnected(unit)) then
-										XPerl_Raid_UpdateHealth(frame)
-									end
-								else
-									if (not myRoster.offline and not UnitIsConnected(unit)) then
-										XPerl_Raid_UpdateHealth(frame)
-									end
-								end
-							end
-						end
-
-						XPerl_UpdateSpellRange(frame, unit, true)
-					end
-				end]]--
 				if conf.rangeFinder.enabled then
 					self.time = elapsed + (self.time or 0)
 					if self.time > 0.2 then
