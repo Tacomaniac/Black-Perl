@@ -337,57 +337,7 @@ function XPerl_UpdateSpellRange()
 	return
 end
 
---Midnight functions
-
-local IsSpellInSpellBook = C_SpellBook.IsSpellInSpellBook
-local playerClass = select(2, UnitClass("player"))
-local activeSpells = {
-    enemy = {},
-    friendly = {},
-    resurrect = {},
-    pet = {},
-}
-
-local function NotSecretValue(value)
-    return issecretvalue(value) == false
-end
-
-local function UnitSpellRange(unit, spells)
-    local isNotInRange;
-    for spellID in pairs(spells) do
-        local inRange = C_Spell.IsSpellInRange(spellID, unit)
-        if inRange then
-            return true
-        elseif inRange ~= nil then
-            isNotInRange = true
-        end
-    end
-    if isNotInRange then return false end
-end
-
-local function UnitInSpellsRange(unit, category)
-    local spells = activeSpells[category]
-    if not next(spells) then
-        if not InCombatLockdown() then return CheckInteractDistance(unit, 4) end
-        return nil
-    end
-
-    local inRange = UnitSpellRange(unit, spells)
-    if (not inRange or inRange == 1) and not InCombatLockdown() then
-        local interactDistance = CheckInteractDistance(unit, 4)
-        if NotSecretValue(interactDistance) then
-            return interactDistance
-        end
-        return nil
-    else
-        if NotSecretValue(inRange) then
-            return (inRange == nil and 1) or inRange
-        end
-        return nil
-    end
-end
-
-local function FriendlyIsInRange(unit)
+local function UnitIsInRange(unit)
     local unit = unit
 
     if UnitIsPlayer(unit) then
@@ -395,23 +345,37 @@ local function FriendlyIsInRange(unit)
     end
 
 	local inRange, checkedRange = UnitInRange(unit)
-	if NotSecretValue(checkedRange) and checkedRange and not inRange then
+
+	if checkedRange and not inRange then 
 		return false
+	elseif checkedRange and not inRange then 
+		return false
+	else 
+		return true
 	end
-
-    return UnitInSpellsRange(unit, "friendly")
 end
-
--- end of midnight specific addons for range checking
 
 --DoRangeCheck
 local function DoRangeCheck(unit, opt)
-	local range
-	if UnitInParty(unit) and UnitInRaid(unit) and not FriendlyIsInRange(unit) then
+    local unit = opt.unit
+    
+    -- Calculate range status (may be a secret value - DO NOT compare or test!)
+    local inRange
+    if not UnitExists(unit) then
+        inRange = true
+    elseif UnitIsUnit(unit, "player") then
+        inRange = true  -- Player is always in range of themselves
+    elseif UnitInParty(unit) or UnitInRaid(unit) then
+        inRange = UnitIsInRange(unit)
+        -- UnitInRange returns nil for invalid units
+        if inRange == nil then inRange = true end
+    else
+        inRange = true
+    end
+
+	if not inRange then 
 		return opt.FadeAmount
-	else
-		return
-	end	
+	end
 end
 
 -- XPerl_UpdateSpellRange(self)
@@ -430,7 +394,7 @@ function XPerl_UpdateSpellRange2(self, overrideUnit, isRaidFrame)
 		local mainA, nameA, statsA -- Receives main, name and stats alpha levels
 
 		if (rf.enabled and (isRaidFrame or not conf.rangeFinder.raidOnly)) then
-			if (not UnitIsVisible(unit))--[[ or UnitInVehicle(unit)]] then
+			if (not UnitIsVisible(unit)) then
 				if (rf.Main.enabled) then
 					mainA = conf.transparency.frame * rf.Main.FadeAmount
 				else
@@ -441,11 +405,10 @@ function XPerl_UpdateSpellRange2(self, overrideUnit, isRaidFrame)
 						statsA = rf.StatsFrame.FadeAmount
 					end
 				end
-			--[[elseif (XPerl_Highlight:HasEffect(UnitName(unit), "AGGRO")) then
-				mainA = conf.transparency.frame]]
 			else
 				if (rf.Main.enabled) then
 					mainA = DoRangeCheck(unit, rf.Main)
+					
 					if (mainA) then
 						mainA = mainA * conf.transparency.frame
 					end
@@ -520,11 +483,6 @@ function XPerl_StartupSpellRange()
 		XPerl_DefaultRangeSpells.ANY = {}
 	end
 
-	--[[local bandage = FindABandage()
-	if bandage then
-		XPerl_DefaultRangeSpells.ANY.item = bandage
-	end]]
-
 	local rf = conf.rangeFinder
 
 	local function Setup1(self)
@@ -553,12 +511,7 @@ function XPerl_StartupSpellRange()
 	Setup1(rf.NameFrame)
 	Setup1(rf.StatsFrame)
 
-	--if (rangeCheckSpell) then
-		-- Put the real work function in place
 	XPerl_UpdateSpellRange = XPerl_UpdateSpellRange2
-	--else
-	--	XPerl_UpdateSpellRange = function() end
-	--end
 end
 
 XPerl_RegisterOptionChanger(XPerl_StartupSpellRange)
@@ -912,11 +865,11 @@ function SetUnitHealth(self, frameConfigStyle)
 						if frameConfigStyle == 1 then -- "Current Health Example: 104240"
 							hbt:SetFormattedText("%s", curr)
 						elseif frameConfigStyle == 2 then --"Current Health /Max Health Example: 104240/104240"
-							hbt:SetFormattedText("%s / %s", curr, max)
+							hbt:SetFormattedText("%s/%s", curr, max)
 						elseif frameConfigStyle == 3 then --"Abbreviated Text Current Health - Example: 104k"
 							hbt:SetFormattedText("%s", AbbreviateLargeNumbers(curr))
 						elseif frameConfigStyle == 4 then --"Abbreviated Text Current Health /Max Health Example: 104k/104k"
-							hbt:SetFormattedText("%s / %s", AbbreviateLargeNumbers(curr), AbbreviateLargeNumbers(max))
+							hbt:SetFormattedText("%s/%s", AbbreviateLargeNumbers(curr), AbbreviateLargeNumbers(max))
 						end 
 					end
 				end)
@@ -929,7 +882,7 @@ end
 
 -- SetUnitPower
 function SetUnitPower(self, frameConfigStyle)
-	local bar = self.statsFrame.manabar
+	local bar = self.statsFrame.manaBar
 
 	local powerType = XPerl_GetDisplayedPowerType(self.partyid)
 
@@ -952,8 +905,8 @@ function SetUnitPower(self, frameConfigStyle)
 
 		local success = pcall(function()
 					-- Show current / max health
-					local curr = UnitPower(self.partyid, true)
-					local max = UnitPowerMax(self.partyid, true)
+					local curr = UnitPower(self.partyid, powerType, true)
+					local max = UnitPowerMax(self.partyid, powerType, true)
 
 					if curr and max then
 						if frameConfigStyle == 1 then -- "Current Health Example: 104240"

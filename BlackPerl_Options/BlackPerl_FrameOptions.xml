@@ -5496,11 +5496,11 @@
 								XPerl_OptionsSetMyText(self, "XPERL_CONFIG_HEALTH_OPTION_CURRENTHEALTH")
 							</OnLoad>
 							<!-- <OnShow>
-								self:SetChecked(XPerlDB.healthStyle.healthType)
+								self:SetChecked(XPerlDB.player.textStyle.healthType)
 							</OnShow> -->
 							<OnClick>
 								self.configBase = "XPerlDB.player"
-								self.configIndex = "healthStyle.healthType"
+								self.configIndex = "textStyle.healthType"
 								self.configClick = 1
 								XPerl_Options_CheckRadio(self, {"CurrentHealth","CurrentAndMaxHealth","AbbreviatedCurrentHealth","AbbreviatedCurrentAndMaxHealth"})
 							</OnClick>
@@ -5520,11 +5520,11 @@
 								XPerl_OptionsSetMyText(self, "XPERL_CONFIG_HEALTH_OPTION_CURRENTANDMAXHEALTH")
 							</OnLoad>
 							<!-- <OnShow>
-								self:SetChecked(XPerlDB.healthStyle.healthType)
+								self:SetChecked(XPerlDB.player.textStyle.healthType)
 							</OnShow> -->
 							<OnClick>
 								self.configBase = "XPerlDB.player"
-								self.configIndex = "healthStyle.healthType"
+								self.configIndex = "textStyle.healthType"
 								self.configClick = 2
 								XPerl_Options_CheckRadio(self, {"CurrentHealth","CurrentAndMaxHealth","AbbreviatedCurrentHealth","AbbreviatedCurrentAndMaxHealth"})
 							</OnClick>
@@ -5544,11 +5544,11 @@
 								XPerl_OptionsSetMyText(self, "XPERL_CONFIG_HEALTH_OPTION_ABBREVTEXT_CURRENTHEALTH")
 							</OnLoad>
 							<!-- <OnShow>
-								self:SetChecked(XPerlDB.healthStyle.healthType)
+								self:SetChecked(XPerlDB.player.textStyle.healthType)
 							</OnShow> -->
 							<OnClick>
 								self.configBase = "XPerlDB.player"
-								self.configIndex = "healthStyle.healthType"
+								self.configIndex = "textStyle.healthType"
 								self.configClick = 3
 								XPerl_Options_CheckRadio(self, {"CurrentHealth","CurrentAndMaxHealth","AbbreviatedCurrentHealth","AbbreviatedCurrentAndMaxHealth"})
 							</OnClick>
@@ -5568,11 +5568,11 @@
 								XPerl_OptionsSetMyText(self, "XPERL_CONFIG_HEALTH_OPTION_ABBREVTEXT_CURRENTANDMAXHEALTH")
 							</OnLoad>
 							<!-- <OnShow>
-								self:SetChecked(XPerlDB.healthStyle.healthType)
+								self:SetChecked(XPerlDB.player.textStyle.healthType)
 							</OnShow> -->
 							<OnClick>
 								self.configBase = "XPerlDB.player"
-								self.configIndex = "healthStyle.healthType"
+								self.configIndex = "textStyle.healthType"
 								self.configClick = 4
 								XPerl_Options_CheckRadio(self, {"CurrentHealth","CurrentAndMaxHealth","AbbreviatedCurrentHealth","AbbreviatedCurrentAndMaxHealth"})
 							</OnClick>

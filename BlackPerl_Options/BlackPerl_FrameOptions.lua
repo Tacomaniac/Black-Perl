@@ -1798,8 +1798,9 @@ function XPerl_Options_ImportOldConfig(old)
 			portrait		= Convert(old.ShowPlayerPortrait),
 			portrait3D		= Convert(old.ShowPlayerPortrait3D),
 			hitIndicator	= Convert(old.CombatHitIndicator),
-			healthStyle = {
-				healthType = 1
+			textStyle = {
+				healthType = 1,
+				manaType
 			},
 			level			= Convert(old.ShowPlayerLevel),
 			classIcon		= Convert(old.ShowPlayerClassIcon),
@@ -2334,8 +2335,9 @@ local function XPerl_Target_ConfigDefault(default, section)
 			enable		= 1,
 		},
 		hitIndicator	= 1,
-		healthStyle = {
-				healthType = 1
+		textStyle = {
+				healthType = 1,
+				manaType
 			},
 		threat			= 1,
 		threatMode		= "portraitFrame",
@@ -2403,8 +2405,9 @@ local function XPerl_Party_ConfigDefault(default)
 		portrait		= 1,
 		portrait3D		= 1,
 		hitIndicator	= 1,
-		healthStyle = {
-				healthType = 1
+		textStyle = {
+				healthType = 1,
+				manaType
 			},
 		threat			= 1,
 		threatMode		= "portraitFrame",
@@ -2456,8 +2459,9 @@ local function XPerl_PartyPet_ConfigDefault(default)
 		enable			= 1,
 		scale			= 0.7,
 		name			= 1,
-		healthStyle = {
-				healthType = 1
+		textStyle = {
+				healthType = 1,
+				manaType
 			},
 		buffs = {
 			enable		= 1,
@@ -2486,8 +2490,9 @@ local function XPerl_Player_ConfigDefault(default)
 		portrait		= 1,
 		portrait3D		= 1,
 		hitIndicator	= 1,
-		healthStyle = {
-				healthType = 1
+		textStyle = {
+				healthType = 1,
+				manaType
 			},
 		threat			= 1,
 		threatMode		= "portraitFrame",
@@ -2544,8 +2549,9 @@ local function XPerl_Pet_ConfigDefault(default)
 		portrait = 1,
 		portrait3D = 1,
 		hitIndicator= 1,
-		healthStyle = {
-				healthType = 1
+		textStyle = {
+				healthType = 1,
+				manaType
 			},
 		happiness = {
 			enable = 1,
@@ -2606,8 +2612,9 @@ local function XPerl_TargetTarget_ConfigDefault(default, section)
 		pvpIcon			= 1,
 		percent			= 1,
 		values			= 1,
-		healthStyle = {
-				healthType = 1
+		textStyle = {
+				healthType = 1,
+				manaType
 			},
 		healprediction	= 1,
 		absorbs			= 1,
@@ -2630,9 +2637,10 @@ local function XPerl_Raid_ConfigDefault(default)
 		disableDefault	= nil,
 --		sortByClass		= nil,
 		sortByRole 		= nil,
-		healthStyle = {
-				healthType = 1
-		},
+		textStyle = {
+				healthType = 1,
+				manaType
+			},
 		-- group = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
 		group = {1, 1, 1, 1, 1, 1, 1, 1},
 		class = {
@@ -3676,6 +3684,11 @@ if (XPerl_UpgradeSettings) then
 			if (oldVersion < "7.0.7") then
 				old.raid.role = nil
 				old.raid.disableDefault = nil
+			end
+
+			if (oldVersion < "8.0.0") then
+				old.textStyle.healthType = 1
+				old.textStyle.manaType = 1
 			end
 		end
 	end

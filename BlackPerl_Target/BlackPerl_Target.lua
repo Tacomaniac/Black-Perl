@@ -775,7 +775,10 @@ function XPerl_Target_SetMana(self)
 		return
 	end
 
-	SetUnitPower(self)
+	--get style for the health text -- this would be same for mana
+	local frameConfigStyle = 2 --pconf.healthStyle.healthType
+	SetUnitPower(self, frameConfigStyle)
+
 	-- local powerType = XPerl_GetDisplayedPowerType(partyid)
 	-- local unitPower = UnitPower(partyid, powerType)
 	-- local unitPowerMax = UnitPowerMax(partyid, powerType)
@@ -898,7 +901,10 @@ function XPerl_Target_UpdateHealth(self)
 	-- self.targethpmax = hpMax
 	self.afk = UnitIsAFK(partyid) and conf.showAFK == 1
 
-	SetUnitHealth(self)
+	--get style for the health text
+	local healthConfigStyle = 2 --pconf.healthStyle.healthType
+
+	SetUnitHealth(self,healthConfigStyle)
 	--set bar / text and percent of the health bar for the target
 	-- XPerl_SetHealthBar(self, hp, hpMax)
 	XPerl_Target_UpdateAbsorbPrediction(self)

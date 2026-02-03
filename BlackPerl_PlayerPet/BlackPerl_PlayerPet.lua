@@ -318,7 +318,10 @@ local function XPerl_Player_Pet_UpdateHealth(self)
 	local pethealth = UnitIsGhost(partyid) and 1 or (UnitIsDead(partyid) and 0 or UnitHealth(partyid))
 	local pethealthmax = UnitHealthMax(partyid)
 
-	SetUnitHealth(self)
+	--get style for the health text
+	local healthConfigStyle = 2 --pconf.healthStyle.healthType
+
+	SetUnitHealth(self,healthConfigStyle)
 	--XPerl_SetHealthBar(self, pethealth, pethealthmax)
 
 	XPerl_Player_Pet_UpdateAbsorbPrediction(self)

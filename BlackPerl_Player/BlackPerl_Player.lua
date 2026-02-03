@@ -661,7 +661,10 @@ end
 
 -- XPerl_Player_UpdateMana
 local function XPerl_Player_UpdateMana(self)
-	SetUnitPower(self)
+
+	--get style for the health text -- this would be same for mana
+	local frameConfigStyle = 2 --pconf.textStyle.healthType
+	SetUnitPower(self, frameConfigStyle)
 
 	-- local powerType = XPerl_GetDisplayedPowerType(self.partyid)
 	-- local unitPower = UnitPower(self.partyid, powerType)
@@ -742,8 +745,8 @@ local function XPerl_Player_UpdateHealth(self)
 	self.afk = UnitIsAFK(partyid) and conf.showAFK == 1
 
 	--get style for the health text
-	local healthConfigStyle = pconf.healthStyle.healthType
-
+	local healthConfigStyle = 2 --pconf.healthStyle.healthType
+	-- local healthConfigStyle = pconf.healthStyle.healthType
 	SetUnitHealth(self,healthConfigStyle)
 	XPerl_Player_UpdateAbsorbPrediction(self)
 	XPerl_Player_UpdateHealPrediction(self)

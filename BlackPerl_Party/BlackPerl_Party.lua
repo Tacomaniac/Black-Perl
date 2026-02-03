@@ -374,7 +374,10 @@ local function XPerl_Party_UpdateHealth(self)
 	local reason
 
 	
-	SetUnitHealth(self)
+	--get style for the health text
+	local healthConfigStyle = 2 --pconf.healthStyle.healthType
+
+	SetUnitHealth(self,healthConfigStyle)
 	--XPerl_SetHealthBar(self, Partyhealth, Partyhealthmax)
 
 	XPerl_Party_UpdateAbsorbPrediction(self)
@@ -834,18 +837,21 @@ local function XPerl_Party_UpdateMana(self)
 		XPerl_Party_UpdatePlayerFlags(self)
 	end
 
-	local powerType = XPerl_GetDisplayedPowerType(partyid)
-	local unitPower = UnitPower(partyid, powerType)
-	local unitPowerMax = UnitPowerMax(partyid, powerType)
+	-- local powerType = XPerl_GetDisplayedPowerType(partyid)
+	-- local unitPower = UnitPower(partyid, powerType)
+	-- local unitPowerMax = UnitPowerMax(partyid, powerType)
 
-	--Set party power percent
-	local powerPercent
-	powerPercent = UnitPowerPercent(partyid, powerType, true, CurveConstants.ScaleTo100)
-	self.statsFrame.manaBar.percent:SetFormattedText(percD,powerPercent)
-	--Set party power text
-	self.statsFrame.manaBar:SetMinMaxValues(0, unitPowerMax)
-	self.statsFrame.manaBar:SetValue(unitPower)
-	self.statsFrame.manaBar.text:SetFormattedText("%d/%d", unitPower, unitPowerMax)
+	-- --Set party power percent
+	-- local powerPercent
+	-- powerPercent = UnitPowerPercent(partyid, powerType, true, CurveConstants.ScaleTo100)
+	-- self.statsFrame.manaBar.percent:SetFormattedText(percD,powerPercent)
+	-- --Set party power text
+	-- self.statsFrame.manaBar:SetMinMaxValues(0, unitPowerMax)
+	-- self.statsFrame.manaBar:SetValue(unitPower)
+	-- self.statsFrame.manaBar.text:SetFormattedText("%d/%d", unitPower, unitPowerMax)
+	
+	local frameConfigStyle = 2 --pconf.healthStyle.healthTyp
+	SetUnitPower(self, frameConfigStyle)
 
 	if (not UnitIsConnected(partyid)) then
 		self.statsFrame.healthBar.text:SetText(XPERL_LOC_OFFLINE)
@@ -857,7 +863,6 @@ end
 
 -- XPerl_Party_UpdateRange
 local function XPerl_Party_Update_Range(self, overrideUnit)
-	local partyid = overrideUnit or self.partyid
 	if not partyid then
 		return
 	end
@@ -867,17 +872,42 @@ local function XPerl_Party_Update_Range(self, overrideUnit)
 		return
 	end
 
-	--Checking a different piece of code for this
-	DoRangeCheck(partyid, self)
+    local inRange = false
 
-	-- local inRange, checkedRange = UnitInRange(partyid)
-	-- if not issecretvalue(checkedRange) and checkedRange and not inRange then 
-	-- 	self.nameFrame.rangeIcon:Show()
-	-- 	self.nameFrame.rangeIcon:SetAlpha(1)
-	-- else
-	-- 	self.nameFrame.rangeIcon:Hide()
-	-- end
+    if not UnitExists(unit) then
+        inRange = true
+    elseif UnitIsUnit(unit, "player") then
+        inRange = true  -- Player is always in range of themselves
+    elseif UnitInParty(unit) then
+        inRange = UnitInRange(unit)
+        -- UnitInRange returns nil for invalid units
+        if inRange == nil then inRange = true end
+    else
+        inRange = true
+    end
+
+
+    -- -- Calculate alpha - use same setting as main frames
+    -- local outOfRangeAlpha = self.frame.FadeAmount
+    
+    -- -- Apply alpha using SetAlphaFromBoolean (handles secret values)
+    -- if frame.SetAlphaFromBoolean then
+    --     frame:SetAlphaFromBoolean(inRange, 1.0, outOfRangeAlpha)
+    -- end
+    -- if frame.healthBar and frame.healthBar.SetAlphaFromBoolean then
+    --     frame.healthBar:SetAlphaFromBoolean(inRange, 1.0, outOfRangeAlpha)
+    -- end
+
+
+	-- if not UnitIsConnected(partyid) or inRange then
+	if not UnitIsConnected(partyid) then
+		self.nameFrame.rangeIcon:Hide()
+	else
+		self.nameFrame.rangeIcon:Show()
+		self.nameFrame.rangeIcon:SetAlpha(1)
+	end
 end
+
 
 -- XPerl_Party_SingleGroup
 function XPerl_Party_SingleGroup()
@@ -1068,24 +1098,6 @@ function XPerl_Party_OnUpdate(self, elapsed)
 
 			self.time = 0
 		end
-
-		--[=[if (checkRaidNextUpdate) then
-			checkRaidNextUpdate = checkRaidNextUpdate - 1
-			if (checkRaidNextUpdate <= 0) then
-				checkRaidNextUpdate = nil
-				CheckRaid()
-
-				-- Due to a bug in the API (WoW 2.0.1), GetPartyLeaderIndex() can often claim
-				-- that party1 is the leader, even when they're not. So, we do a delayed check
-				-- after a party change
-				--[[for i, frame in pairs(PartyFrames) do
-					if (frame.partyid) then
-						XPerl_Party_UpdateLeader(frame)
-					end
-				end]] -- Do we really need this now?
-			end
-		end]=]
-	--end
 end
 
 -- XPerl_Party_Target_OnUpdate
@@ -1139,11 +1151,12 @@ function XPerl_Party_UpdateDisplay(self, less)
 	XPerl_Party_UpdateTarget(self)
 	XPerl_Unit_UpdateReadyState(self)
 
-	if pconf.range30yard then
-		XPerl_Party_Update_Range(self)
-	else
-		self.nameFrame.rangeIcon:Hide()
-	end
+	-- if pconf.range30yard then
+	-- 	XPerl_Party_Update_Range(self)
+	-- else
+	-- 	self.nameFrame.rangeIcon:Hide()
+	-- end
+
 	XPerl_UpdateSpellRange(self, partyid)
 end
 
@@ -1211,14 +1224,6 @@ function XPerl_Party_Events:PARTY_LOOT_METHOD_CHANGED()
 		end
 	end
 end
-
---[[function XPerl_Party_Events:PET_BATTLE_OPENING_START()
-	CheckRaid()
-end
-
-function XPerl_Party_Events:PET_BATTLE_CLOSE()
-	CheckRaid()
-end]]
 
 -- RAID_TARGET_UPDATE
 function XPerl_Party_Events:RAID_TARGET_UPDATE()

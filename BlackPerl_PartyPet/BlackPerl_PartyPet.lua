@@ -309,16 +309,19 @@ local function XPerl_Party_Pet_UpdateHealth(self)
 	local health = UnitIsGhost(partyid) and 1 or (UnitIsDead(partyid) and 0 or UnitHealth(partyid))
 	local healthmax = UnitHealthMax(partyid)
 
-	self.pethp = health
-	self.pethpmax = healthmax
+	-- self.pethp = health
+	-- self.pethpmax = healthmax
 
-	--Set party pets health percent
-	local healthPct
-	healthPct = UnitHealthPercent(partyid,true, ConstantCurve.ScaleTo100)
+	-- --Set party pets health percent
+	-- local healthPct
+	-- healthPct = UnitHealthPercent(partyid,true, ConstantCurve.ScaleTo100)
 
-	--Setp party pets health bar
-	self.statsFrame.healthBar:SetMinMaxValues(0, healthmax)
-	self.statsFrame.healthBar:SetValue(health)
+	-- --Setp party pets health bar
+	-- self.statsFrame.healthBar:SetMinMaxValues(0, healthmax)
+	-- self.statsFrame.healthBar:SetValue(health)
+	local frameConfigStyle = 2 --pconf.healthStyle.healthType
+	SetUnitHealth(self, frameConfigStyle)
+
 	--Set party pets health bar color
 	XPerl_ColourHealthBar(self, healthPct)
 
@@ -350,21 +353,23 @@ local function XPerl_Party_Pet_UpdateMana(self)
 		return
 	end
 
-	local unitPower = UnitPower(partyid)
-	local unitPowerMax = UnitPowerMax(partyid)
+	-- local unitPower = UnitPower(partyid)
+	-- local unitPowerMax = UnitPowerMax(partyid)
 
-	self.petmana = unitPower
-	self.petmanamax = unitPowerMax
+	-- self.petmana = unitPower
+	-- self.petmanamax = unitPowerMax
 
-	self.statsFrame.manaBar:SetMinMaxValues(0, unitPowerMax)
-	self.statsFrame.manaBar:SetValue(unitPower)
+	-- self.statsFrame.manaBar:SetMinMaxValues(0, unitPowerMax)
+	-- self.statsFrame.manaBar:SetValue(unitPower)
+	local frameConfigStyle = 2 --pconf.healthStyle.healthType
+	SetUnitPower(self, frameConfigStyle)
 
-	if (XPerl_GetDisplayedPowerType(partyid) >= 1) then
-		self.statsFrame.manaBar.text:SetText(unitPower)
-	else
-		local powerPercent = UnitPowerPercent(partyid, nil, true, ConstantCurve.ScaleTo100)
-		self.statsFrame.manaBar.percent:SetFormattedText("%.0f%%",powerPercent)
-	end
+	-- if (XPerl_GetDisplayedPowerType(partyid) >= 1) then
+	-- 	self.statsFrame.manaBar.text:SetText(unitPower)
+	-- else
+	-- 	local powerPercent = UnitPowerPercent(partyid, nil, true, ConstantCurve.ScaleTo100)
+	-- 	self.statsFrame.manaBar.percent:SetFormattedText("%.0f%%",powerPercent)
+	-- end
 end
 
 --------------------
