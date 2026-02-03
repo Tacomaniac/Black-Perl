@@ -661,22 +661,24 @@ end
 
 -- XPerl_Player_UpdateMana
 local function XPerl_Player_UpdateMana(self)
-	local powerType = XPerl_GetDisplayedPowerType(self.partyid)
-	local unitPower = UnitPower(self.partyid, powerType)
-	local unitPowerMax = UnitPowerMax(self.partyid, powerType)
+	SetUnitPower(self)
 
-	--sets text value of mana on bar
-	self.statsFrame.manaBar:SetMinMaxValues(0, unitPowerMax)
-	--initial set current power
-	self.statsFrame.manaBar:SetValue(unitPower)
-	-- self.statsFrame.manaBar.text:SetFormattedText("%d/%d", playermana, playermanamax)
-	XPerl_SetValuedText(self.statsFrame.manaBar.text, unitPower, unitPowerMax)
+	-- local powerType = XPerl_GetDisplayedPowerType(self.partyid)
+	-- local unitPower = UnitPower(self.partyid, powerType)
+	-- local unitPowerMax = UnitPowerMax(self.partyid, powerType)
 
-	local powerPercent
-	--get percent of power type
-	powerPercent = UnitPowerPercent("player", powerType, true, CurveConstants.ScaleTo100)
-	--Set percent of powertype on bar
-	self.statsFrame.manaBar.percent:SetFormattedText(percD, powerPercent)
+	-- --sets text value of mana on bar
+	-- self.statsFrame.manaBar:SetMinMaxValues(0, unitPowerMax)
+	-- --initial set current power
+	-- self.statsFrame.manaBar:SetValue(unitPower)
+	-- -- self.statsFrame.manaBar.text:SetFormattedText("%d/%d", playermana, playermanamax)
+	-- XPerl_SetValuedText(self.statsFrame.manaBar.text, unitPower, unitPowerMax)
+
+	-- local powerPercent
+	-- --get percent of power type
+	-- powerPercent = UnitPowerPercent("player", powerType, true, CurveConstants.ScaleTo100)
+	-- --Set percent of powertype on bar
+	-- self.statsFrame.manaBar.percent:SetFormattedText(percD, powerPercent)
 
 	--show manabar text
 	if (not self.statsFrame.greyMana) then

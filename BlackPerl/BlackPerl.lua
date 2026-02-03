@@ -927,13 +927,68 @@ function SetUnitHealth(self, frameConfigStyle)
 	end
 end
 
+-- SetUnitPower
+function SetUnitPower(self, frameConfigStyle)
+	local bar = self.statsFrame.manabar
 
--- function SetUnitPower(self)
--- 	local bar = self.statsFrame.manaBar
+	local powerType = XPerl_GetDisplayedPowerType(self.partyid)
+
+	--set to normal default if not populated
+	if frameConfigStyle == nil then 
+		frameConfigStyle = 1
+	end 
+
+	local percent
+	--Get health bar percent for unit
+	percent = UnitPowerPercent(self.partyid, powerType, true, CurveConstants.ScaleTo100)
+	
+	--Set percent bar for health
+	if (bar.percent) then
+		bar.percent:SetFormattedText(percD, percent)
+	end
+
+	if (bar.text) then 
+		local pbt = bar.text
+
+		local success = pcall(function()
+					-- Show current / max health
+					local curr = UnitPower(self.partyid, true)
+					local max = UnitPowerMax(self.partyid, true)
+
+					if curr and max then
+						if frameConfigStyle == 1 then -- "Current Health Example: 104240"
+							pbt:SetFormattedText("%s", curr)
+						elseif frameConfigStyle == 2 then --"Current Health /Max Health Example: 104240/104240"
+							pbt:SetFormattedText("%s / %s", curr, max)
+						elseif frameConfigStyle == 3 then --"Abbreviated Text Current Health - Example: 104k"
+							pbt:SetFormattedText("%s", AbbreviateLargeNumbers(curr))
+						elseif frameConfigStyle == 4 then --"Abbreviated Text Current Health /Max Health Example: 104k/104k"
+							pbt:SetFormattedText("%s / %s", AbbreviateLargeNumbers(curr), AbbreviateLargeNumbers(max))
+						end 
+					end
+				end)
+		
+		if not success then
+			pbt:SetText("Bad")
+		end
+	end
+end
+
+-- XPerl_SetValuedText
+function XPerl_SetValuedText(self, unitValue, unitValueMax, suffix)
+	self:SetFormattedText("%d/%d%s", unitValue, unitValueMax, suffix or "")
+end
+
+-- local SetValuedText = XPerl_SetValuedText 
+
+-- -- XPerl_SetHealthBar
+-- function XPerl_SetHealthBar(self, hp, Max)
+-- 	local bar = self.statsFrame.healthBar
+-- 	bar:SetMinMaxValues(0, Max) --0 is always min / hp max is always max so just set them
 
 -- 	local percent
 -- 	--Get health bar percent for unit
--- 	percent = UnitPowerPercent(self.partyid, true, CurveConstants.ScaleTo100)
+-- 	percent = UnitHealthPercent(self.partyid, true, CurveConstants.ScaleTo100)
 	
 -- 	--set the color of the healthBar
 -- 	XPerl_ColourHealthBar(self, percent)
@@ -943,58 +998,12 @@ end
 -- 		bar.percent:SetFormattedText(percD, percent)
 -- 	end
 
--- 	largeNumTag = 'K'
-
--- 	if (bar.text) then 
+-- 	--Set health bar text
+-- 	if (bar.text) then
 -- 		local hbt = bar.text
--- 		local success = pcall(function()
--- 					-- Show current / max health
--- 					local curr = UnitHealth(self.partyid, true)
--- 					local max = UnitHealthMax(self.partyid, true)
-
--- 					if curr and max then
--- 						-- hbt:SetFormattedText("%.2f/%.2f",AbbreviateNumbers(curr), AbbreviateNumbers(max))
--- 						-- hbt:SetFormattedText("%s / %s", AbbreviateNumbers(curr), AbbreviateNumbers(max))
--- 						hbt:SetFormattedText("%s / %s", AbbreviateLargeNumbers(curr), AbbreviateLargeNumbers(max))
--- 					end
--- 				end)
-		
--- 		if not success then
--- 			hbt:SetText("Bad")
--- 		end
+-- 		SetValuedText(hbt, hp, Max)
 -- 	end
 -- end
-
--- XPerl_SetValuedText
-function XPerl_SetValuedText(self, unitValue, unitValueMax, suffix)
-	self:SetFormattedText("%d/%d%s", unitValue, unitValueMax, suffix or "")
-end
-
-local SetValuedText = XPerl_SetValuedText 
-
--- XPerl_SetHealthBar
-function XPerl_SetHealthBar(self, hp, Max)
-	local bar = self.statsFrame.healthBar
-	bar:SetMinMaxValues(0, Max) --0 is always min / hp max is always max so just set them
-
-	local percent
-	--Get health bar percent for unit
-	percent = UnitHealthPercent(self.partyid, true, CurveConstants.ScaleTo100)
-	
-	--set the color of the healthBar
-	XPerl_ColourHealthBar(self, percent)
-	
-	--Set percent bar for health
-	if (bar.percent) then
-		bar.percent:SetFormattedText(percD, percent)
-	end
-
-	--Set health bar text
-	if (bar.text) then
-		local hbt = bar.text
-		SetValuedText(hbt, hp, Max)
-	end
-end
 
 ---------------------------------
 --Class Icon Location Functions--
@@ -1458,10 +1467,6 @@ function XPerl_PlayerTip(self, unitid)
 	local r, g, b = GameTooltip_UnitColor(unitid)
 	GameTooltipTextLeft1:SetTextColor(r, g, b)
 	GameTooltip:Show()
-
-	-- if (XPerl_RaidTipExtra) then
-	-- 	XPerl_RaidTipExtra(unitid)
-	-- end
 
 	XPerl_Highlight:TooltipInfo(UnitName(unitid))
 end
@@ -2008,16 +2013,6 @@ function XPerl_RestoreAllPositions()
 								end
 							end
 						end
-						--[[if (k == "XPerl_Runes") then
-							frame:SetMovable(true)
-							frame:EnableMouse(true)
-							frame:RegisterForDrag("LeftButton")
-							frame:SetScript("OnDragStart", frame.StartMoving)
-							frame:SetScript("OnDragStop", frame.StopMovingOrSizing)
-							frame:SetUserPlaced(true)
-						else]]
-							--frame:SetUserPlaced(true)
-						--end
 					end
 				end
 			end
@@ -2140,7 +2135,7 @@ local function BuffException(unit, index, filter, func, exceptions, raidFrames)
 		return name, icon, applications, dispelName, duration, expirationTime, sourceUnit, isStealable, nameplateShowPersonal, spellId, index
 	end
 
-	if not IsVanillaClassic and C_UnitAuras then
+	if C_UnitAuras then
 		local auraData = func(unit, index, filter)
 		if auraData then
 			name = auraData.name
@@ -2162,7 +2157,7 @@ local function BuffException(unit, index, filter, func, exceptions, raidFrames)
 		-- We need the index of the buff unfiltered later for tooltips
 		for i = 1, 40 do
 			local name, icon, applications, sourceUnit
-			if not IsVanillaClassic and C_UnitAuras then
+			if  C_UnitAuras then
 				local auraData = func(unit, i, filter)
 				if auraData then
 					name = auraData.name
@@ -2189,7 +2184,7 @@ local function BuffException(unit, index, filter, func, exceptions, raidFrames)
 	-- See how many filtered buffs WoW has returned by default
 	local normalBuffFilterCount = 0
 	for i = 1, 40 do
-		if not IsVanillaClassic and C_UnitAuras then
+		if C_UnitAuras then
 			local auraData = func(unit, i, filter == "HELPFUL" and "HELPFUL|RAID" or (filter == "HARMFUL" and "HARMFUL|RAID" or filter))
 			if auraData then
 				name = auraData.name
@@ -2209,7 +2204,7 @@ local function BuffException(unit, index, filter, func, exceptions, raidFrames)
 	local classExceptions = exceptions[playerClass]
 	local allExceptions = exceptions.ALL
 	for i = 1, 40 do
-		if not IsVanillaClassic and C_UnitAuras then
+		if  C_UnitAuras then
 			local auraData = func(unit, i, filter)
 			if auraData then
 				name = auraData.name
@@ -2504,8 +2499,6 @@ function XPerl_GetBuffButton(self, buffnum, debuff, createIfAbsent, newID)
 
 		if setup.rightClickable then
 			button:RegisterForClicks("RightButtonUp")
-			--button:SetAttribute("type", "cancelaura")
-			--button:SetAttribute("index", "number")
 		end
 
 		local size = self.conf.buffs.size
@@ -2519,13 +2512,11 @@ function XPerl_GetBuffButton(self, buffnum, debuff, createIfAbsent, newID)
 		end
 
 		if debuff == 1 then
-			--buffFrame.UpdateTooltip = setup.updateTooltipDebuff
 			button.UpdateTooltip = setup.updateTooltipDebuff
 			for k, v in pairs (setup.debuffScripts) do
 				button:SetScript(k, v)
 			end
 		else
-			--buffFrame.UpdateTooltip = setup.updateTooltipBuff
 			button.UpdateTooltip = setup.updateTooltipBuff
 			for k, v in pairs (setup.buffScripts) do
 				button:SetScript(k, v)
@@ -3241,11 +3232,6 @@ function XPerl_ProtectedCall(func, self)
 	if (func) then
 		if (InCombatLockdown()) then
 			XPerl_OutOfCombatQueue[func] = self == nil and false or self
-			--[[if (self) then
-				tinsert(XPerl_OutOfCombatQueue, {func, self})
-			else
-				tinsert(XPerl_OutOfCombatQueue, func)
-			end]]
 		else
 			func(self)
 		end
@@ -3931,66 +3917,16 @@ function XPerl_Register_Prediction(self, conf, guidToUnit, ...)
 		return
 	end
 
-	if not IsVanillaClassic then
 		if conf.healprediction then
 			self:RegisterUnitEvent("UNIT_HEAL_PREDICTION", ...)
 		else
 			self:UnregisterEvent("UNIT_HEAL_PREDICTION")
 		end
 
-		if not IsPandaClassic then
-			if conf.absorbs then
-				self:RegisterUnitEvent("UNIT_ABSORB_AMOUNT_CHANGED", ...)
-			else
-				self:UnregisterEvent("UNIT_ABSORB_AMOUNT_CHANGED")
-			end
-		--[[else
-			-- HoT predictions do not work properly on Wrath/Cata Classic so use HealComm
-			if conf.hotPrediction then
-				local UpdateHealth = function(event, ...)
-					local unit = guidToUnit(select(select("#", ...), ...))
-					if unit then
-						local f = self:GetScript("OnEvent")
-						f(self, "UNIT_HEAL_PREDICTION", unit)
-					end
-				end
-				HealComm.RegisterCallback(self, "HealComm_HealStarted", UpdateHealth)
-				HealComm.RegisterCallback(self, "HealComm_HealStopped", UpdateHealth)
-				HealComm.RegisterCallback(self, "HealComm_HealDelayed", UpdateHealth)
-				HealComm.RegisterCallback(self, "HealComm_HealUpdated", UpdateHealth)
-				HealComm.RegisterCallback(self, "HealComm_ModifierChanged", UpdateHealth)
-				HealComm.RegisterCallback(self, "HealComm_GUIDDisappeared", UpdateHealth)
-			else
-				HealComm.UnregisterCallback(self, "HealComm_HealStarted")
-				HealComm.UnregisterCallback(self, "HealComm_HealStopped")
-				HealComm.UnregisterCallback(self, "HealComm_HealDelayed")
-				HealComm.UnregisterCallback(self, "HealComm_HealUpdated")
-				HealComm.UnregisterCallback(self, "HealComm_ModifierChanged")
-				HealComm.UnregisterCallback(self, "HealComm_GUIDDisappeared")
-			end--]]
-		end
-	else
-		if conf.healprediction then
-			local UpdateHealth = function(event, ...)
-				local unit = guidToUnit(select(select("#", ...), ...))
-				if unit then
-					local f = self:GetScript("OnEvent")
-					f(self, "UNIT_HEAL_PREDICTION", unit)
-				end
-			end
-			HealComm.RegisterCallback(self, "HealComm_HealStarted", UpdateHealth)
-			HealComm.RegisterCallback(self, "HealComm_HealStopped", UpdateHealth)
-			HealComm.RegisterCallback(self, "HealComm_HealDelayed", UpdateHealth)
-			HealComm.RegisterCallback(self, "HealComm_HealUpdated", UpdateHealth)
-			HealComm.RegisterCallback(self, "HealComm_ModifierChanged", UpdateHealth)
-			HealComm.RegisterCallback(self, "HealComm_GUIDDisappeared", UpdateHealth)
+
+		if conf.absorbs then
+			self:RegisterUnitEvent("UNIT_ABSORB_AMOUNT_CHANGED", ...)
 		else
-			HealComm.UnregisterCallback(self, "HealComm_HealStarted")
-			HealComm.UnregisterCallback(self, "HealComm_HealStopped")
-			HealComm.UnregisterCallback(self, "HealComm_HealDelayed")
-			HealComm.UnregisterCallback(self, "HealComm_HealUpdated")
-			HealComm.UnregisterCallback(self, "HealComm_ModifierChanged")
-			HealComm.UnregisterCallback(self, "HealComm_GUIDDisappeared")
+			self:UnregisterEvent("UNIT_ABSORB_AMOUNT_CHANGED")
 		end
-	end
 end

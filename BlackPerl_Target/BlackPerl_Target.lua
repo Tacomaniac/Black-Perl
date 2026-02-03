@@ -768,30 +768,32 @@ end
 -- XPerl_Target_SetMana
 function XPerl_Target_SetMana(self)
 	local partyid = self.partyid
+
 	if not partyid then
 		self.targetmana = 0
 		self.targetmanamax = 0
 		return
 	end
 
-	local powerType = XPerl_GetDisplayedPowerType(partyid)
-	local unitPower = UnitPower(partyid, powerType)
-	local unitPowerMax = UnitPowerMax(partyid, powerType)
+	SetUnitPower(self)
+	-- local powerType = XPerl_GetDisplayedPowerType(partyid)
+	-- local unitPower = UnitPower(partyid, powerType)
+	-- local unitPowerMax = UnitPowerMax(partyid, powerType)
 
-	self.targetmana = unitPower
-	self.targetmanamax = unitPowerMax
+	-- self.targetmana = unitPower
+	-- self.targetmanamax = unitPowerMax
 
-	--Set power type percent
-	local powerPercent = UnitPowerPercent(partyid, powerType,true, CurveConstants.ScaleTo100)
-	--set percent 
-	self.statsFrame.manaBar.percent:SetFormattedText(percD, powerPercent)
+	-- --Set power type percent
+	-- local powerPercent = UnitPowerPercent(partyid, powerType,true, CurveConstants.ScaleTo100)
+	-- --set percent 
+	-- self.statsFrame.manaBar.percent:SetFormattedText(percD, powerPercent)
 
-	--set mana bar
-	self.statsFrame.manaBar:SetMinMaxValues(0, unitPowerMax)
-	self.statsFrame.manaBar:SetValue(unitPower)
+	-- --set mana bar
+	-- self.statsFrame.manaBar:SetMinMaxValues(0, unitPowerMax)
+	-- self.statsFrame.manaBar:SetValue(unitPower)
 
-	--Set text value of the power type
-	XPerl_SetValuedText(self.statsFrame.manaBar.text, unitPower, unitPowerMax)
+	-- --Set text value of the power type
+	-- XPerl_SetValuedText(self.statsFrame.manaBar.text, unitPower, unitPowerMax)
 end
 
 -- XPerl_Target_SetComboBar
@@ -890,14 +892,15 @@ function XPerl_Target_UpdateHealth(self)
 		return
 	end
 
-	local hp, hpMax, percent = XPerl_Target_GetHealth(self)
+	-- local hp, hpMax, percent = XPerl_Target_GetHealth(self)
 
-	self.targethp = hp
-	self.targethpmax = hpMax
+	-- self.targethp = hp
+	-- self.targethpmax = hpMax
 	self.afk = UnitIsAFK(partyid) and conf.showAFK == 1
 
+	SetUnitHealth(self)
 	--set bar / text and percent of the health bar for the target
-	XPerl_SetHealthBar(self, hp, hpMax)
+	-- XPerl_SetHealthBar(self, hp, hpMax)
 	XPerl_Target_UpdateAbsorbPrediction(self)
 	XPerl_Target_UpdateHealPrediction(self)
 	XPerl_Target_UpdateResurrectionStatus(self)

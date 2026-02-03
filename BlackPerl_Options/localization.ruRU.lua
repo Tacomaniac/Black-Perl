@@ -3,8 +3,6 @@
 	Translated by StingerSoft
 ]]
 
-local IsClassic = WOW_PROJECT_ID >= WOW_PROJECT_CLASSIC
-
 if GetLocale() == "ruRU" then
 	-- Tabs
 	XPERL_CONF_TITLE1						= "Общее"
@@ -753,9 +751,7 @@ if GetLocale() == "ruRU" then
 	XPERL_CONF_RAID_HIGHLIGHTS_HOTCOUNT_DESC	= "Будет отображать на объекта сколько активных исцелений за время весит на нём"
 	XPERL_CONF_RAID_HIGHLIGHTS_TARGET		= "Моя цель"
 	XPERL_CONF_RAID_HIGHLIGHTS_TARGET_DESC	= "Показывать вашу цель в группе и в рейд фреймах"
-	if not IsClassic then
-		XPERL_CONF_RAID_HIGHLIGHTS_MENDING_DESC	= "Включить отслеживание Молитвы восстановления. Вмести с включенным сверканием, будет отображаться хорошей графикой для облегчения слежение за баффом."
-	end
+	XPERL_CONF_RAID_HIGHLIGHTS_MENDING_DESC	= "Включить отслеживание Молитвы восстановления. Вмести с включенным сверканием, будет отображаться хорошей графикой для облегчения слежение за баффом."
 	XPERL_CONF_RAID_HIGHLIGHTS_SPARKLES		= "Сверкание"
 	XPERL_CONF_RAID_HIGHLIGHTS_SPARKLES_DESC= "Используйте новый вид сверкания для большей удобности и отчетливого выделения. Отключите старый стиль окраски краёв."
 	XPERL_CONF_RAID_HIGHLIGHTS_EXTRA		= "Доб сверкание"

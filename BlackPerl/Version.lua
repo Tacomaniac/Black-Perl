@@ -22,7 +22,7 @@ function BlackPerl:ADDON_LOADED(addon)
 	self:RegisterEvents()
 
 	self.playerName = string.gsub(UnitName("player").."-"..GetRealmName(), "%s+", "")
-	self.version = C_AddOns.GetAddOnMetadata and C_AddOns.GetAddOnMetadata("BlackPerl", "Version") or "7.6.2"
+	self.version = C_AddOns.GetAddOnMetadata and C_AddOns.GetAddOnMetadata("BlackPerl", "Version") or "1.1.0"
 
 	self:UnregisterEvent("ADDON_LOADED")
 end
