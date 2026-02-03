@@ -1549,17 +1549,6 @@ function XPerl_Target_Events:UNIT_AURA()
 		XPerl_Target_BuffPositions(self)
 	end
 	--XPerl_Target_DebuffUpdate(self)
-
-	--[[if conf.showFD then
-		local _, class = UnitClass(self.partyid)
-		if class == "HUNTER" then
-			local feigning = UnitBuff(self.partyid, feignDeath)
-			if feigning ~= self.feigning then
-				self.feigning = feigning
-				XPerl_Target_UpdateHealth(self)
-			end
-		end
-	end--]]
 end
 
 -- UNIT_FACTION
@@ -1614,29 +1603,17 @@ function XPerl_Target_Events:UNIT_HEAL_PREDICTION(unit)
 		if (tconf.healprediction and unit == self.partyid) then
 			XPerl_SetExpectedHealth(self)
 		end
-		if (tconf.hotPrediction and unit == self.partyid) then
-			XPerl_SetExpectedHots(self)
-		end
 	elseif self == XPerl_TargetTarget or self == XPerl_TargetTargetTarget then
 		if (conf.targettarget.healprediction and unit == self.partyid) then
 			XPerl_SetExpectedHealth(self)
-		end
-		if (conf.targettarget.hotPrediction and unit == self.partyid) then
-			XPerl_SetExpectedHots(self)
 		end
 	elseif self == XPerl_Focus then
 		if (fconf.healprediction and unit == self.partyid) then
 			XPerl_SetExpectedHealth(self)
 		end
-		if (fconf.hotPrediction and unit == self.partyid) then
-			XPerl_SetExpectedHots(self)
-		end
 	elseif self == XPerl_FocusTarget then
 		if (conf.focustarget.healprediction and unit == self.partyid) then
 			XPerl_SetExpectedHealth(self)
-		end
-		if (conf.focustarget.hotPrediction and unit == self.partyid) then
-			XPerl_SetExpectedHots(self)
 		end
 	end
 end

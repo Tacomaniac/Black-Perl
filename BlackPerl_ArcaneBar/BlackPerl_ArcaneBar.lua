@@ -5,12 +5,6 @@
 local ArcaneBars = {}
 local shield_icon = "|TInterface\\GroupFrame\\UI-Group-MainTankIcon:0:0:0:0|t"
 
---[===[@debug@
-local function d(...)
-	ChatFrame1:AddMessage("XPerl: "..format(...))
-end
---@end-debug@]===]
-
 local conf
 XPerl_RequestConfig(function(new)
 	conf = new
@@ -20,8 +14,6 @@ end, "$Revision:  $")
 local _, _, _, clientRevision = GetBuildInfo()
 
 local IsRetail = WOW_PROJECT_ID == WOW_PROJECT_MAINLINE
-local IsClassic = WOW_PROJECT_ID >= WOW_PROJECT_CLASSIC
-local IsVanillaClassic = WOW_PROJECT_ID == WOW_PROJECT_CLASSIC
 
 local min = min
 local max = max
@@ -70,9 +62,7 @@ local function enableToggle(self, value)
 			if (self.unit == "target") then
 				self:RegisterEvent("PLAYER_TARGET_CHANGED")
 			elseif (self.unit == "focus") then
-				if not IsVanillaClassic then
-					self:RegisterEvent("PLAYER_FOCUS_CHANGED")
-				end
+				self:RegisterEvent("PLAYER_FOCUS_CHANGED")
 			elseif (strfind(self.unit, "^party")) then
 				self:RegisterEvent("PARTY_MEMBER_ENABLE")
 				self:RegisterEvent("PARTY_MEMBER_DISABLE")
@@ -99,25 +89,14 @@ local function overrideToggle(value)
 					return XPerl_ArcaneBar_OnEvent(CastingBarFrame, event, ...)
 				end
 				for i, event in pairs(events) do
-					if IsRetail then
-						PlayerCastingBarFrame:RegisterEvent(event)
-					else
-						if event ~= "UNIT_SPELLCAST_INTERRUPTIBLE" and event ~= "UNIT_SPELLCAST_NOT_INTERRUPTIBLE" then
-							CastingBarFrame:RegisterEvent(event)
-						end
-					end
+					PlayerCastingBarFrame:RegisterEvent(event)
 				end
 				pconf.bar.Overrided = nil
 			end
 		else
 			if (not pconf.bar.Overrided) then
-				if IsRetail then
-					PlayerCastingBarFrame:Hide()
-					PlayerCastingBarFrame:UnregisterAllEvents()
-				else
-					CastingBarFrame:Hide()
-					CastingBarFrame:UnregisterAllEvents()
-				end
+				PlayerCastingBarFrame:Hide()
+				PlayerCastingBarFrame:UnregisterAllEvents()
 				pconf.bar.Overrided = 1
 			end
 		end
@@ -137,6 +116,33 @@ local function ActiveCasting(self)
 	end
 end
 
+-- --Midnight check if the unit is casting
+-- function UnitIsCasting(unitId, spellId)
+-- 	if (UnitExists(unitId)) then
+-- 	local plateFrame = C_NamePlate.GetNamePlateForUnit(unitId)
+-- 	if (plateFrame) then
+-- 		local castBar = plateFrame.unitFrame.castBar
+-- 		if (castBar:IsShown()) then
+-- 			if (spellId) then
+-- 				return castBar.SpellID == spellId or castBar.SpellName == spellId
+-- 			else
+-- 				return castBar.SpellID
+-- 			end
+-- 		end
+-- 		else
+-- 			return false
+-- 		end
+-- 	end
+
+-- 	return false
+-- end
+
+-- function GetSpellName(spellId)
+-- 	local si = C_Spell.GetSpellInfo(spellID) 
+-- 		if si then 
+-- 			return si.name, nil, si.iconID, si.castTime, si.minRange, si.maxRange, si.spellID, si.originalIconID 
+-- 		end 
+-- end
 --------------------------------------------------
 --
 -- Event/Update Handlers
@@ -173,19 +179,23 @@ function XPerl_ArcaneBar_OnEvent(self, event, unit, ...)
 	end
 
 	if (event == "UNIT_SPELLCAST_START") then
+		--get the info from the unit its self
 		local name, text, texture, startTime, endTime, isTradeSkill, castID, notInterruptible = UnitCastingInfo(self.unit)
+
+		if issecretvalue(name) then 
+			return 
+		end 
+	
+		-- --get the info from the plate of the unit
+		-- local spellId = UnitIsCasting(unitId, spellId)
+		-- local spellName, emptyValue, iconID, castTime, minRange, maxRange, spellID, originalIconID  = GetSpellName(spellId)
+
 		if (not name or (not self.showTradeSkills and isTradeSkill)) then
 			self:Hide()
 			return
 		end
 
 		self:SetStatusBarColor(barColours.main.r, barColours.main.g, barColours.main.b, conf.transparency.frame)
-		-- if (not IsClassic and notInterruptible) then
-		-- 	self.spellText:SetText(shield_icon..shield_icon..name:gsub(" %- No Text", "")..shield_icon..shield_icon)
-		-- else
-		-- 	self.spellText:SetText(name:gsub(" %- No Text", ""))
-		-- end
-		
 		self.spellText:SetText(name:gsub(" %- No Text", ""))
 
 		self.castID = castID
@@ -200,6 +210,7 @@ function XPerl_ArcaneBar_OnEvent(self, event, unit, ...)
 		self.casting, self.channeling, self.fadeOut, self.flash = 1, nil, nil, nil
 		self:Show()
 		self.delaySum = 0
+
 		if (conf.player.castBar.castTime) then
 			self.castTimeText:Show()
 		else

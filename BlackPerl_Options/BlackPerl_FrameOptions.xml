@@ -1567,119 +1567,7 @@
 			</CheckButton>
 		</Frames>
 	</Frame>
-
-	<Frame name="XPerl_Options_HealerModeTemplate" inherits="XPerlBackdropTemplate" virtual="true">
-		<Size>
-			<AbsDimension x="190" y="62"/>
-		</Size>
-		<Frames>
-			<CheckButton name="$parent_Healer" inherits="XPerlCheckButtonTemplate">
-				<Anchors>
-					<Anchor point="TOPLEFT"/>
-				</Anchors>
-				<Scripts>
-					<OnLoad>
-						XPerl_OptionsSetMyText(self, "XPERL_CONF_HEALER_MODE", true)
-						self.Validate = function()
-							XPerl_Options_EnableSibling(self, "DeficitOnly")
-							XPerl_Options_EnableSibling(self, "DeficitMax")
-							XPerl_Options_EnableSibling(self, "CurMaxDeficit")
-						end
-					</OnLoad>
-					<OnShow>
-						self:SetChecked(self:GetParent():getEnable())
-						self:Validate()
-					</OnShow>
-					<OnClick>
-						self:GetParent().setEnable(self:GetChecked())
-						self:Validate()
-					</OnClick>
-				</Scripts>
-			</CheckButton>
-
-			<CheckButton name="$parent_DeficitOnly" inherits="XPerlRadioButtonTemplate">
-				<Anchors>
-					<Anchor point="TOPLEFT" relativeTo="$parent_Healer" relativePoint="BOTTOMRIGHT">
-						<Offset>
-							<AbsDimension x="0" y="8"/>
-						</Offset>
-					</Anchor>
-				</Anchors>
-				<Scripts>
-					<OnLoad>
-						XPerl_OptionsSetMyText(self, "XPERL_CONF_HEALERMODE_DEFICIT", true)
-					</OnLoad>
-					<OnShow>
-						self:SetChecked(self:GetParent():getType() == 0)
-						if (self.hideOptions and strfind(self.hideOptions, "0")) then
-							self:Hide()
-						else
-							self:Show()
-						end
-					</OnShow>
-					<OnClick>
-						self:GetParent().setType(0)
-						XPerl_Options_CheckRadio(self,{"DeficitOnly", "DeficitMax", "CurMaxDeficit"})
-					</OnClick>
-				</Scripts>
-			</CheckButton>
-
-			<CheckButton name="$parent_DeficitMax" inherits="XPerlRadioButtonTemplate">
-				<Anchors>
-					<Anchor point="TOPLEFT" relativeTo="$parent_DeficitOnly" relativePoint="TOPRIGHT">
-						<Offset>
-							<AbsDimension x="40" y="0"/>
-						</Offset>
-					</Anchor>
-				</Anchors>
-				<Scripts>
-					<OnLoad>
-						XPerl_OptionsSetMyText(self, "XPERL_CONF_HEALERMODE_DEFICITMAX", true)
-					</OnLoad>
-					<OnShow>
-						self:SetChecked(self:GetParent():getType() == 1)
-						if (self.hideOptions and strfind(self.hideOptions, "1")) then
-							self:Hide()
-						else
-							self:Show()
-						end
-					</OnShow>
-					<OnClick>
-						self:GetParent().setType(1)
-						XPerl_Options_CheckRadio(self,{"DeficitOnly", "DeficitMax", "CurMaxDeficit"})
-					</OnClick>
-				</Scripts>
-			</CheckButton>
-
-			<CheckButton name="$parent_CurMaxDeficit" inherits="XPerlRadioButtonTemplate">
-				<Anchors>
-					<Anchor point="TOPLEFT" relativeTo="$parent_DeficitOnly" relativePoint="BOTTOMLEFT">
-						<Offset>
-							<AbsDimension x="0" y="2"/>
-						</Offset>
-					</Anchor>
-				</Anchors>
-				<Scripts>
-					<OnLoad>
-						XPerl_OptionsSetMyText(self, "XPERL_CONF_HEALERMODE_CURMAXDEFICIT", true)
-					</OnLoad>
-					<OnShow>
-						self:SetChecked(self:GetParent():getType() == 2)
-						if (self.hideOptions and strfind(self.hideOptions, "2")) then
-							self:Hide()
-						else
-							self:Show()
-						end
-					</OnShow>
-					<OnClick>
-						self:GetParent().setType(2)
-						XPerl_Options_CheckRadio(self,{"DeficitOnly", "DeficitMax", "CurMaxDeficit"})
-					</OnClick>
-				</Scripts>
-			</CheckButton>
-		</Frames>
-	</Frame>
-
+	
 	<Button name="XPerlLayoutLineTemplate" virtual="true">
 		<NormalFont style="GameFontNormalSmall"/>
 		<ButtonText name="$parentText" justifyH="LEFT" setAllPoints="true"/>
@@ -5160,6 +5048,7 @@
 						</Scripts>
 					</CheckButton>
 
+
 					<CheckButton name="$parent_ShowRunes" inherits="XPerlCheckButtonTemplate">
 						<Anchors>
 							<Anchor point="TOP" relativeTo="$parent_Portrait" relativePoint="BOTTOM">
@@ -5583,8 +5472,110 @@
 								self.configBase = "XPerlDB.player"
 								self.configIndex = "values"
 								self.configClick = XPerl_Player_Reset
+								self.Validate = function()
+									XPerl_Options_EnableSibling(self, "CurrentHealth")
+									XPerl_Options_EnableSibling(self, "CurrentAndMaxHealth")
+									XPerl_Options_EnableSibling(self, "AbbreviatedCurrentHealth")
+									XPerl_Options_EnableSibling(self, "AbbreviatedCurrentAndMaxHealth")
+								end
 								XPerl_Options_RegisterProtected(self)
 							</OnLoad>
+						</Scripts>
+					</CheckButton>
+
+					<CheckButton name="$parent_currentHealth" inherits="XPerlRadioButtonTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="$parent_Values" relativePoint="BOTTOMRIGHT">
+								<Offset>
+									<AbsDimension x="-4" y="4"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								XPerl_OptionsSetMyText(self, "XPERL_CONFIG_HEALTH_OPTION_CURRENTHEALTH")
+							</OnLoad>
+							<OnShow>
+								self:SetChecked(XPerlDB.healthStyle.healthType)
+							</OnShow>
+							<OnClick>
+								self.configBase = "XPerlDB.player"
+								self.configIndex = "healthStyle.healthType"
+								self.configClick = 1
+								XPerl_Options_CheckRadio(self, {"CurrentHealth","CurrentAndMaxHealth","AbbreviatedCurrentHealth","AbbreviatedCurrentAndMaxHealth"})
+							</OnClick>
+						</Scripts>
+					</CheckButton>
+
+					<CheckButton name="$parent_currentAndMaxHealth" inherits="XPerlRadioButtonTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="$parent_currentHealth" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="2"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								XPerl_OptionsSetMyText(self, "XPERL_CONFIG_HEALTH_OPTION_CURRENTANDMAXHEALTH")
+							</OnLoad>
+							<OnShow>
+								self:SetChecked(XPerlDB.healthStyle.healthType)
+							</OnShow>
+							<OnClick>
+								self.configBase = "XPerlDB.player"
+								self.configIndex = "healthStyle.healthType"
+								self.configClick = 2
+								XPerl_Options_CheckRadio(self, {"CurrentHealth","CurrentAndMaxHealth","AbbreviatedCurrentHealth","AbbreviatedCurrentAndMaxHealth"})
+							</OnClick>
+						</Scripts>
+					</CheckButton>
+
+					<CheckButton name="$parent_abbreviatedCurrentHealth" inherits="XPerlRadioButtonTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="$parent_currentAndMaxHealth" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="2"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								XPerl_OptionsSetMyText(self, "XPERL_CONFIG_HEALTH_OPTION_ABBREVTEXT_CURRENTHEALTH")
+							</OnLoad>
+							<OnShow>
+								self:SetChecked(XPerlDB.healthStyle.healthType)
+							</OnShow>
+							<OnClick>
+								self.configBase = "XPerlDB.player"
+								self.configIndex = "healthStyle.healthType"
+								self.configClick = 3
+								XPerl_Options_CheckRadio(self, {"CurrentHealth","CurrentAndMaxHealth","AbbreviatedCurrentHealth","AbbreviatedCurrentAndMaxHealth"})
+							</OnClick>
+						</Scripts>
+					</CheckButton>
+ 
+					<CheckButton name="$parent_abbreviatedCurrentAndMaxHealth" inherits="XPerlRadioButtonTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="$parent_abbreviatedCurrentHealth" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="2"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								XPerl_OptionsSetMyText(self, "XPERL_CONFIG_HEALTH_OPTION_ABBREVTEXT_CURRENTANDMAXHEALTH")
+							</OnLoad>
+							<OnShow>
+								self:SetChecked(XPerlDB.healthStyle.healthType)
+							</OnShow>
+							<OnClick>
+								self.configBase = "XPerlDB.player"
+								self.configIndex = "healthStyle.healthType"
+								self.configClick = 4
+								XPerl_Options_CheckRadio(self, {"CurrentHealth","CurrentAndMaxHealth","AbbreviatedCurrentHealth","AbbreviatedCurrentAndMaxHealth"})
+							</OnClick>
 						</Scripts>
 					</CheckButton>
 
@@ -5612,7 +5603,7 @@
 						<Anchors>
 							<Anchor point="TOPLEFT" relativeTo="$parent_Values" relativePoint="BOTTOMLEFT">
 								<Offset>
-									<AbsDimension x="0" y="6"/>
+									<AbsDimension x="0" y="-72"/>
 								</Offset>
 							</Anchor>
 						</Anchors>
@@ -5650,64 +5641,6 @@
 							</OnLoad>
 						</Scripts>
 					</CheckButton>
-
-					<Frame name="$parent_Healer" inherits="XPerl_Options_HealerModeTemplate">
-						<Anchors>
-							<Anchor point="TOPLEFT" relativeTo="$parent_WithName" relativePoint="BOTTOMLEFT">
-								<Offset>
-									<AbsDimension x="-16" y="5"/>
-								</Offset>
-							</Anchor>
-						</Anchors>
-						<Scripts>
-							<OnLoad>
-								self:OnBackdropLoaded()
-								self.getEnable = function() return XPerlDB.player.healerMode.enable end
-								self.setEnable = function(n)
-									XPerlDB.player.healerMode.enable = n
-									XPerl_Player_Reset()
-								end
-								self.getType = function() return XPerlDB.player.healerMode.type end
-								self.setType = function(n)
-									XPerlDB.player.healerMode.type = n
-									XPerl_Player_Reset()
-								end
-							</OnLoad>
-						</Scripts>
-					</Frame>
-
-					<Slider name="$parent_Width" inherits="XPerlSlider">
-						<Size>
-							<AbsDimension x="150" y="16"/>
-						</Size>
-						<Anchors>
-							<Anchor point="TOPLEFT" relativeTo="$parent_Healer" relativePoint="BOTTOMLEFT">
-								<Offset>
-									<AbsDimension x="5" y="-10"/>
-								</Offset>
-							</Anchor>
-						</Anchors>
-						<Scripts>
-							<OnLoad>
-								self:SetMinMaxValues(0, 100)
-								self:SetValueStep(1)
-								self:SetObeyStepOnDrag(true)
-								XPerl_SliderSetup(self)
-								XPerl_OptionsSetMyText(self, "XPERL_CONF_PLAYER_WIDTHBONUS")
-								XPerl_Options_RegisterProtected(self)
-							</OnLoad>
-							<OnShow>
-								self:SetValue(XPerlDB.player.size.width or 0)
-							</OnShow>
-							<OnValueChanged>
-								if (XPerlDB.player.size.width ~= value) then
-									XPerlDB.player.size.width = value
-									XPerl_Player_SetWidth(XPerl_Player)
-								end
-								_G[self:GetName().."Current"]:SetText(XPerlDB.player.size.width)
-							</OnValueChanged>
-						</Scripts>
-					</Slider>
 
 					<Frame name="$parent_Buffs" inherits="XPerlBackdropTemplate">
 						<KeyValues>
@@ -6099,6 +6032,7 @@
 							</CheckButton>
 						</Frames>
 					</Frame>
+
 
 					<Frame name="$parent_Totems" inherits="XPerlBackdropTemplate">
 						<KeyValues>
@@ -7045,30 +6979,6 @@
 									</OnValueChanged>
 								</Scripts>
 							</Slider>
-							<Frame name="$parent_Healer" inherits="XPerl_Options_HealerModeTemplate">
-								<Anchors>
-									<Anchor point="TOPLEFT" relativeTo="$parent_ScalePetTarget" relativePoint="BOTTOMLEFT">
-										<Offset>
-											<AbsDimension x="0" y="-10"/>
-										</Offset>
-									</Anchor>
-								</Anchors>
-								<Scripts>
-									<OnLoad>
-										self:OnBackdropLoaded()
-										self.getEnable = function() return XPerlDB.pettarget.healerMode.enable end
-										self.setEnable = function(n)
-											XPerlDB.pettarget.healerMode.enable = n
-											XPerl_TargetTarget_Reset()
-										end
-										self.getType = function() return XPerlDB.pettarget.healerMode.type end
-										self.setType = function(n)
-											XPerlDB.pettarget.healerMode.type = n
-											XPerl_TargetTarget_Reset()
-										end
-									</OnLoad>
-								</Scripts>
-							</Frame>
 						</Frames>
 					</Frame>
 
@@ -8174,37 +8084,12 @@
 						</Scripts>
 					</CheckButton>
 
-					<Frame name="$parent_Healer" inherits="XPerl_Options_HealerModeTemplate">
-						<Anchors>
-							<Anchor point="TOPLEFT" relativeTo="$parent_30yd" relativePoint="BOTTOMLEFT">
-								<Offset>
-									<AbsDimension x="0" y="6"/>
-								</Offset>
-							</Anchor>
-						</Anchors>
-						<Scripts>
-							<OnLoad>
-								self:OnBackdropLoaded()
-								self.getEnable = function() return XPerlDB.target.healerMode.enable end
-								self.setEnable = function(n)
-									XPerlDB.target.healerMode.enable = n
-									XPerl_Target_Reset()
-								end
-								self.getType = function() return XPerlDB.target.healerMode.type end
-								self.setType = function(n)
-									XPerlDB.target.healerMode.type = n
-									XPerl_Target_Reset()
-								end
-							</OnLoad>
-						</Scripts>
-					</Frame>
-
 					<Slider name="$parent_Width" inherits="XPerlSlider">
 						<Size>
 							<AbsDimension x="150" y="16"/>
 						</Size>
 						<Anchors>
-							<Anchor point="TOPLEFT" relativeTo="$parent_Healer" relativePoint="TOPRIGHT">
+							<Anchor point="TOPLEFT" relativeTo="$parent_30yd" relativePoint="TOPRIGHT">
 								<Offset>
 									<AbsDimension x="-25" y="-45"/>
 								</Offset>
@@ -8782,32 +8667,6 @@
 									</OnValueChanged>
 								</Scripts>
 							</Slider>
-							<Frame name="$parent_Healer" inherits="XPerl_Options_HealerModeTemplate">
-								<Anchors>
-									<Anchor point="TOPLEFT" relativeTo="$parent_ScaleTargetTarget" relativePoint="BOTTOMLEFT">
-										<Offset>
-											<AbsDimension x="0" y="-10"/>
-										</Offset>
-									</Anchor>
-								</Anchors>
-								<Scripts>
-									<OnLoad>
-										self:OnBackdropLoaded()
-										self.getEnable = function() return XPerlDB.targettarget.healerMode.enable end
-										self.setEnable = function(n)
-											XPerlDB.targettarget.healerMode.enable = n
-											XPerlDB.targettargettarget.healerMode.enable = n
-											XPerl_TargetTarget_Reset()
-										end
-										self.getType = function() return XPerlDB.targettarget.healerMode.type end
-										self.setType = function(n)
-											XPerlDB.targettarget.healerMode.type = n
-											XPerlDB.targettargettarget.healerMode.type = n
-											XPerl_TargetTarget_Reset()
-										end
-									</OnLoad>
-								</Scripts>
-							</Frame>
 						</Frames>
 					</Frame>
 
@@ -9908,37 +9767,12 @@
 						</Scripts>
 					</CheckButton>
 
-					<Frame name="$parent_Healer" inherits="XPerl_Options_HealerModeTemplate">
-						<Anchors>
-							<Anchor point="TOPLEFT" relativeTo="$parent_PVPIcon" relativePoint="BOTTOMLEFT">
-								<Offset>
-									<AbsDimension x="0" y="6"/>
-								</Offset>
-							</Anchor>
-						</Anchors>
-						<Scripts>
-							<OnLoad>
-								self:OnBackdropLoaded()
-								self.getEnable = function() return XPerlDB.focus.healerMode.enable end
-								self.setEnable = function(n)
-									XPerlDB.focus.healerMode.enable = n
-									XPerl_Target_Reset()
-								end
-								self.getType = function() return XPerlDB.focus.healerMode.type end
-								self.setType = function(n)
-									XPerlDB.focus.healerMode.type = n
-									XPerl_Target_Reset()
-								end
-							</OnLoad>
-						</Scripts>
-					</Frame>
-
 					<Slider name="$parent_Width" inherits="XPerlSlider">
 						<Size>
 							<AbsDimension x="150" y="16"/>
 						</Size>
 						<Anchors>
-							<Anchor point="TOPLEFT" relativeTo="$parent_Healer" relativePoint="BOTTOMLEFT">
+							<Anchor point="TOPLEFT" relativeTo="$parent_PVPIcon" relativePoint="BOTTOMLEFT">
 								<Offset>
 									<AbsDimension x="5" y="-10"/>
 								</Offset>
@@ -10413,34 +10247,6 @@
 									</OnValueChanged>
 								</Scripts>
 							</Slider>
-							<Frame name="$parent_Healer" inherits="XPerl_Options_HealerModeTemplate">
-								<Anchors>
-									<Anchor point="TOPLEFT" relativeTo="$parent_ScaleFocusTarget" relativePoint="BOTTOMLEFT">
-										<Offset>
-											<AbsDimension x="0" y="-10"/>
-										</Offset>
-									</Anchor>
-								</Anchors>
-								<Scripts>
-									<OnLoad>
-										self:OnBackdropLoaded()
-										self.getEnable = function()
-											return XPerlDB.focustarget.healerMode.enable
-										end
-										self.setEnable = function(n)
-											XPerlDB.focustarget.healerMode.enable = n
-											XPerl_TargetTarget_Reset()
-										end
-										self.getType = function()
-											return XPerlDB.focustarget.healerMode.type
-										end
-										self.setType = function(n)
-											XPerlDB.focustarget.healerMode.type = n
-											XPerl_TargetTarget_Reset()
-										end
-									</OnLoad>
-								</Scripts>
-							</Frame>
 						</Frames>
 					</Frame>
 
@@ -11515,41 +11321,12 @@
 						</Scripts>
 					</CheckButton>
 
-					<Frame name="$parent_Healer" inherits="XPerl_Options_HealerModeTemplate">
-						<Anchors>
-							<Anchor point="TOPLEFT" relativeTo="$parent_30yd" relativePoint="BOTTOMLEFT">
-								<Offset>
-									<AbsDimension x="0" y="6"/>
-								</Offset>
-							</Anchor>
-						</Anchors>
-						<Scripts>
-							<OnLoad>
-								self:OnBackdropLoaded()
-								self.getEnable = function()
-									return XPerlDB.party.healerMode.enable
-								end
-								self.setEnable = function(n)
-									XPerlDB.party.healerMode.enable = n
-									XPerl_Party_Reset()
-								end
-								self.getType = function()
-									return XPerlDB.party.healerMode.type
-								end
-								self.setType = function(n)
-									XPerlDB.party.healerMode.type = n
-									XPerl_Party_Reset()
-								end
-							</OnLoad>
-						</Scripts>
-					</Frame>
-
 					<Slider name="$parent_Width" inherits="XPerlSlider">
 						<Size>
 							<AbsDimension x="150" y="16"/>
 						</Size>
 						<Anchors>
-							<Anchor point="TOPLEFT" relativeTo="$parent_Healer" relativePoint="BOTTOMLEFT">
+							<Anchor point="TOPLEFT" relativeTo="$parent_30yd" relativePoint="BOTTOMLEFT">
 								<Offset>
 									<AbsDimension x="5" y="-10"/>
 								</Offset>
@@ -12798,30 +12575,12 @@
 						</Scripts>
 					</CheckButton>
 
-					<CheckButton name="$parent_Healer" inherits="XPerlCheckButtonTemplate">
-						<Anchors>
-							<Anchor point="TOPRIGHT" relativeTo="$parent_BuffTooltipHelperVis" relativePoint="BOTTOMLEFT">
-								<Offset>
-									<AbsDimension x="0" y="6"/>
-								</Offset>
-							</Anchor>
-						</Anchors>
-						<Scripts>
-							<OnLoad>
-								XPerl_OptionsSetMyText(self, "XPERL_CONF_HEALER_MODE", true)
-								self.configBase = "XPerlDB.raid.healerMode"
-								self.configIndex = "enable"
-								self.configClick = XPerl_Raid_OptionActions
-							</OnLoad>
-						</Scripts>
-					</CheckButton>
-
 					<Slider name="$parent_Width" inherits="XPerlSlider">
 						<Size>
 							<AbsDimension x="150" y="16"/>
 						</Size>
 						<Anchors>
-							<Anchor point="TOPLEFT" relativeTo="$parent_Healer" relativePoint="BOTTOMLEFT">
+							<Anchor point="TOPLEFT" relativeTo="$parent_BuffTooltipHelperVis" relativePoint="BOTTOMLEFT">
 								<Offset>
 									<AbsDimension x="5" y="-10"/>
 								</Offset>
@@ -14027,56 +13786,12 @@
 						</Scripts>
 					</CheckButton>
 
-					<Frame name="$parent_Healer" inherits="XPerl_Options_HealerModeTemplate">
-						<Anchors>
-							<Anchor point="TOPLEFT" relativeTo="$parent_Percent" relativePoint="BOTTOMLEFT">
-								<Offset>
-									<AbsDimension x="0" y="6"/>
-								</Offset>
-							</Anchor>
-						</Anchors>
-						<Scripts>
-							<OnLoad>
-								self:OnBackdropLoaded()
-								self.getEnable = function()
-									return XPerlDB.player.healerMode.enable
-								end
-								self.setEnable = function(n)
-									XPerlDB.player.healerMode.enable = n
-									XPerlDB.pettarget.healerMode.enable = n
-									XPerlDB.target.healerMode.enable = n
-									XPerlDB.targettarget.healerMode.enable = n
-									XPerlDB.targettargettarget.healerMode.enable = n
-									XPerlDB.focus.healerMode.enable = n
-									XPerlDB.focustarget.healerMode.enable = n
-									XPerlDB.party.healerMode.enable = n
-									XPerlDB.raid.healerMode.enable = n
-									XPerl_OptionActions()
-								end
-								self.getType = function()
-									return XPerlDB.player.healerMode.type
-								end
-								self.setType = function(n)
-									XPerlDB.player.healerMode.type = n
-									XPerlDB.pettarget.healerMode.type = n
-									XPerlDB.target.healerMode.type = n
-									XPerlDB.targettarget.healerMode.type = n
-									XPerlDB.targettargettarget.healerMode.type = n
-									XPerlDB.focus.healerMode.type = n
-									XPerlDB.focustarget.healerMode.type = n
-									XPerlDB.party.healerMode.type = n
-									XPerl_OptionActions()
-								end
-							</OnLoad>
-						</Scripts>
-					</Frame>
-
 					<Slider name="$parent_Width" inherits="XPerlSlider">
 						<Size>
 							<AbsDimension x="150" y="16"/>
 						</Size>
 						<Anchors>
-							<Anchor point="TOPLEFT" relativeTo="$parent_Healer" relativePoint="BOTTOMLEFT">
+							<Anchor point="TOPLEFT" relativeTo="$parent_Percent" relativePoint="BOTTOMLEFT">
 								<Offset>
 									<AbsDimension x="5" y="-10"/>
 								</Offset>
@@ -16123,43 +15838,12 @@
 						</Scripts>
 					</CheckButton>
 
-					<Frame name="$parent_Healer" inherits="XPerl_Options_HealerModeTemplate">
-						<Anchors>
-							<Anchor point="TOPLEFT" relativeTo="$parent_GrowUp" relativePoint="BOTTOMLEFT">
-								<Offset>
-									<AbsDimension x="0" y="6"/>
-								</Offset>
-							</Anchor>
-						</Anchors>
-						<Scripts>
-							<OnLoad>
-								self:OnBackdropLoaded()
-								self.hideOptions = "2"
-								self.getEnable = function()
-									return XPerlDB.player.healerMode.enable
-								end
-								self.setEnable = function(n)
-									BlackPerlConfigHelper.HealerMode = n
-									XPerl_MakeTankList()
-								end
-								self.getType = function()
-									return XPerlDB.player.healerMode.type
-								end
-								self.setType = function(n)
-									BlackPerlConfigHelper.HealerModeType = n
-									XPerl_MakeTankList()
-								end
-								self:SetScale(0.9)
-							</OnLoad>
-						</Scripts>
-					</Frame>
-
 					<Slider name="$parent_MaxTanks" inherits="XPerlSlider">
 						<Size>
 							<AbsDimension x="155" y="16"/>
 						</Size>
 						<Anchors>
-							<Anchor point="TOPLEFT" relativeTo="$parent_Healer" relativePoint="BOTTOMLEFT">
+							<Anchor point="TOPLEFT" relativeTo="$parent_GrowUp" relativePoint="BOTTOMLEFT">
 								<Offset>
 									<AbsDimension x="-10" y="-10"/>
 								</Offset>
