@@ -3,8 +3,6 @@
 	Translated by Asixandur, Philipxander and Darkvalky
 ]]
 
-local IsClassic = WOW_PROJECT_ID >= WOW_PROJECT_CLASSIC
-
 if GetLocale() == "deDE" then
 	-- Tabs
 	XPERL_CONF_TITLE1			= GENERAL_LABEL -- "Allgemein"
@@ -750,9 +748,7 @@ if GetLocale() == "deDE" then
 	XPERL_CONF_RAID_HIGHLIGHTS_HOTCOUNT_DESC 	= "Zeigt bei einer Einheit, wie viele aktiven HOTs diese gerade von JEDER Klasse hat"
 	XPERL_CONF_RAID_HIGHLIGHTS_TARGET			= "Mein Ziel"
 	XPERL_CONF_RAID_HIGHLIGHTS_TARGET_DESC		= "Zeigt Dein Ziel an den Gruppen und Schlachtzugfenstern"
-	if not IsClassic then
-		XPERL_CONF_RAID_HIGHLIGHTS_MENDING_DESC	= "Aktiviere "..(C_Spell.GetSpellInfo(33076) and C_Spell.GetSpellInfo(33076).name).." Verfolgung. Mit aktiviertem Glanz, zeigt dies eine prahlerische Grafik um den Buff besser verfolgen zu k\195\182nnen"
-	end
+	XPERL_CONF_RAID_HIGHLIGHTS_MENDING_DESC	= "Aktiviere "..(C_Spell.GetSpellInfo(33076) and C_Spell.GetSpellInfo(33076).name).." Verfolgung. Mit aktiviertem Glanz, zeigt dies eine prahlerische Grafik um den Buff besser verfolgen zu k\195\182nnen"
 	XPERL_CONF_RAID_HIGHLIGHTS_SPARKLES			= "Glanz"
 	XPERL_CONF_RAID_HIGHLIGHTS_SPARKLES_DESC	= "Verwende das neue Glanz-Aussehen f\195\188r eine strahlender und besser sichtbare Methode des Hervorhebens. Deaktivieren f\195\188r die alten Randfarben."
 	XPERL_CONF_RAID_HIGHLIGHTS_EXTRA			= "Extra Glanz"

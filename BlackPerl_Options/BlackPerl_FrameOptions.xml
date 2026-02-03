@@ -5495,9 +5495,9 @@
 							<OnLoad>
 								XPerl_OptionsSetMyText(self, "XPERL_CONFIG_HEALTH_OPTION_CURRENTHEALTH")
 							</OnLoad>
-							<OnShow>
+							<!-- <OnShow>
 								self:SetChecked(XPerlDB.healthStyle.healthType)
-							</OnShow>
+							</OnShow> -->
 							<OnClick>
 								self.configBase = "XPerlDB.player"
 								self.configIndex = "healthStyle.healthType"
@@ -5519,9 +5519,9 @@
 							<OnLoad>
 								XPerl_OptionsSetMyText(self, "XPERL_CONFIG_HEALTH_OPTION_CURRENTANDMAXHEALTH")
 							</OnLoad>
-							<OnShow>
+							<!-- <OnShow>
 								self:SetChecked(XPerlDB.healthStyle.healthType)
-							</OnShow>
+							</OnShow> -->
 							<OnClick>
 								self.configBase = "XPerlDB.player"
 								self.configIndex = "healthStyle.healthType"
@@ -5543,9 +5543,9 @@
 							<OnLoad>
 								XPerl_OptionsSetMyText(self, "XPERL_CONFIG_HEALTH_OPTION_ABBREVTEXT_CURRENTHEALTH")
 							</OnLoad>
-							<OnShow>
+							<!-- <OnShow>
 								self:SetChecked(XPerlDB.healthStyle.healthType)
-							</OnShow>
+							</OnShow> -->
 							<OnClick>
 								self.configBase = "XPerlDB.player"
 								self.configIndex = "healthStyle.healthType"
@@ -5567,9 +5567,9 @@
 							<OnLoad>
 								XPerl_OptionsSetMyText(self, "XPERL_CONFIG_HEALTH_OPTION_ABBREVTEXT_CURRENTANDMAXHEALTH")
 							</OnLoad>
-							<OnShow>
+							<!-- <OnShow>
 								self:SetChecked(XPerlDB.healthStyle.healthType)
-							</OnShow>
+							</OnShow> -->
 							<OnClick>
 								self.configBase = "XPerlDB.player"
 								self.configIndex = "healthStyle.healthType"
